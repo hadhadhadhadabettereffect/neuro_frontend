@@ -1,5 +1,7 @@
-const path = require("path");
+const fs =require("fs"),
+    path = require("path");
 const browserify = require("browserify"),
+    ts = require("typescript"),
     tsify = require("tsify"),
     source = require("vinyl-source-stream");
 const gulp = require("gulp"),
@@ -52,9 +54,7 @@ var browserifyOptions = mergeOptions({
     packageCache: {}
 }, "browserifyOptions", "js");
 
-var tsOptions = mergeOptions({
-    noImplicitAny: true
-}, "typescriptOptions", "js");
+var tsOptions = mergeOptions({}, "typescriptOptions", "js");
 
 var uglifyOptions = mergeOptions({
     output: {
@@ -94,6 +94,8 @@ if (config.css.minify) {
  * bundle pug -> html
  */
 gulp.task("html", function () {
+    // get ClickAction enum as dictionary
+    pugOptions.data.clickActions = requireTs("src/js/enums.ts").ClickAction;
     for (let srcFile of config.html.src) {
         gulp.src(config.html.src)
             .pipe(pug(pugOptions))
@@ -200,4 +202,22 @@ function mergeObjs (a, b) {
         a[k] = b[k];
     }
     return a;
+}
+
+/**
+ * get exports from typescript file
+ * @param {string} filepath .ts file path
+ * @param {object} [opts] ts compiler options
+ * @return {object} module.exports of transpiled file
+ */
+function requireTs (filepath, opts) {
+    var options = opts ? opts : {
+        module: ts.ModuleKind.CommonJS,
+        preserveConstEnums: true
+    };
+    var str = fs.readFileSync(path.join(__dirname, filepath), "utf8");
+    var res = ts.transpileModule(str, options);
+    var m = new module.constructor();
+    m._compile(res.outputText, "");
+    return m.exports;
 }
