@@ -1,0 +1,27 @@
+{
+  "name": "neuro-front-end",
+  "version": "1.0.0",
+  "description": "neuro-studio.com front-end src",
+  "author": "Eric Birkeland <ericjbirkeland@gmail.com>",
+  "license": "ISC",
+  "devDependencies": {
+    "autoprefixer": "^8.3.0",
+    "browserify": "^16.2.0",
+    "cssnano": "^3.10.0",
+    "gulp": "^3.9.1",
+    "gulp-cli": "^2.0.1",
+    "gulp-connect": "^5.5.0",
+    "gulp-flatten": "^0.4.0",
+    "gulp-if": "^2.0.2",
+    "gulp-postcss": "^7.0.1",
+    "gulp-pug": "^3.3.0",
+    "gulp-streamify": "^1.0.2",
+    "gulp-typescript": "^4.0.2",
+    "gulp-uglify": "^3.0.0",
+    "postcss-import": "^11.1.0",
+    "precss": "^3.1.2",
+    "tsify": "^4.0.0",
+    "typescript": "^2.8.1",
+    "vinyl-source-stream": "^2.0.0"
+  }
+}

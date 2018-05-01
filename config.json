@@ -1,0 +1,23 @@
+{
+    "html": {
+        "src": ["src/html/index.pug"],
+        "outDir": "../back_end/static",
+        "minify": false
+    },
+    "css": {
+        "src": ["src/css/main.css"],
+        "outDir": "../back_end/static/css",
+        "minify": false,
+        "plugins": ["postcss-import", "precss", "autoprefixer"]
+    },
+    "js": {
+        "src": ["src/js/main.ts"],
+        "outDir": "../back_end/static/js",
+        "minify": false 
+    },
+    "pugOptions": {
+        "data": {
+            "title": "neuro"
+        }
+    }
+}

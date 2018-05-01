@@ -1,0 +1,1 @@
+`$ gulp build` to bundle js/html/css
