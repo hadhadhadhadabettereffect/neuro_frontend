@@ -1,0 +1,51 @@
+%nav_link {
+    position: fixed;
+    cursor: pointer;
+
+    &.active, &:hover {
+        color: $font_color__nav--active;
+    }
+}
+
+#nav {
+    position: fixed;
+    user-select: none;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    text-align: center;
+    line-height: $height__nav;
+}
+
+#nav_home {
+    @extend %nav_link;
+    top: 0;
+    left: $height__nav;
+    right: $height__nav;
+    height: $height__nav;
+}
+
+#nav_agency {
+    @extend %nav_link;
+    top: $height__nav;
+    bottom: $height__nav;
+    left: 0;
+    width: $height__nav;
+}
+
+#nav_contact {
+    @extend %nav_link;
+    bottom: $height__nav;
+    left: $height__nav;
+    right: $height__nav;
+    height: $height__nav;
+}
+
+#nav_collection {
+    @extend %nav_link;
+    top: $height__nav;
+    bottom: $height__nav;
+    right: $height__nav;
+    width: $height__nav;
+}
