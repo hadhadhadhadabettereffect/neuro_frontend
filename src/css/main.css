@@ -3,5 +3,7 @@
 
 body {
     margin: 0;
-    font-family: $font_family;
+    background-color: $background;
+    font-family: $font-family;
+    color: $font-color;
 }

@@ -1,12 +1,26 @@
-/* width/height */
+/*********
+ * measurement
+ *********/
+
 $width__nav-link: 150px;
 $height__nav: 32px;
 
-/* type */
-$font_family: sans-serif;
 
-$font_color: white;
+/*********
+ *type
+ *********/
+
+/* font */
+ $font-family: sans-serif;
+/* font color */
+$font-color: white;
 $font-color__link--hover: #42a6be;
 $font-color__link--active: blue;
-
+/* font size */
 $font-size__nav: 1rem;
+
+
+/*********
+ * color
+ *********/
+$background: black;
