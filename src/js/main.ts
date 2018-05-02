@@ -1,5 +1,6 @@
 import { ClickAction } from "./enums";
 import { clickNavLink } from "./nav";
+import { toggleContact } from "./contact";
 
 document.body.addEventListener("click", handleClick, false);
 
@@ -13,6 +14,9 @@ function handleClick (event) {
             case ClickAction.collection:
                 clickNavLink(action);
                 break;
+
+            case ClickAction.contact:
+                toggleContact();
         }
     }
 }

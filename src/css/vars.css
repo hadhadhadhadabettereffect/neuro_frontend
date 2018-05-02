@@ -6,15 +6,20 @@ $height__nav: 75px;
 $width__nav-link: 150px;
 $padding__nav-link: 25px;
 
+$height__contact: 500px;
+$padding__contact: 35px 40px;
+
+$padding__col: 50px;
+
 /*********
  *type
  *********/
 
 /* font */
-$font-family: 'Open Sans', sans-serif;
+$font-family: 'Hind', sans-serif;
 /* font color */
 $font-color: white;
-$font-color__link--hover: #0070ff;
+$font-color__link--hover: #6bbdff;
 $font-color__link--active: blue;
 /* font size */
 $font-size__nav: 1rem;
@@ -24,3 +29,10 @@ $font-size__nav: 1rem;
  * color
  *********/
 $background: black;
+$background__contact: blue;
+
+
+/*********
+ * breakpoints
+ *********/
+$breakpoint-1: 600px;

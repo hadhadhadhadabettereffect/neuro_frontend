@@ -6,21 +6,6 @@
     transform: rotate(-90deg);
 }
 
-.link {
-    cursor: pointer;
-    padding: $padding__nav-link;
-
-    &:hover {
-        color: $font-color__link--hover;
-    }
-
-    &--active {
-        color: $font-color__link--active;
-        font-weight: 800;
-        font-size: 0.7rem;
-    }
-}
-
 .nav--top {
     position: fixed;
     top: 0;
