@@ -1,0 +1,20 @@
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:300,800');
+
+body {
+    margin: 0;
+    background-color: $background;
+    font-family: $font-family;
+    color: $font-color;
+}
+
+h1 {
+    font-size: 1rem;
+    letter-spacing: 1.35em;
+    font-weight: 300;
+}
+
+h2 {
+    font-size: 0.75rem;
+    font-weight: 300;
+    letter-spacing: 0.2em;
+}

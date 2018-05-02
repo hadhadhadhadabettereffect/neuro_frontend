@@ -1,9 +1,3 @@
 @import "vars";
+@import "typography";
 @import "nav";
-
-body {
-    margin: 0;
-    background-color: $background;
-    font-family: $font-family;
-    color: $font-color;
-}

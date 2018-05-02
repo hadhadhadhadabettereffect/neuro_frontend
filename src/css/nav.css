@@ -8,15 +8,16 @@
 
 .link {
     cursor: pointer;
-    font-size: $font-size__nav;
+    padding: $padding__nav-link;
 
     &:hover {
         color: $font-color__link--hover;
     }
 
     &--active {
-        font-size: $font-size__nav;
         color: $font-color__link--active;
+        font-weight: 800;
+        font-size: 0.7rem;
     }
 }
 
@@ -49,6 +50,7 @@
     left: 0;
     right: 0;
     bottom: 0;
+    height: $height__nav;
 }
 
 #nav {

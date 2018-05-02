@@ -2,19 +2,19 @@
  * measurement
  *********/
 
+$height__nav: 75px;
 $width__nav-link: 150px;
-$height__nav: 32px;
-
+$padding__nav-link: 25px;
 
 /*********
  *type
  *********/
 
 /* font */
- $font-family: sans-serif;
+$font-family: 'Open Sans', sans-serif;
 /* font color */
 $font-color: white;
-$font-color__link--hover: #42a6be;
+$font-color__link--hover: #0070ff;
 $font-color__link--active: blue;
 /* font size */
 $font-size__nav: 1rem;
