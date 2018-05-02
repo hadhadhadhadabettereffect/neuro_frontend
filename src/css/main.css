@@ -1,2 +1,7 @@
 @import "vars";
 @import "nav";
+
+body {
+    margin: 0;
+    font-family: $font_family;
+}

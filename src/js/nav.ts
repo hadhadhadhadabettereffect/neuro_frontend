@@ -17,12 +17,12 @@ function updateNav () {
     if (changes & NavLink.home_mask) changes ^= NavLink.home;
     if (changes & NavLink.agency_mask) {
         agencyLink.className = (activeLink === NavLink.agency) ?
-            "active" : "";
+            "link--active" : "link";
         changes ^= NavLink.agency;
     }
     if (changes & NavLink.collection_mask) {
         collectionLink.className = (activeLink === NavLink.collection) ?
-            "active" : "";
+            "link--active" : "link";
         changes ^= NavLink.collection;
     }
 }
