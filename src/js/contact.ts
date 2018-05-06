@@ -6,34 +6,83 @@ const enum TimeUnits {
     msPerSec = 1000,
     msPerMin = msPerSec * secsPerMin,
     msPerHour = msPerMin * minsPerHour,
-
-    mod4 = 0x3,
 }
 
-const contactEl = document.getElementById("contact");
-const clockEl = document.getElementById("clock");
+const enum ContactForm {
+    transitionMs = 280,
+    elTop = 75,
+}
+
+const contactEl = document.createElement("div");
+var clockEl = null;
 
 var visible = false;
 var transition = false;
 
-var timezone = "EDT";
 var timeoffset = -4 * TimeUnits.msPerHour; // UTC -4:00
 var t = 0; // current time in ms
+var delta = 0; // transition time
+var startTime = 0;
+var windowHeight = 0;
 
-document.getElementById("timezone").innerText = timezone;
+// fetch contact form html
+var httpRequest = new XMLHttpRequest();
+httpRequest.onreadystatechange = function(){
+    if (httpRequest.readyState === XMLHttpRequest.DONE) {
+        contactEl.id = "contact";
+        contactEl.innerHTML = httpRequest.responseText;
+        clockEl = contactEl.querySelector("#clock");
+    }
+};
+httpRequest.open("GET", '/contact.html', true);
+httpRequest.send();
 
 export function toggleContact() {
-    transition = true;
-    visible = !visible;
+    if (!transition) {
+        transition = true;
+        delta = 0;
+        visible = !visible;
+    }
+}
+
+function show() {
+    if (delta === 0) {
+        windowHeight = window.innerHeight + ContactForm.elTop;
+        contactEl.style.top = windowHeight + "px";
+        document.body.appendChild(contactEl);
+        startTime = performance.now();
+    } else {
+        if (delta > 1) {
+            contactEl.style.top = ContactForm.elTop + "px";
+            transition = false;
+        } else {
+            contactEl.style.top = windowHeight - (windowHeight * delta) + "px";
+        }
+    }
+    delta = (performance.now() - startTime) / ContactForm.transitionMs;
+}
+
+function hide() {
+    if (delta === 0) {
+        windowHeight = window.innerHeight;
+        startTime = performance.now();
+    }
+    delta = (performance.now() - startTime) / ContactForm.transitionMs;
+    if (delta > 1) {
+        document.body.removeChild(contactEl);
+        transition = false;
+    } else {
+        contactEl.style.top = ContactForm.elTop + (windowHeight * delta) + "px"
+    }
 }
 
 export function updateContact(): boolean {
     if (transition) {
-        contactEl.style.bottom = visible ? "0" : "-100%";
-        transition = false;
+        if (visible) show();
+        else hide();
     }
     // if contact form is active, animate clock
-    if (visible) {
+    if (visible && clockEl !== null) {
         // if at least 1 second has passed
         if ((Date.now() + timeoffset) - t > 999) {
             t = Date.now() + timeoffset;
@@ -42,7 +91,7 @@ export function updateContact(): boolean {
                 getSecs(t);
         }
     }
-    return !visible; // keep animating time if visible
+    return !transition && !visible; // keep animating time if visible
 }
 
 /**

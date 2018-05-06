@@ -1,21 +1,18 @@
 #contact {
     position: fixed;
-    left: $height__nav;
-    right: $height__nav;
-    bottom: -100%;
-    height: $height__contact;
-    transition: bottom 550ms cubic-bezier(0.4, 0, 0.2, 1);
+    left: 0;
+    right: 0;
+    height: 100%;
+    background: $background__contact;
 }
 
 .contact__inner {
     position: relative;
     width: 1000px;
     max-width: 100%;
-    height: $height__contact;
-    margin: 0 auto;
+    margin: $height__nav auto 0;
     padding: $padding__contact;
     box-sizing: border-box;
-    background: $background__contact;
 }
 
 .close {

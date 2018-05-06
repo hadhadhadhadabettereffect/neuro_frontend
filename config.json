@@ -1,6 +1,6 @@
 {
     "html": {
-        "src": ["src/html/index.pug"],
+        "src": ["src/html/index.pug", "src/html/contact.pug"],
         "outDir": "../back_end/static",
         "minify": false
     },
