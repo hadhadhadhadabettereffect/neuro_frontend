@@ -46,3 +46,9 @@ h4 {
     }
 }
 
+/* in contact form */
+.time {
+    font-size: $font-size__time;
+    font-weight: 200;
+    display: inline-block;
+}

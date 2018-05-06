@@ -13,7 +13,7 @@
     "js": {
         "src": ["src/js/main.ts"],
         "outDir": "../back_end/static/js",
-        "minify": false 
+        "minify": false
     },
     "pugOptions": {
         "data": {
