@@ -13,7 +13,8 @@ var activeSection = SiteArea.home,
     activeContent = SiteArea.home;
 var startTime, delta = 0;
 var initMove = true;
-var contentEl = document.getElementById("content"),
+var wrapEl = document.getElementById("wrap"),
+    contentEl = document.getElementById("content"),
     agencyEl = document.createElement("div"),
     collectionEl = document.createElement("div");
 
@@ -75,7 +76,7 @@ function initTransition() {
         startX = 0;
         moveX = width;
     } else {
-        contentEl.style.display = "block";
+        wrapEl.style.display = "block";
         // if coming from home, move from off screen to 0
         if (activeSection === SiteArea.agency) {
             startX = -width;
@@ -103,13 +104,13 @@ function handleTransition() {
         // done if moving to home
         if (activeSection === SiteArea.home) {
             changes ^= SectionChange.navigate_mask;
-            contentEl.style.display = "none";
+            wrapEl.style.display = "none";
         }
         // done if coming from home
         else if (prevSection === SiteArea.home) {
             changes ^= SectionChange.navigate_mask;
             contentEl.style.overflowY = "auto";
-            contentEl.style.left = "0";
+            wrapEl.style.left = "0";
         }
         // if coming from one side and moving to the other
         // start moving towards other side after moving from prevSide
@@ -118,7 +119,7 @@ function handleTransition() {
             initMove = true;
         }
     } else {
-        contentEl.style.left = (startX + (moveX * delta)) + "px";
+        wrapEl.style.left = (startX + (moveX * delta)) + "px";
     }
 }
 

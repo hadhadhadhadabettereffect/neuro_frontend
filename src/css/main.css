@@ -3,13 +3,20 @@
 @import "nav";
 @import "contact";
 
-#content {
+#wrap {
     position: fixed;
-    top: $height__nav;
-    bottom: 0;
     width: 100%;
-    overflow-y: auto;
+    top: 0;
+    bottom: 0;
     display: none;
+}
+
+#content {
+    position: absolute;
+    top: $height__nav;
+    bottom: $height__nav;
+    left: $height__nav;
+    right: $height__nav;
 }
 
 .content__inner {
