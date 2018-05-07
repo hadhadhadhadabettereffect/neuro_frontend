@@ -16,16 +16,16 @@ export function clickNavLink(link: number): boolean {
 }
 
 export function updateNav(): boolean {
-    if (changes & SiteArea.home_mask) changes ^= SiteArea.home;
+    if (changes & SiteArea.home_mask) changes ^= SiteArea.home_mask;
     if (changes & SiteArea.agency_mask) {
         agencyLink.className = (activeLink === SiteArea.agency) ?
             "link--active" : "link";
-        changes ^= SiteArea.agency;
+        changes ^= SiteArea.agency_mask;
     }
     if (changes & SiteArea.collection_mask) {
         collectionLink.className = (activeLink === SiteArea.collection) ?
             "link--active" : "link";
-        changes ^= SiteArea.collection;
+        changes ^= SiteArea.collection_mask;
     }
     return true;
 }

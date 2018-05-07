@@ -17,19 +17,18 @@ function animate() {
 function applyUpdates() {
     if (changes) {
         // only applying changes to one handler at a time
-        // in the order: contact, sections, nav
         // so if contact is active, nav and sections wont change
         if (changes & ChangeHandler.contact_mask) {
             if (updateContact())
                 changes ^= ChangeHandler.contact_mask;
         }
+        else if (changes & ChangeHandler.nav_mask) {
+            if (updateNav())
+                changes ^= ChangeHandler.nav_mask;
+        }
         else if (changes & ChangeHandler.section_mask) {
             if (updateSections())
                 changes ^= ChangeHandler.section_mask;
-        }
-         else if (changes & ChangeHandler.nav_mask) {
-            if (updateNav())
-                changes ^= ChangeHandler.nav_mask;
         }
     }
 }

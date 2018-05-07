@@ -2,6 +2,8 @@
  * measurement
  *********/
 
+$width__content: 1366px;
+
 $height__nav: 75px;
 $width__nav-link: 150px;
 $padding__nav-link: 25px;

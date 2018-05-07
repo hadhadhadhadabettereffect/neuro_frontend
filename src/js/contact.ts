@@ -27,14 +27,14 @@ var windowHeight = 0;
 
 // fetch contact form html
 var httpRequest = new XMLHttpRequest();
-httpRequest.onreadystatechange = function(){
+httpRequest.onreadystatechange = function () {
     if (httpRequest.readyState === XMLHttpRequest.DONE) {
         contactEl.id = "contact";
         contactEl.innerHTML = httpRequest.responseText;
         clockEl = contactEl.querySelector("#clock");
     }
 };
-httpRequest.open("GET", '/contact.html', true);
+httpRequest.open("GET", "/contact.html", true);
 httpRequest.send();
 
 export function toggleContact() {

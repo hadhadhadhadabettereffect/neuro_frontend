@@ -1,12 +1,15 @@
 import {
     ClickAction,
     ChangeHandler,
-    ListenerEvent
+    SectionChange
 } from "./enums";
 import { clickNavLink } from "./nav";
 import { toggleContact } from "./contact";
 import { markChange } from "./changeloop";
-import { markListenerEvent } from "./sections";
+import {
+    markSectionEvent,
+    navToSection
+} from "./sections";
 
 document.body.addEventListener("click", handleClick, false);
 window.addEventListener("resize", handleResize, false);
@@ -14,12 +17,12 @@ document.getElementById("content").addEventListener("scroll", handleScroll, fals
 
 
 function handleResize() {
-    markListenerEvent(ListenerEvent.resize_mask);
+    markSectionEvent(SectionChange.resize_mask);
     markChange(ChangeHandler.section_mask);
 }
 
 function handleScroll() {
-    markListenerEvent(ListenerEvent.scroll_mask);
+    markSectionEvent(SectionChange.scroll_mask);
     markChange(ChangeHandler.section_mask);
 }
 
@@ -31,8 +34,10 @@ function handleClick(event) {
             case ClickAction.home:
             case ClickAction.agency:
             case ClickAction.collection:
-                if (clickNavLink(action))
-                    markChange(ChangeHandler.nav_mask);
+                if (clickNavLink(action)) {
+                    navToSection(action);
+                    markChange(ChangeHandler.nav_section_mask);
+                }
                 break;
 
             case ClickAction.contact:
