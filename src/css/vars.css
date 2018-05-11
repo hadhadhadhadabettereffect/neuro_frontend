@@ -7,6 +7,8 @@ $width__content: 1366px;
 $height__nav: 75px;
 $width__nav-link: 150px;
 $padding__nav-link: 25px;
+$width__subnav: 500px;
+$width__subnav__item: 100px;
 
 $height__contact: 500px;
 $padding__contact: 35px 40px;
@@ -25,6 +27,7 @@ $font-color__link--hover: #6bbdff;
 $font-color__link--active: blue;
 /* font size */
 $font-size__nav: 1rem;
+$font-size__subnav: 0.8rem;
 $font-size__time: 2.8rem;
 
 /*********

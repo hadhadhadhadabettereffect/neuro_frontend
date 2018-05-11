@@ -1,7 +1,6 @@
-%rotate90 {
+.rotate {
     position: absolute;
     top: 50%;
-    left: calc($height__nav / 2);
     transform-origin: left center;
     transform: rotate(-90deg);
 }
@@ -48,20 +47,41 @@
     text-align: center;
 }
 
-#nav_home {
-    width: 150px;
+.nav__link {
+    cursor: pointer;
+    line-height: $height__nav;
+    width: $width__nav-link;
     margin: 0 auto;
+    text-align: center;
+
+    &--side {
+        @extend .nav__link;
+        position: absolute;
+        left: calc($width__nav-link/-2);
+        background: $background;
+    }
 }
 
-#nav_contact {
-    width: 150px;
-    margin: 0 auto;
+.subnav {
+    position: absolute;
+    text-align: center;
+    font-size: $font-size__subnav;
+    left: calc($width__subnav__item / -2);
 }
 
-#nav_agency {
-    @extend %rotate90;
+.subnav__item {
+    position: absolute;
+    display: block;
+    width: $width__subnav__item;
+    height: $height__nav;
+    line-height: $height__nav;
 }
 
-#nav_collection {
-    @extend %rotate90;
+.subnav__link {
+    cursor: pointer;
+    background: $background;
+
+    &:hover {
+        text-decoration: underline;
+    }
 }

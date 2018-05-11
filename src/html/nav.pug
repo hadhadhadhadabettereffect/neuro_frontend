@@ -1,8 +1,19 @@
 .nav--top
-    h1(id="nav_home" class="link" data-action= clickActions.home) neuro
+    h1(id="nav_home" class="nav__link" data-action= clickActions.home) neuro
 .nav--left
-    h2(id="nav_agency" class="link" data-action= clickActions.agency) AGENCY
+    .rotate
+        #subnav--agency.subnav
+            .subnav__item
+                a.subnav__link(data-action= clickActions.agency_about) about
+            .subnav__item
+                a.subnav__link(data-action= clickActions.agency_services) services
+            .subnav__item
+                a.subnav__link(data-action= clickActions.agency_work) work
+            .subnav__item
+                a.subnav__link(data-action= clickActions.agency_team) team
+        h2(id="nav_agency" class="nav__link--side" data-action= clickActions.agency) AGENCY
 .nav--right
-    h2(id="nav_collection" class="link" data-action= clickActions.collection) COLLECTION
+    .rotate
+        h2(id="nav_collection" class="nav__link--side" data-action= clickActions.collection) COLLECTION
 .nav--bottom
-    h2(id="nav_contact" class="link" data-action= clickActions.contact) CONTACT
+    h2(id="nav_contact" class="nav__link" data-action= clickActions.contact) CONTACT

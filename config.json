@@ -11,7 +11,7 @@
     "css": {
         "src": ["src/css/main.css"],
         "outDir": "../back_end/static/css",
-        "minify": false,
+        "minify": true,
         "plugins": ["postcss-import", "precss", "autoprefixer"]
     },
     "js": {

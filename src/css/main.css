@@ -3,6 +3,10 @@
 @import "nav";
 @import "contact";
 
+body {
+    user-select: none;
+}
+
 #wrap {
     position: fixed;
     width: 100%;
