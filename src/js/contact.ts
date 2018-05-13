@@ -18,12 +18,15 @@ var clockEl = null;
 
 var visible = false;
 var transition = false;
+var appendEl = false;
 
 var timeoffset = -4 * TimeUnits.msPerHour; // UTC -4:00
 var t = 0; // current time in ms
 var delta = 0; // transition time
 var startTime = 0;
 var windowHeight = 0;
+var yOffset = 0;
+var elTop = 0;
 
 // fetch contact form html
 var httpRequest = new XMLHttpRequest();
@@ -42,45 +45,21 @@ export function toggleContact() {
         transition = true;
         delta = 0;
         visible = !visible;
-    }
-}
-
-function show() {
-    if (delta === 0) {
-        windowHeight = window.innerHeight + ContactForm.elTop;
-        contactEl.style.top = windowHeight + "px";
-        document.body.appendChild(contactEl);
-        startTime = performance.now();
-    } else {
-        if (delta > 1) {
-            contactEl.style.top = ContactForm.elTop + "px";
-            transition = false;
-        } else {
-            contactEl.style.top = windowHeight - (windowHeight * delta) + "px";
-        }
-    }
-    delta = (performance.now() - startTime) / ContactForm.transitionMs;
-}
-
-function hide() {
-    if (delta === 0) {
         windowHeight = window.innerHeight;
+        if (visible) {
+            elTop = windowHeight;
+            yOffset = ContactForm.elTop - windowHeight;
+            appendEl = true;
+        } else {
+            elTop = ContactForm.elTop;
+            yOffset = windowHeight - ContactForm.elTop;
+        }
         startTime = performance.now();
-    }
-    delta = (performance.now() - startTime) / ContactForm.transitionMs;
-    if (delta > 1) {
-        document.body.removeChild(contactEl);
-        transition = false;
-    } else {
-        contactEl.style.top = ContactForm.elTop + (windowHeight * delta) + "px"
     }
 }
 
 export function updateContact(): boolean {
-    if (transition) {
-        if (visible) show();
-        else hide();
-    }
+    if (transition) showHide();
     // if contact form is active, animate clock
     if (visible && clockEl !== null) {
         // if at least 1 second has passed
@@ -93,6 +72,23 @@ export function updateContact(): boolean {
     }
     return !transition && !visible; // keep animating time if visible
 }
+
+function finalizeTransition () {
+    transition = false;
+    if (visible)
+        contactEl.style.top = ContactForm.elTop + "px";
+    else document.body.removeChild(contactEl);
+}
+
+function showHide () {
+    delta = (performance.now() - startTime) / ContactForm.transitionMs;
+    contactEl.style.top = (elTop + (yOffset * delta) >>> 0) + "px";
+    if (appendEl) {
+        appendEl = false;
+        document.body.appendChild(contactEl);
+    } else if (delta > 1) finalizeTransition();
+}
+
 
 /**
  * Time helpers
