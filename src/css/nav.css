@@ -75,6 +75,10 @@
     width: $width__subnav__item;
     height: $height__nav;
     line-height: $height__nav;
+
+    &.subnav__item--active {
+        color: blue;
+    }
 }
 
 .subnav__link {

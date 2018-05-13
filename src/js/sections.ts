@@ -20,14 +20,15 @@ var slideHeight = (width < NavMeasure.min_width) ?
 var activeSection = SiteArea.home,
     prevSection = SiteArea.home,
     activeContent = SiteArea.home,
-    activeSlide = 0,
-    nextSlide = 0;
+    nextSlide = 0,
+    markedSlide = 0;
 var startTime, delta = 0;
 var initMove = true;
 var wrapEl = document.getElementById("wrap"),
     contentEl = document.getElementById("content"),
     agencyEl = document.createElement("div"),
-    collectionEl = document.createElement("div");
+    collectionEl = document.createElement("div"),
+    agencySubNav = document.getElementById("subnav--agency").querySelectorAll(".subnav__item");
 
 // fetch agency and collection html
 var httpRequest = new XMLHttpRequest();
@@ -51,7 +52,7 @@ httpRequest.send();
 export function navToSection(section: number) {
     prevSection = activeSection;
     activeSection = section;
-    activeSlide = 0;
+    nextSlide = 0;
     scrollY = 0;
     prevScrollY = 0;
     changes |= SectionChange.navigate_mask;
@@ -61,7 +62,7 @@ export function navToSection(section: number) {
 export function scrollToSlide(slide: number) {
     nextSlide = slide;
     targetScrollY = nextSlide * slideHeight;
-    changes |= SectionChange.slide_mask;
+    changes |= SectionChange.slide_and_subnav;
     scrollY = contentEl.scrollTop;
     prevScrollY = scrollY;
     scrollDist = targetScrollY - scrollY;
@@ -90,6 +91,11 @@ export function updateSections(): boolean {
     // mpve btw agency, home, collection areas
     if (changes & SectionChange.navigate_mask) {
         handleTransition();
+    }
+    // update highlighted subnav item
+    if (changes & SectionChange.subnav_mask) {
+        changes ^= SectionChange.subnav_mask;
+        updateSubnav();
     }
     return changes === 0;
 }
@@ -176,4 +182,16 @@ function handleScroll() {
     scrollY = wrapEl.scrollTop;
     scrollDown = scrollY >= prevScrollY;
     nextSlide = (scrollY / slideHeight) >>> 0;
+}
+
+function updateSubnav() {
+    if (markedSlide !== nextSlide) {
+        if (activeSection === SiteArea.agency) {
+            agencySubNav[markedSlide].className = "subnav__item";
+            agencySubNav[nextSlide].className = "subnav__item subnav__item--active";
+        } else if (activeSection === SiteArea.collection) {
+            // same with collection subnav
+        }
+        markedSlide = nextSlide;
+    }
 }

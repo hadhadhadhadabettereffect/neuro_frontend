@@ -48,13 +48,16 @@ export const enum SectionChange {
     resize,
     navigate,
     slide,
+    subnav,
 
     scroll_mask = 1 << scroll,
     resize_mask = 1 << resize,
     navigate_mask = 1 << navigate,
     slide_mask = 1 << slide,
+    subnav_mask = 1 << subnav,
 
     not_scroll_slide = ~(scroll_mask | slide_mask),
+    slide_and_subnav = slide_mask | subnav_mask,
 
     transition_ms = 450,
 }
