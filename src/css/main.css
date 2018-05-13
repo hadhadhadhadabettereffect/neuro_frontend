@@ -7,6 +7,8 @@ body {
     user-select: none;
 }
 
+::-webkit-scrollbar { display: none; }
+
 #wrap {
     position: fixed;
     width: 100%;
@@ -21,6 +23,7 @@ body {
     bottom: $height__nav;
     left: $height__nav;
     right: $height__nav;
+    -ms-overflow-style: none;
 }
 
 .content__inner {

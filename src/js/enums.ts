@@ -18,6 +18,9 @@ export const enum ClickAction {
     agency_services,
     agency_work,
     agency_team,
+
+    agency_nav_offset = agency_about,
+
 }
 
 export const enum ChangeHandler {
@@ -44,17 +47,21 @@ export const enum SectionChange {
     scroll,
     resize,
     navigate,
+    slide,
 
     scroll_mask = 1 << scroll,
     resize_mask = 1 << resize,
     navigate_mask = 1 << navigate,
+    slide_mask = 1 << slide,
+
+    not_scroll_slide = ~(scroll_mask | slide_mask),
 
     transition_ms = 450,
 }
 
 export const enum NavMeasure {
     nav_height = 75,
-    link_width = 150,
+    link_width = 100,
     sublink_width = 100,
 
     sublink_start = sublink_width / -2,
@@ -63,9 +70,13 @@ export const enum NavMeasure {
     link_c = -(link_width / 2) - sublink_width - sublink_start,
     link_d = link_c - sublink_width,
 
-    min_height = nav_height + // top nav
-        nav_height + // bottom nav
-        link_width + // side nav link
-        sublink_width * 4 // 4 subnav items
+    // top nav height + btm nav height
+    top_btm_space = nav_height * 2,
 
+    min_height = top_btm_space +
+        link_width + // side nav link
+        sublink_width * 4, // 4 subnav items
+
+
+    min_width = 500 // if < min_width, use mobile nav
 }

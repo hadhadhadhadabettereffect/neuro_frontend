@@ -1,6 +1,7 @@
 import {
     SectionChange,
-    SiteArea
+    SiteArea,
+    NavMeasure
 } from "./enums";
 
 var changes = 0;
@@ -8,9 +9,19 @@ var width = window.innerWidth,
     height = window.innerHeight,
     startX = 0,
     moveX = 0;
+var scrollY = 0,
+    prevScrollY = 0,
+    targetScrollY = 0,
+    scrollDist = 0,
+    scrollDown = true;
+
+var slideHeight = (width < NavMeasure.min_width) ?
+        height - NavMeasure.nav_height : height - NavMeasure.top_btm_space;
 var activeSection = SiteArea.home,
     prevSection = SiteArea.home,
-    activeContent = SiteArea.home;
+    activeContent = SiteArea.home,
+    activeSlide = 0,
+    nextSlide = 0;
 var startTime, delta = 0;
 var initMove = true;
 var wrapEl = document.getElementById("wrap"),
@@ -40,8 +51,21 @@ httpRequest.send();
 export function navToSection(section: number) {
     prevSection = activeSection;
     activeSection = section;
+    activeSlide = 0;
+    scrollY = 0;
+    prevScrollY = 0;
     changes |= SectionChange.navigate_mask;
     initMove = true;
+}
+
+export function scrollToSlide(slide: number) {
+    nextSlide = slide;
+    targetScrollY = nextSlide * slideHeight;
+    changes |= SectionChange.slide_mask;
+    scrollY = contentEl.scrollTop;
+    prevScrollY = scrollY;
+    scrollDist = targetScrollY - scrollY;
+    startTime = performance.now();
 }
 
 export function markSectionEvent(changeMask) {
@@ -49,18 +73,37 @@ export function markSectionEvent(changeMask) {
 }
 
 export function updateSections(): boolean {
-    if (changes & SectionChange.scroll_mask) {
+    // go to a particular slide
+    if (changes & SectionChange.slide_mask) {
+        moveToNextSlide();
+    }
+    // ignore scroll listener if actively transitioning to another slide
+    else if (changes & SectionChange.scroll_mask) {
         changes ^= SectionChange.scroll_mask;
         handleScroll();
     }
+    // update measurements on window resize
     if (changes & SectionChange.resize_mask) {
         changes ^= SectionChange.resize_mask;
         handleResize();
     }
+    // mpve btw agency, home, collection areas
     if (changes & SectionChange.navigate_mask) {
         handleTransition();
     }
     return changes === 0;
+}
+
+function moveToNextSlide () {
+    delta = (performance.now() - startTime) / SectionChange.transition_ms;
+    if (delta > 1) {
+        scrollY = targetScrollY;
+        changes &= SectionChange.not_scroll_slide;
+    } else {
+        scrollY = (prevScrollY + (scrollDist * delta)) >>> 0;
+    }
+    contentEl.scrollTop = scrollY;
+    return false;
 }
 
 function initTransition() {
@@ -129,5 +172,8 @@ function handleResize() {
 }
 
 function handleScroll() {
-
+    prevScrollY = scrollY;
+    scrollY = wrapEl.scrollTop;
+    scrollDown = scrollY >= prevScrollY;
+    nextSlide = (scrollY / slideHeight) >>> 0;
 }

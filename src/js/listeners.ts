@@ -8,7 +8,8 @@ import { toggleContact } from "./contact";
 import { markChange } from "./changeloop";
 import {
     markSectionEvent,
-    navToSection
+    navToSection,
+    scrollToSlide
 } from "./sections";
 
 document.body.addEventListener("click", handleClick, false);
@@ -43,6 +44,15 @@ function handleClick(event) {
             case ClickAction.contact:
                 toggleContact();
                 markChange(ChangeHandler.contact_mask);
+                break;
+
+            case ClickAction.agency_about:
+            case ClickAction.agency_services:
+            case ClickAction.agency_work:
+            case ClickAction.agency_team:
+                scrollToSlide(action - ClickAction.agency_nav_offset);
+                markChange(ChangeHandler.section_mask);
+                break;
         }
     }
 }
