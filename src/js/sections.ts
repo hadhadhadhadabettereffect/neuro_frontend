@@ -55,7 +55,7 @@ export function navToSection(section: number) {
     nextSlide = 0;
     scrollY = 0;
     prevScrollY = 0;
-    changes |= SectionChange.navigate_mask;
+    changes |= SectionChange.nav_and_subnav;
     initMove = true;
 }
 
@@ -160,6 +160,7 @@ function handleTransition() {
             changes ^= SectionChange.navigate_mask;
             contentEl.style.overflowY = "auto";
             wrapEl.style.left = "0";
+            prevSection = activeSection;
         }
         // if coming from one side and moving to the other
         // start moving towards other side after moving from prevSide
@@ -186,10 +187,10 @@ function handleScroll() {
 
 function updateSubnav() {
     if (markedSlide !== nextSlide) {
-        if (activeSection === SiteArea.agency) {
+        if (prevSection === SiteArea.agency) {
             agencySubNav[markedSlide].className = "subnav__item";
             agencySubNav[nextSlide].className = "subnav__item subnav__item--active";
-        } else if (activeSection === SiteArea.collection) {
+        } else if (prevSection === SiteArea.collection) {
             // same with collection subnav
         }
         markedSlide = nextSlide;

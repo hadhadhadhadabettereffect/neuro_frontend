@@ -58,6 +58,7 @@ export const enum SectionChange {
 
     not_scroll_slide = ~(scroll_mask | slide_mask),
     slide_and_subnav = slide_mask | subnav_mask,
+    nav_and_subnav = navigate_mask | subnav_mask,
 
     transition_ms = 450,
 }
