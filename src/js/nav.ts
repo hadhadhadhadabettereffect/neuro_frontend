@@ -3,7 +3,8 @@ import { SiteArea, NavMeasure } from "./enums";
 const pageTitles = [
     "Neuro Studio", "Neuro Studio | Agency", "Neuro Studio | Collection"
 ];
-const pageUrls = ["/", "/agency", "/collection"];
+// const pageUrls = ["/", "/agency", "/collection"];
+const pageUrls = ["/","/","/"];
 
 var activeLink = SiteArea.home;
 var changes = 0;

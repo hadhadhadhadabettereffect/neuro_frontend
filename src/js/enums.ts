@@ -75,7 +75,7 @@ export const enum NavMeasure {
     link_d = link_c - sublink_width,
 
     // top nav height + btm nav height
-    top_btm_space = nav_height * 2,
+    top_btm_space = nav_height * 2 + 1,
 
     min_height = top_btm_space +
         link_width + // side nav link

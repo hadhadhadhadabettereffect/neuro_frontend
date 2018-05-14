@@ -1,0 +1,26 @@
+.service {
+    display: inline-block;
+    padding: 12px;
+}
+
+.staff {
+    display: inline-block;
+    padding: 12px;
+}
+
+.staff__photo {
+    background: #ccc;
+    height: $width__staff__photo;
+    width: $width__staff__photo;
+}
+
+.staff__name {
+    line-height: 1.5em;
+    font-weight: 300;
+    margin-top: 16px;
+}
+
+.staff__title {
+    font-size: 0.7rem;
+    font-weight: 200;
+}

@@ -15,8 +15,7 @@ var scrollY = 0,
     scrollDist = 0,
     scrollDown = true;
 
-var slideHeight = (width < NavMeasure.min_width) ?
-        height - NavMeasure.nav_height : height - NavMeasure.top_btm_space;
+var slideHeight = height - NavMeasure.top_btm_space;
 var activeSection = SiteArea.home,
     prevSection = SiteArea.home,
     activeContent = SiteArea.home,
@@ -176,6 +175,7 @@ function handleTransition() {
 function handleResize() {
     width = window.innerWidth;
     height = window.innerHeight;
+    slideHeight = height - NavMeasure.top_btm_space;
 }
 
 function handleScroll() {

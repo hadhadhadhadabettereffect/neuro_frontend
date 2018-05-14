@@ -3,6 +3,9 @@
  *********/
 
 $width__content: 1366px;
+$width__content--min: 300px;
+
+$padding__col: 50px;
 
 $height__nav: 75px;
 $width__nav-link: 150px;
@@ -13,7 +16,8 @@ $width__subnav__item: 100px;
 $height__contact: 500px;
 $padding__contact: 35px 40px;
 
-$padding__col: 50px;
+$width__staff__photo: 140px;
+
 
 /*********
  *type
@@ -41,3 +45,4 @@ $background__contact: blue;
  * breakpoints
  *********/
 $breakpoint-1: 600px;
+$breakpoint-2: 420px;
