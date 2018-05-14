@@ -3,14 +3,14 @@
 .nav--left
     .rotate
         #subnav--agency.subnav
-            .subnav__item.subnav__item--active
-                a.subnav__link(data-action= clickActions.agency_about) about
             .subnav__item
-                a.subnav__link(data-action= clickActions.agency_services) services
+                a.subnav__link.subnav__link--active(data-action= clickActions.agency_about) ABOUT
             .subnav__item
-                a.subnav__link(data-action= clickActions.agency_work) work
+                a.subnav__link(data-action= clickActions.agency_services) SERVICES
             .subnav__item
-                a.subnav__link(data-action= clickActions.agency_team) team
+                a.subnav__link(data-action= clickActions.agency_work) WORK
+            .subnav__item
+                a.subnav__link(data-action= clickActions.agency_team) TEAM
         h2(id="nav_agency" class="nav__link--side" data-action= clickActions.agency) AGENCY
 .nav--right
     .rotate

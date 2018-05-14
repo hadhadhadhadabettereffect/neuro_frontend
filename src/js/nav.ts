@@ -21,15 +21,13 @@ export function updateNav(): boolean {
     if (changes & SiteArea.home_mask) changes ^= SiteArea.home_mask;
     if (changes & SiteArea.agency_mask) {
         if (activeLink === SiteArea.agency) {
-            agencyLinkEl.style.cursor = "default";
-            agencyLinkEl.style.color = "blue";
+            agencyLinkEl.className = "nav__link--side nav__link--active";
             agencyLinks[0].style.left = NavMeasure.link_a + "px";
             agencyLinks[1].style.left = NavMeasure.link_b + "px";
             agencyLinks[2].style.left = NavMeasure.link_c + "px";
             agencyLinks[3].style.left = NavMeasure.link_d + "px";
         } else {
-            agencyLinkEl.style.cursor = "pointer";
-            agencyLinkEl.style.color = "white";
+            agencyLinkEl.className = "nav__link--side";
             agencyLinks[0].style.left = "0";
             agencyLinks[1].style.left = "0";
             agencyLinks[2].style.left = "0";
@@ -39,7 +37,7 @@ export function updateNav(): boolean {
     }
     if (changes & SiteArea.collection_mask) {
         collectionLinkEl.className = (activeLink === SiteArea.collection) ?
-            "nav__link--active" : "nav__link";
+            "nav__link--side nav__link--active" : "nav__link--side";
         changes ^= SiteArea.collection_mask;
     }
     return true;

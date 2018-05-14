@@ -66,7 +66,7 @@ export const enum SectionChange {
 export const enum NavMeasure {
     nav_height = 75,
     link_width = 100,
-    sublink_width = 100,
+    sublink_width = 90,
 
     sublink_start = sublink_width / -2,
     link_a = (link_width / 2) + sublink_width - sublink_start,

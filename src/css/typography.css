@@ -31,21 +31,6 @@ h4 {
     font-weight: 700;
 }
 
-.link {
-    cursor: pointer;
-    padding: $padding__nav-link;
-
-    &:hover {
-        color: $font-color__link--hover;
-    }
-
-    &--active {
-        color: $font-color__link--active;
-        font-weight: 700;
-        font-size: 0.7rem;
-    }
-}
-
 /* in contact form */
 .time {
     font-size: $font-size__time;

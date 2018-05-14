@@ -28,7 +28,7 @@ var wrapEl = document.getElementById("wrap"),
     contentEl = document.getElementById("content"),
     agencyEl = document.createElement("div"),
     collectionEl = document.createElement("div"),
-    agencySubNav = document.getElementById("subnav--agency").querySelectorAll(".subnav__item");
+    agencySubNav = document.getElementById("subnav--agency").querySelectorAll(".subnav__link");
 
 // fetch agency and collection html
 var httpRequest = new XMLHttpRequest();
@@ -178,7 +178,6 @@ function handleResize() {
     height = window.innerHeight;
 }
 
-// highlight subnav link for active slide
 function handleScroll() {
     prevScrollY = scrollY;
     scrollY = contentEl.scrollTop;
@@ -189,8 +188,8 @@ function handleScroll() {
 function updateSubnav() {
     if (markedSlide !== nextSlide) {
         if (prevSection === SiteArea.agency) {
-            agencySubNav[markedSlide].className = "subnav__item";
-            agencySubNav[nextSlide].className = "subnav__item subnav__item--active";
+            agencySubNav[markedSlide].className = "subnav__link";
+            agencySubNav[nextSlide].className = "subnav__link subnav__link--active";
         } else if (prevSection === SiteArea.collection) {
             // same with collection subnav
         }
