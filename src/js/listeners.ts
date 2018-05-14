@@ -17,6 +17,16 @@ window.addEventListener("resize", handleResize, false);
 document.getElementById("content").addEventListener("scroll", handleScroll, false);
 
 
+window.onpopstate = function(event) {
+    if (event.state.hasOwnProperty("page")) {
+        let p = event.state.page;
+        if (clickNavLink(p)) {
+            navToSection(p);
+            markChange(ChangeHandler.nav_section_mask);
+        }
+    }
+};
+
 function handleResize() {
     markSectionEvent(SectionChange.resize_mask);
     markChange(ChangeHandler.section_mask);

@@ -1,11 +1,22 @@
 import { SiteArea, NavMeasure } from "./enums";
 
+const pageTitles = [
+    "Neuro Studio", "Neuro Studio | Agency", "Neuro Studio | Collection"
+];
+const pageUrls = ["/", "/agency", "/collection"];
+
 var activeLink = SiteArea.home;
 var changes = 0;
 var agencyLinkEl = document.getElementById("nav_agency"),
     collectionLinkEl = document.getElementById("nav_collection"),
     agencyNavEl = document.getElementById("subnav--agency"),
     agencyLinks = <any>agencyNavEl.querySelectorAll(".subnav__item");
+
+// replace state on init for popstate data
+history.replaceState({
+    page: activeLink
+}, pageTitles[activeLink], pageUrls[activeLink]);
+
 
 // returns true if clicked link is not current area
 export function clickNavLink(link: number): boolean {
@@ -18,8 +29,11 @@ export function clickNavLink(link: number): boolean {
 }
 
 export function updateNav(): boolean {
-    if (changes & SiteArea.home_mask) changes ^= SiteArea.home_mask;
+    if (changes & SiteArea.home_mask) {
+        changes ^= SiteArea.home_mask;
+    }
     if (changes & SiteArea.agency_mask) {
+        changes ^= SiteArea.agency_mask;
         if (activeLink === SiteArea.agency) {
             agencyLinkEl.className = "nav__link--side nav__link--active";
             agencyLinks[0].style.left = NavMeasure.link_a + "px";
@@ -33,12 +47,19 @@ export function updateNav(): boolean {
             agencyLinks[2].style.left = "0";
             agencyLinks[3].style.left = "0";
         }
-        changes ^= SiteArea.agency_mask;
     }
     if (changes & SiteArea.collection_mask) {
-        collectionLinkEl.className = (activeLink === SiteArea.collection) ?
-            "nav__link--side nav__link--active" : "nav__link--side";
         changes ^= SiteArea.collection_mask;
+        if (activeLink === SiteArea.collection) {
+            collectionLinkEl.className = "nav__link--side nav__link--active";
+        } else {
+            collectionLinkEl.className = "nav__link--side";
+        }
     }
+
+    history.pushState({
+        page: activeLink
+    }, pageTitles[activeLink], pageUrls[activeLink]);
+
     return true;
 }
