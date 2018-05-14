@@ -38,6 +38,11 @@ httpRequest.onreadystatechange = function () {
             agencyEl.innerHTML = httpRequest.responseText;
             httpRequest.open("GET", "/collection.html", true);
             httpRequest.send();
+            let photos = agencyEl.querySelectorAll(".staff__photo");
+            for (let i=0, j=4; i<j; ++i) {
+                (<any>photos[i]).src ="https://placeimg.com/140/140/animals?t=" +
+                    Date.now() + i;
+            }
         } else {
             collectionEl.className = "content__inner";
             collectionEl.innerHTML = httpRequest.responseText;
