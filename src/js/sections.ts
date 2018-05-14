@@ -178,11 +178,12 @@ function handleResize() {
     height = window.innerHeight;
 }
 
+// highlight subnav link for active slide
 function handleScroll() {
     prevScrollY = scrollY;
-    scrollY = wrapEl.scrollTop;
-    scrollDown = scrollY >= prevScrollY;
+    scrollY = contentEl.scrollTop;
     nextSlide = (scrollY / slideHeight) >>> 0;
+    if (nextSlide !== markedSlide) updateSubnav();
 }
 
 function updateSubnav() {
