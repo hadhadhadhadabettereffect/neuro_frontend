@@ -5,7 +5,7 @@ export const enum SiteArea {
 
     home_mask = 1 << home,
     agency_mask = 1 << agency,
-    collection_mask = 1 << collection
+    collection_mask = 1 << collection,
 }
 
 export const enum ClickAction {

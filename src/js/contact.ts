@@ -19,6 +19,7 @@ var clockEl = null;
 var visible = false;
 var transition = false;
 var appendEl = false;
+var awaitingHTML = true;
 
 var timeoffset = -4 * TimeUnits.msPerHour; // UTC -4:00
 var t = 0; // current time in ms
@@ -28,17 +29,12 @@ var windowHeight = 0;
 var yOffset = 0;
 var elTop = 0;
 
-// fetch contact form html
-var httpRequest = new XMLHttpRequest();
-httpRequest.onreadystatechange = function () {
-    if (httpRequest.readyState === XMLHttpRequest.DONE) {
-        contactEl.id = "contact";
-        contactEl.innerHTML = httpRequest.responseText;
-        clockEl = contactEl.querySelector("#clock");
-    }
-};
-httpRequest.open("GET", "/contact.html", true);
-httpRequest.send();
+export function setContactHTML(text: string) {
+    contactEl.id = "contact";
+    contactEl.innerHTML = text;
+    clockEl = contactEl.querySelector("#clock");
+    awaitingHTML = false;
+}
 
 export function toggleContact() {
     if (!transition) {
@@ -59,6 +55,8 @@ export function toggleContact() {
 }
 
 export function updateContact(): boolean {
+    if (awaitingHTML) return false;
+
     if (transition) showHide();
     // if contact form is active, animate clock
     if (visible && clockEl !== null) {

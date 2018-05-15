@@ -20,42 +20,38 @@ var activeSection = SiteArea.home,
     prevSection = SiteArea.home,
     activeContent = SiteArea.home,
     nextSlide = 0,
-    markedSlide = 0;
+    markedSlide = 0,
+    activeSectionMask = SiteArea.home_mask;
 var startTime, delta = 0;
-var initMove = true;
+var initMove = true,
+    contentReady = SiteArea.home_mask;
 var wrapEl = document.getElementById("wrap"),
     contentEl = document.getElementById("content"),
     agencyEl = document.createElement("div"),
     collectionEl = document.createElement("div"),
     agencySubNav = document.getElementById("subnav--agency").querySelectorAll(".subnav__link");
 
-// fetch agency and collection html
-var httpRequest = new XMLHttpRequest();
-httpRequest.onreadystatechange = function () {
-    if (httpRequest.readyState === XMLHttpRequest.DONE) {
-        if (httpRequest.responseURL == "http://localhost:8000/agency.html") {
-            agencyEl.className = "content__inner";
-            agencyEl.innerHTML = httpRequest.responseText;
-            httpRequest.open("GET", "/collection.html", true);
-            httpRequest.send();
-            let photos = agencyEl.querySelectorAll(".staff__photo");
-            for (let i=0, j=4; i<j; ++i) {
-                (<any>photos[i]).src ="https://placeimg.com/140/140/animals?t=" +
-                    Date.now() + i;
-            }
-        } else {
-            collectionEl.className = "content__inner";
-            collectionEl.innerHTML = httpRequest.responseText;
-            httpRequest = null;
+
+export function setContentHTML(section: number, text: string) {
+    if (section === SiteArea.agency_mask) {
+        agencyEl.className = "content__inner";
+        agencyEl.innerHTML = text;
+        let photos = agencyEl.querySelectorAll(".staff__photo");
+        for (let i = 0, j = 4; i < j; ++i) {
+            (<any>photos[i]).src = "https://placeimg.com/140/140/animals?t=" +
+                Date.now() + i;
         }
+    } else {
+        collectionEl.className = "content__inner";
+        collectionEl.innerHTML = text;
     }
-};
-httpRequest.open("GET", "/agency.html", true);
-httpRequest.send();
+    contentReady |= section;
+}
 
 export function navToSection(section: number) {
     prevSection = activeSection;
     activeSection = section;
+    activeSectionMask = 1 << section;
     nextSlide = 0;
     scrollY = 0;
     prevScrollY = 0;
@@ -78,6 +74,9 @@ export function markSectionEvent(changeMask) {
 }
 
 export function updateSections(): boolean {
+    // wait for next anim frame if content not ready
+    if ((contentReady&activeSectionMask) === 0) return false;
+
     // go to a particular slide
     if (changes & SectionChange.slide_mask) {
         moveToNextSlide();
