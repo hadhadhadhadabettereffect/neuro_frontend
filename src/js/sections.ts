@@ -13,7 +13,7 @@ var scrollY = 0,
     prevScrollY = 0,
     targetScrollY = 0,
     scrollDist = 0,
-    scrollDown = true;
+    scrollUp = true;
 
 var slideHeight = height - NavMeasure.top_btm_space;
 var activeSection = SiteArea.home,
@@ -85,7 +85,13 @@ export function updateSections(): boolean {
     // ignore scroll listener if actively transitioning to another slide
     else if (changes & SectionChange.scroll_mask) {
         changes ^= SectionChange.scroll_mask;
+        changes |= SectionChange.endscroll_mask;
         handleScroll();
+    }
+    // if finished scrolling
+    else if (changes & SectionChange.endscroll_mask) {
+        changes ^= SectionChange.endscroll_mask;
+        onAfterScroll();
     }
     // update measurements on window resize
     if (changes & SectionChange.resize_mask) {
@@ -186,8 +192,21 @@ function handleResize() {
 function handleScroll() {
     prevScrollY = scrollY;
     scrollY = contentEl.scrollTop;
+    scrollUp = scrollY < prevScrollY;
     nextSlide = (scrollY / slideHeight) >>> 0;
     if (nextSlide !== markedSlide) updateSubnav();
+}
+
+// gravitate toward nearest slide after scroll
+function onAfterScroll() {
+    var dist;
+    if (scrollUp) {
+        dist = scrollY - (nextSlide * slideHeight);
+        if (dist/slideHeight < 0.5) scrollToSlide(nextSlide);
+    } else if (nextSlide < 3) {
+        dist = ((nextSlide + 1) * slideHeight) - scrollY;
+        if (dist/slideHeight < 0.5) scrollToSlide(nextSlide + 1);
+    }
 }
 
 function updateSubnav() {

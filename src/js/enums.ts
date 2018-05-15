@@ -20,7 +20,6 @@ export const enum ClickAction {
     agency_team,
 
     agency_nav_offset = agency_about,
-
 }
 
 export const enum ChangeHandler {
@@ -49,12 +48,14 @@ export const enum SectionChange {
     navigate,
     slide,
     subnav,
+    endscroll,
 
     scroll_mask = 1 << scroll,
     resize_mask = 1 << resize,
     navigate_mask = 1 << navigate,
     slide_mask = 1 << slide,
     subnav_mask = 1 << subnav,
+    endscroll_mask = 1 << endscroll,
 
     not_scroll_slide = ~(scroll_mask | slide_mask),
     slide_and_subnav = slide_mask | subnav_mask,

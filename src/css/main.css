@@ -11,6 +11,10 @@ body {
 
 ::-webkit-scrollbar { display: none; }
 
+img {
+    max-height: 100%;
+}
+
 #wrap {
     position: fixed;
     width: 100%;
@@ -70,7 +74,7 @@ body {
     width: 50%;
     height: 100%;
     max-height: 100%;
-    padding: 0 $padding__col $padding__col;
+    padding: $padding__col;
     box-sizing: border-box;
     overflow-y: auto;
 }
@@ -90,6 +94,6 @@ body {
 
 @media only screen and (max-width: $breakpoint-2) {
     .col {
-        padding: 0 0 $padding__col;
+        padding: $padding__col 0;
     }
 }
