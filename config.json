@@ -1,8 +1,8 @@
 {
     "html": {
         "src": ["src/html/index.pug",
-            "src/html/contact.pug",
-            "src/html/agency.pug",
+            "src/html/contact/all.pug",
+            "src/html/agency/all.pug",
             "src/html/collection.pug"
         ],
         "outDir": "../back_end/static",

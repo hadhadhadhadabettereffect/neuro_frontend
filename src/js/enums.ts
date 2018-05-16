@@ -19,7 +19,13 @@ export const enum ClickAction {
     agency_work,
     agency_team,
 
+    collection_campaign,
+    collection_products,
+    collection_story,
+    collection_press,
+
     agency_nav_offset = agency_about,
+    collection_nav_offset = collection_campaign,
 }
 
 export const enum ChangeHandler {
@@ -81,7 +87,6 @@ export const enum NavMeasure {
     min_height = top_btm_space +
         link_width + // side nav link
         sublink_width * 4, // 4 subnav items
-
 
     min_width = 500 // if < min_width, use mobile nav
 }

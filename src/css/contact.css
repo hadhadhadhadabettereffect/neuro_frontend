@@ -33,5 +33,5 @@
 
 #clock {
     /* setting fixed width so "EDT/EST" doesnt move as time updates */
-    width: 145px;
+    width: 148px;
 }
