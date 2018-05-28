@@ -3,6 +3,15 @@
 @import "nav";
 @import "contact";
 @import "agency";
+@import "collection";
+
+html {
+  box-sizing: border-box;
+}
+
+*, *:before, *:after {
+  box-sizing: inherit;
+}
 
 body {
     user-select: none;
@@ -21,6 +30,7 @@ img {
     top: 0;
     bottom: 0;
     display: none;
+    background: $background;
 }
 
 #content {
@@ -75,12 +85,25 @@ img {
     height: 100%;
     max-height: 100%;
     padding: $padding__col;
-    box-sizing: border-box;
     overflow-y: auto;
 }
 
 .col--right {
     left: 50%;
+}
+
+#homevid {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    z-index: -100;
+    transform: translateX(-50%) translateY(-50%);
+    background: url(/images/neuro-bg-med.jpg) no-repeat;
+    background-size: cover;
 }
 
 @media only screen and (max-width: $breakpoint-1) {

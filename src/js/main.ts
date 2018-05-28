@@ -30,4 +30,3 @@ fetchContact.onreadystatechange = function () {
 };
 fetchContact.open("GET", "/contact.html", true);
 fetchContact.send();
-

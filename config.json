@@ -1,9 +1,9 @@
 {
     "html": {
         "src": ["src/html/index.pug",
-            "src/html/contact/all.pug",
-            "src/html/agency/all.pug",
-            "src/html/collection.pug"
+            "src/html/collection/collection.pug",
+            "src/html/agency/agency.pug",
+            "src/html/contact.pug"
         ],
         "outDir": "../back_end/static",
         "minify": false
