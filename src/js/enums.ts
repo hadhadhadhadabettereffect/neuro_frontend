@@ -20,6 +20,11 @@ export const enum ClickAction {
     agency_work,
     agency_team,
 
+    subnav_0,
+    subnav_1,
+    subnav_2,
+    subnav_3,
+
     collection_campaign,
     collection_products,
     collection_story,
@@ -27,6 +32,8 @@ export const enum ClickAction {
 
     agency_nav_offset = agency_about,
     collection_nav_offset = collection_campaign,
+
+    subnav_offset = subnav_0,
 }
 
 export const enum ChangeHandler {

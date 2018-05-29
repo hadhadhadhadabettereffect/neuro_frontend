@@ -70,7 +70,7 @@
 .subnav {
     position: absolute;
     display: flex;
-    flex-direction: row;
+    flex-direction: row-reverse;
     top: 50%;
     transform: rotate(-90deg) translateY(-175px);
     transform-origin: bottom;

@@ -5,13 +5,10 @@ const pageTitles = [
 ];
 const pageUrls = process.env.NODE_ENV === "production" ?
     ["/", "/agency", "/collection"] : ["/","/","/"];
-
+const agencyLinks = <any>document.getElementById("subnav--agency").querySelectorAll(".subnav__item"),
+    collectionLinks = <any>document.getElementById("subnav--collection").querySelectorAll(".subnav__item");
 var activeLink = SiteArea.home;
 var changes = 0;
-var agencyLinkEl = document.getElementById("nav_agency"),
-    collectionLinkEl = document.getElementById("nav_collection"),
-    agencyNavEl = document.getElementById("subnav--agency"),
-    agencyLinks = <any>agencyNavEl.querySelectorAll(".subnav__item");
 
 // replace state on init for popstate data
 history.replaceState({
@@ -36,25 +33,25 @@ export function updateNav(): boolean {
     if (changes & SiteArea.agency_mask) {
         changes ^= SiteArea.agency_mask;
         if (activeLink === SiteArea.agency) {
-            agencyLinkEl.className = "nav__link--side nav__link--active";
-            agencyLinks[0].style.left = NavMeasure.link_a + "px";
-            agencyLinks[1].style.left = NavMeasure.link_b + "px";
-            agencyLinks[2].style.left = NavMeasure.link_c + "px";
-            agencyLinks[3].style.left = NavMeasure.link_d + "px";
+            agencyLinks[2].className = "nav__link--side nav__link--active";
+            // agencyLinks[0].style.left = NavMeasure.link_a + "px";
+            // agencyLinks[1].style.left = NavMeasure.link_b + "px";
+            // agencyLinks[2].style.left = NavMeasure.link_c + "px";
+            // agencyLinks[3].style.left = NavMeasure.link_d + "px";
         } else {
-            agencyLinkEl.className = "nav__link--side";
-            agencyLinks[0].style.left = "0";
-            agencyLinks[1].style.left = "0";
-            agencyLinks[2].style.left = "0";
-            agencyLinks[3].style.left = "0";
+            agencyLinks[2].className = "nav__link--side";
+            // agencyLinks[0].style.left = "0";
+            // agencyLinks[1].style.left = "0";
+            // agencyLinks[2].style.left = "0";
+            // agencyLinks[3].style.left = "0";
         }
     }
     if (changes & SiteArea.collection_mask) {
         changes ^= SiteArea.collection_mask;
         if (activeLink === SiteArea.collection) {
-            collectionLinkEl.className = "nav__link--side nav__link--active";
+            collectionLinks[2].className = "nav__link--side nav__link--active";
         } else {
-            collectionLinkEl.className = "nav__link--side";
+            collectionLinks[2].className = "nav__link--side";
         }
     }
 

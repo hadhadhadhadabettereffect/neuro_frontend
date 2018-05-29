@@ -15,7 +15,6 @@ var scrollY = 0,
     scrollDist = 0,
     scrollUp = true;
 
-var slideHeight = height - NavMeasure.top_btm_space;
 var activeSection = SiteArea.home,
     prevSection = SiteArea.home,
     activeContent = SiteArea.home,
@@ -29,12 +28,12 @@ var wrapEl = document.getElementById("wrap"),
     contentEl = document.getElementById("content"),
     agencyEl = document.createElement("div"),
     collectionEl = document.createElement("div"),
-    agencySubNav = document.getElementById("subnav--agency").querySelectorAll(".subnav__link");
+    agencySubNav = document.getElementById("subnav--agency").querySelectorAll(".subnav__link"),
+    collectionSubNav = document.getElementById("subnav--collection").querySelectorAll(".subnav__link");
 
 
 export function setContentHTML(section: number, text: string) {
     if (section === SiteArea.agency_mask) {
-        agencyEl.className = "content__inner";
         agencyEl.innerHTML = text;
         let photos = agencyEl.querySelectorAll(".staff__photo");
         for (let i = 0, j = 4; i < j; ++i) {
@@ -42,7 +41,6 @@ export function setContentHTML(section: number, text: string) {
                 Date.now() + i;
         }
     } else {
-        collectionEl.className = "content__inner";
         collectionEl.innerHTML = text;
     }
     contentReady |= section;
@@ -61,7 +59,7 @@ export function navToSection(section: number) {
 
 export function scrollToSlide(slide: number) {
     nextSlide = slide;
-    targetScrollY = nextSlide * slideHeight;
+    targetScrollY = nextSlide * height;
     changes |= SectionChange.slide_and_subnav;
     scrollY = contentEl.scrollTop;
     prevScrollY = scrollY;
@@ -187,14 +185,13 @@ function handleTransition() {
 function handleResize() {
     width = window.innerWidth;
     height = window.innerHeight;
-    slideHeight = height - NavMeasure.top_btm_space;
 }
 
 function handleScroll() {
     prevScrollY = scrollY;
     scrollY = contentEl.scrollTop;
     scrollUp = scrollY < prevScrollY;
-    nextSlide = (scrollY / slideHeight) >>> 0;
+    nextSlide = (scrollY / height) >>> 0;
     if (nextSlide !== markedSlide) updateSubnav();
 }
 
@@ -202,11 +199,11 @@ function handleScroll() {
 function onAfterScroll() {
     var dist;
     if (scrollUp) {
-        dist = scrollY - (nextSlide * slideHeight);
-        if (dist/slideHeight < 0.5) scrollToSlide(nextSlide);
+        dist = scrollY - (nextSlide * height);
+        if (dist/height < 0.5) scrollToSlide(nextSlide);
     } else if (nextSlide < 3) {
-        dist = ((nextSlide + 1) * slideHeight) - scrollY;
-        if (dist/slideHeight < 0.5) scrollToSlide(nextSlide + 1);
+        dist = ((nextSlide + 1) * height) - scrollY;
+        if (dist/height < 0.5) scrollToSlide(nextSlide + 1);
     }
 }
 
@@ -216,7 +213,8 @@ function updateSubnav() {
             agencySubNav[markedSlide].className = "subnav__link";
             agencySubNav[nextSlide].className = "subnav__link subnav__link--active";
         } else if (prevSection === SiteArea.collection) {
-            // same with collection subnav
+            collectionSubNav[markedSlide].className = "subnav__link";
+            collectionSubNav[nextSlide].className = "subnav__link subnav__link--active";
         }
         markedSlide = nextSlide;
     }

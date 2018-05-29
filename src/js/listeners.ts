@@ -61,11 +61,11 @@ function handleClick(event) {
                 showDetails(event.target.getAttribute("data-product") | 0);
                 break;
 
-            case ClickAction.agency_about:
-            case ClickAction.agency_services:
-            case ClickAction.agency_work:
-            case ClickAction.agency_team:
-                scrollToSlide(action - ClickAction.agency_nav_offset);
+            case ClickAction.subnav_1:
+            case ClickAction.subnav_1:
+            case ClickAction.subnav_2:
+            case ClickAction.subnav_3:
+                scrollToSlide(action - ClickAction.subnav_offset);
                 markChange(ChangeHandler.section_mask);
                 break;
         }

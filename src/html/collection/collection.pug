@@ -1,9 +1,17 @@
 - var n = 0
-.slide(style=`top:${n++}00%`)
-    include s1_campaign
-.slide(style=`top:${n++}00%`)
-    include s2_products
-.slide(style=`top:${n++}00%`)
-    include s3_story
-.slide(style=`top:${n++}00%`)
-    include s4_press
+.video-wrap
+    video(playsinline autoplay muted loop poster="media/vid-c.jpg" class="video")
+        source(src="media/vid-c.mp4" type="video/mp4")
+        source(src="media/vid-c.webm" type="video/webm")
+.landing
+    .slide__inner
+        include s1_campaign
+.slide(style=`top:${++n}00%`)
+    .slide__inner
+        include s2_products
+.slide(style=`top:${++n}00%`)
+    .slide__inner
+        include s3_story
+.slide(style=`top:${++n}00%`)
+    .slide__inner
+        include s4_press
