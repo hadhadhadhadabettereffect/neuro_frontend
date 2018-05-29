@@ -1,10 +1,3 @@
-.rotate {
-    position: absolute;
-    top: 50%;
-    transform-origin: left center;
-    transform: rotate(-90deg);
-}
-
 #nav_home {
     display: block;
     height: $height__nav;
@@ -59,9 +52,12 @@
 }
 
 .nav__link--side {
-    @extend .nav__link;
-    position: absolute;
-    left: calc($width__nav-link/-2);
+    cursor: pointer;
+    margin: 0;
+
+    &:hover {
+        color: $font-color__link--hover;
+    }
 
     &.nav__link--active {
         cursor: default;
@@ -73,18 +69,18 @@
 
 .subnav {
     position: absolute;
-    text-align: center;
+    display: flex;
+    flex-direction: row;
+    top: 50%;
+    transform: rotate(-90deg) translateY(-175px);
+    transform-origin: bottom;
     font-size: $font-size__subnav;
-    left: calc($width__subnav__item / -2);
-    display: none;
+    width: 460px;
 }
 
 .subnav__item {
-    position: absolute;
-    display: block;
-    width: $width__subnav__item;
-    height: $height__nav;
-    line-height: $height__nav;
+    width: 20%;
+    text-align: center;
 }
 
 .subnav__link {
@@ -93,6 +89,7 @@
     letter-spacing: 0.25em;
     padding: 2px 2px 2px 4px;
     cursor: pointer;
+    display: block;
 
     &:hover {
         color: $font-color__link--hover;

@@ -10,8 +10,12 @@ $padding__col: 50px;
 $height__nav: 75px;
 $width__nav-link: 150px;
 $padding__nav-link: 25px;
+
 $width__subnav: 500px;
 $width__subnav__item: 100px;
+
+$height__subnav: 460px;
+$width__subnav: 40px;
 
 $height__contact: 500px;
 $padding__contact: 35px 40px;
