@@ -29,7 +29,8 @@ var wrapEl = document.getElementById("wrap"),
     agencyEl = document.createElement("div"),
     collectionEl = document.createElement("div"),
     agencySubNav = document.getElementById("subnav--agency").querySelectorAll(".subnav__link"),
-    collectionSubNav = document.getElementById("subnav--collection").querySelectorAll(".subnav__link");
+    collectionSubNav = document.getElementById("subnav--collection").querySelectorAll(".subnav__link"),
+    homeVideo = document.getElementById("home").querySelector("video");
 
 
 export function setContentHTML(section: number, text: string) {
@@ -128,11 +129,11 @@ function initTransition() {
     if (prevSection === SiteArea.agency) {
         startX = 0;
         moveX = -width;
-        contentEl.querySelector("video").pause();
     } else if (prevSection === SiteArea.collection) {
         startX = 0;
         moveX = width;
     } else {
+        homeVideo.pause();
         wrapEl.style.display = "block";
         // if coming from home, move from off screen to 0
         if (activeSection === SiteArea.agency) {
@@ -149,7 +150,6 @@ function initTransition() {
             contentEl.appendChild(activeSection === SiteArea.agency ?
                 agencyEl : collectionEl);
             activeContent = activeSection;
-            contentEl.querySelector("video").play();
         }
     }
     startTime = performance.now();
@@ -163,13 +163,16 @@ function handleTransition() {
         if (activeSection === SiteArea.home) {
             changes ^= SectionChange.navigate_mask;
             wrapEl.style.display = "none";
+            homeVideo.play();
         }
         // done if coming from home
         else if (prevSection === SiteArea.home) {
             changes ^= SectionChange.navigate_mask;
             contentEl.style.overflowY = "auto";
-            wrapEl.style.left = "0";
+            wrapEl.style.transform = "translateX(0)";
             prevSection = activeSection;
+            homeVideo.pause();
+            contentEl.querySelector("video").play();
         }
         // if coming from one side and moving to the other
         // start moving towards other side after moving from prevSide
@@ -178,7 +181,7 @@ function handleTransition() {
             initMove = true;
         }
     } else {
-        wrapEl.style.left = (startX + (moveX * delta)) + "px";
+        wrapEl.style.transform = "translateX(" + (startX + (moveX * delta)) + "px)";
     }
 }
 
