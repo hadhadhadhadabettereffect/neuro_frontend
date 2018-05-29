@@ -34,16 +34,8 @@ export function updateNav(): boolean {
         changes ^= SiteArea.agency_mask;
         if (activeLink === SiteArea.agency) {
             agencyLinks[2].className = "nav__link--side nav__link--active";
-            // agencyLinks[0].style.left = NavMeasure.link_a + "px";
-            // agencyLinks[1].style.left = NavMeasure.link_b + "px";
-            // agencyLinks[2].style.left = NavMeasure.link_c + "px";
-            // agencyLinks[3].style.left = NavMeasure.link_d + "px";
         } else {
             agencyLinks[2].className = "nav__link--side";
-            // agencyLinks[0].style.left = "0";
-            // agencyLinks[1].style.left = "0";
-            // agencyLinks[2].style.left = "0";
-            // agencyLinks[3].style.left = "0";
         }
     }
     if (changes & SiteArea.collection_mask) {
