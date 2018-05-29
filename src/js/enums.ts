@@ -13,6 +13,7 @@ export const enum ClickAction {
     agency,
     collection,
     contact,
+    product,
 
     agency_about,
     agency_services,

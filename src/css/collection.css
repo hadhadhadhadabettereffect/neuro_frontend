@@ -1,5 +1,9 @@
 $width__product-thumb: 140px;
 
+#campaign {
+    background: url(/media/vid-b.jpg) no-repeat;
+}
+
 #products {
     display: grid;
     grid-gap: 10px;

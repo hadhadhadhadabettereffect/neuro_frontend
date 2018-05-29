@@ -11,11 +11,12 @@ import {
     navToSection,
     scrollToSlide
 } from "./sections";
+import { showDetails } from "./details";
+
 
 document.body.addEventListener("click", handleClick, false);
 window.addEventListener("resize", handleResize, false);
 document.getElementById("content").addEventListener("scroll", handleScroll, false);
-
 
 window.onpopstate = function(event) {
     if (event.state.hasOwnProperty("page")) {
@@ -54,6 +55,10 @@ function handleClick(event) {
             case ClickAction.contact:
                 toggleContact();
                 markChange(ChangeHandler.contact_mask);
+                break;
+
+            case ClickAction.product:
+                showDetails(event.target.getAttribute("data-product") | 0);
                 break;
 
             case ClickAction.agency_about:

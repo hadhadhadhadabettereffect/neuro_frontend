@@ -35,10 +35,10 @@ img {
 
 #content {
     position: absolute;
-    top: $height__nav;
-    bottom: $height__nav;
-    left: $height__nav;
-    right: $height__nav;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
     -ms-overflow-style: none;
 }
 
@@ -49,9 +49,10 @@ img {
 }
 
 .slide {
-    width: 100%;
-    height: 100%;
     position: absolute;
+    left: $height__nav;
+    right: $height__nav;
+    padding: $height__nav 0;
 }
 
 .slide__inner {
@@ -92,8 +93,15 @@ img {
     left: 50%;
 }
 
-#homevid {
-    position: fixed;
+.video-wrap {
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+    background: #000;
+}
+
+.video {
+    position: absolute;
     top: 50%;
     left: 50%;
     min-width: 100%;
@@ -102,8 +110,11 @@ img {
     height: auto;
     z-index: -100;
     transform: translateX(-50%) translateY(-50%);
-    background: url(/images/neuro-bg-med.jpg) no-repeat;
     background-size: cover;
+}
+
+#home {
+    background: url(/media/vid-a.jpg) no-repeat;
 }
 
 @media only screen and (max-width: $breakpoint-1) {

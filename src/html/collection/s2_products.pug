@@ -2,5 +2,5 @@
 - var productCount = 20
 
 #products
-    while n++ < productCount
-        .product-thumb
+    while n < productCount
+        .product-thumb(data-action= clickActions.product data-product= n++)

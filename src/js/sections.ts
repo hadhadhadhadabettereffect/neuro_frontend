@@ -130,6 +130,7 @@ function initTransition() {
     if (prevSection === SiteArea.agency) {
         startX = 0;
         moveX = -width;
+        contentEl.querySelector("video").pause();
     } else if (prevSection === SiteArea.collection) {
         startX = 0;
         moveX = width;
@@ -150,6 +151,7 @@ function initTransition() {
             contentEl.appendChild(activeSection === SiteArea.agency ?
                 agencyEl : collectionEl);
             activeContent = activeSection;
+            contentEl.querySelector("video").play();
         }
     }
     startTime = performance.now();
