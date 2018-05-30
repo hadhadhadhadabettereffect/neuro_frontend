@@ -1,17 +1,14 @@
-import {
-    ClickAction,
-    ChangeHandler,
-    SectionChange
-} from "./enums";
+import { ClickAction } from "./constants/actions";
+import { ChangeHandler,
+        ContentChange } from "./constants/masks";
 import { clickNavLink } from "./nav";
 import { toggleContact } from "./contact";
 import { markChange } from "./changeloop";
-import {
-    markSectionEvent,
-    navToSection,
-    scrollToSlide
-} from "./sections";
 import { showDetails } from "./details";
+import { navToSection } from "./content";
+import { markSlidesChange,
+        scrollToSlide,
+        setActiveSection } from "./slides";
 
 
 document.body.addEventListener("click", handleClick, false);
@@ -23,19 +20,18 @@ window.onpopstate = function(event) {
         let p = event.state.page;
         if (clickNavLink(p)) {
             navToSection(p);
-            markChange(ChangeHandler.nav_section_mask);
+            markChange(ChangeHandler.page);
         }
     }
 };
 
 function handleResize() {
-    markSectionEvent(SectionChange.resize_mask);
-    markChange(ChangeHandler.section_mask);
+    markChange(ChangeHandler.resize);
 }
 
 function handleScroll() {
-    markSectionEvent(SectionChange.scroll_mask);
-    markChange(ChangeHandler.section_mask);
+    markSlidesChange(ContentChange.scroll);
+    markChange(ChangeHandler.slides);
 }
 
 function handleClick(event) {
@@ -48,13 +44,14 @@ function handleClick(event) {
             case ClickAction.collection:
                 if (clickNavLink(action)) {
                     navToSection(action);
-                    markChange(ChangeHandler.nav_section_mask);
+                    setActiveSection(action);
+                    markChange(ChangeHandler.page);
                 }
                 break;
 
             case ClickAction.contact:
                 toggleContact();
-                markChange(ChangeHandler.contact_mask);
+                markChange(ChangeHandler.popunder);
                 break;
 
             case ClickAction.product:
@@ -66,7 +63,7 @@ function handleClick(event) {
             case ClickAction.subnav_2:
             case ClickAction.subnav_3:
                 scrollToSlide(action - ClickAction.subnav_offset);
-                markChange(ChangeHandler.section_mask);
+                markChange(ChangeHandler.slides);
                 break;
         }
     }

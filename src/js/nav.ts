@@ -1,4 +1,6 @@
-import { SiteArea, NavMeasure } from "./enums";
+import { NavMeasure } from "./constants/options";
+import { SiteArea } from "./constants/masks";
+
 
 const pageTitles = [
     "Neuro Studio", "Neuro Studio | Agency", "Neuro Studio | Collection"

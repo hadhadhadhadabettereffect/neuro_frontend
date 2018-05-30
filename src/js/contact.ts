@@ -1,3 +1,7 @@
+import { NavMeasure,
+        TransitionMS } from "./constants/options";
+
+
 const enum TimeUnits {
     hoursPerDay = 24,
     minsPerHour = 60,
@@ -6,11 +10,6 @@ const enum TimeUnits {
     msPerSec = 1000,
     msPerMin = msPerSec * secsPerMin,
     msPerHour = msPerMin * minsPerHour,
-}
-
-const enum ContactForm {
-    transitionMs = 280,
-    elTop = 75,
 }
 
 const contactEl = document.createElement("div");
@@ -29,12 +28,17 @@ var windowHeight = 0;
 var yOffset = 0;
 var elTop = 0;
 
-export function setContactHTML(text: string) {
-    contactEl.id = "contact";
-    contactEl.innerHTML = text;
-    clockEl = contactEl.querySelector("#clock");
-    awaitingHTML = false;
-}
+var fetchContact = new XMLHttpRequest();
+fetchContact.onreadystatechange = function () {
+    if (fetchContact.readyState === XMLHttpRequest.DONE) {
+        contactEl.id = "contact";
+        contactEl.innerHTML = fetchContact.responseText;
+        clockEl = contactEl.querySelector("#clock");
+        awaitingHTML = false;
+    }
+};
+fetchContact.open("GET", "/contact.html", true);
+fetchContact.send();
 
 export function toggleContact() {
     if (!transition) {
@@ -44,11 +48,11 @@ export function toggleContact() {
         windowHeight = window.innerHeight;
         if (visible) {
             elTop = windowHeight;
-            yOffset = ContactForm.elTop - windowHeight;
+            yOffset = NavMeasure.nav_height - windowHeight;
             appendEl = true;
         } else {
-            elTop = ContactForm.elTop;
-            yOffset = windowHeight - ContactForm.elTop;
+            elTop = NavMeasure.nav_height;
+            yOffset = windowHeight - NavMeasure.nav_height;
         }
         startTime = performance.now();
     }
@@ -74,12 +78,12 @@ export function updateContact(): boolean {
 function finalizeTransition () {
     transition = false;
     if (visible)
-        contactEl.style.top = ContactForm.elTop + "px";
+        contactEl.style.top = NavMeasure.nav_height + "px";
     else document.body.removeChild(contactEl);
 }
 
 function showHide () {
-    delta = (performance.now() - startTime) / ContactForm.transitionMs;
+    delta = (performance.now() - startTime) / TransitionMS.popunder;
     contactEl.style.top = (elTop + (yOffset * delta) >>> 0) + "px";
     if (appendEl) {
         appendEl = false;

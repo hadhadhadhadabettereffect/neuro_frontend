@@ -97,7 +97,7 @@ if (config.css.minify) {
  */
 gulp.task("html", function () {
     // get ClickAction enum as dictionary
-    pugOptions.data.clickActions = requireTs("src/js/enums.ts").ClickAction;
+    pugOptions.data.clickActions = requireTs("src/js/constants/actions.ts").ClickAction;
     for (let srcFile of config.html.src) {
         gulp.src(config.html.src)
             .pipe(pug(pugOptions))

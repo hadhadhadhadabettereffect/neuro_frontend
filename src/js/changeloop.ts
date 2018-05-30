@@ -1,7 +1,10 @@
-import { ChangeHandler } from "./enums";
+import { ChangeHandler } from "./constants/masks";
 import { updateNav } from "./nav";
-import { updateSections } from "./sections";
 import { updateContact } from "./contact";
+import { updateContent,
+        updateWidth } from "./content";
+import { updateSlides,
+        updateHeight } from "./slides";
 
 var changes = 0;
 
@@ -18,17 +21,26 @@ function applyUpdates() {
     if (changes) {
         // only applying changes to one handler at a time
         // so if contact is active, nav and sections wont change
-        if (changes & ChangeHandler.contact_mask) {
+        if (changes & ChangeHandler.popunder) {
             if (updateContact())
-                changes ^= ChangeHandler.contact_mask;
+                changes ^= ChangeHandler.popunder;
         }
-        else if (changes & ChangeHandler.nav_mask) {
+        else if (changes & ChangeHandler.navigation) {
             if (updateNav())
-                changes ^= ChangeHandler.nav_mask;
+                changes ^= ChangeHandler.navigation;
         }
-        else if (changes & ChangeHandler.section_mask) {
-            if (updateSections())
-                changes ^= ChangeHandler.section_mask;
+        else if (changes & ChangeHandler.content) {
+            if (updateContent())
+                changes ^= ChangeHandler.content;
+        }
+        else if (changes & ChangeHandler.slides) {
+            if (updateSlides())
+                changes ^= ChangeHandler.slides;
+        }
+        else if (changes & ChangeHandler.resize) {
+            changes ^= ChangeHandler.resize;
+            updateWidth();
+            updateHeight();
         }
     }
 }
