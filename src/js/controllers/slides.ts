@@ -121,16 +121,20 @@ function updateSubnav() {
         if (activeSubnav !== SiteArea.home) {
             navLinks[activeSubnav].className = "nav__link--side";
             subnavs[activeSubnav].style.transform = transformHidden;
+            // clear marked subnav item
+            subnavLinks[activeSubnav][markedSlide].className = "subnav__link";
         }
         if (activeSection !== SiteArea.home) {
             navLinks[activeSection].className = "nav__link--side nav__link--active";
             subnavs[activeSection].style.transform = transformVis;
+            // set first subnav item as active
+            subnavLinks[activeSection][0].className = "subnav__link subnav__link--active";
         }
         activeSubnav = activeSection;
     }
 
     // set active subnav item after scroll or link click
-    if (markedSlide !== nextSlide && activeSubnav !== SiteArea.home) {
+    else if (markedSlide !== nextSlide && activeSubnav !== SiteArea.home) {
         subnavLinks[activeSubnav][markedSlide].className = "subnav__link";
         subnavLinks[activeSubnav][nextSlide].className = "subnav__link subnav__link--active";
         markedSlide = nextSlide;

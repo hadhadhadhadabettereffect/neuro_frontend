@@ -104,6 +104,7 @@ function initTransition() {
             contentEl.appendChild(activeSection === SiteArea.agency ?
                 agencyEl : collectionEl);
             activeContent = activeSection;
+            contentEl.scrollTop = 0;
         }
     }
     startTime = performance.now();
