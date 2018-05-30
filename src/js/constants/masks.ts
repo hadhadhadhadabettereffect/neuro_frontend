@@ -1,27 +1,25 @@
 export const enum SiteArea {
-    home,
     agency,
     collection,
+    home,
 
-    home_mask = 1 << home,
     agency_mask = 1 << agency,
     collection_mask = 1 << collection,
+    home_mask = 1 << home,
 }
 
 export const enum ChangeHandler {
     _slides,
-    _navigation,
-    _content,
-    _popunder,
+    _page,
+    _contact,
     _resize,
 
     slides = 1 << _slides,
-    navigation = 1 << _navigation,
-    content = 1 << _content,
-    popunder = 1 << _popunder,
+    page = 1 << _page,
+    contact = 1 << _contact,
     resize = 1 << _resize,
 
-    page = navigation | content | slides,
+    navigate = page | slides,
 }
 
 export const enum ListenerEvent {

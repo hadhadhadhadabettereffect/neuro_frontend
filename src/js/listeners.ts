@@ -1,7 +1,6 @@
 import { ClickAction } from "./constants/actions";
 import { ChangeHandler,
         ContentChange } from "./constants/masks";
-import { clickNavLink } from "./controllers/nav";
 import { toggleContact } from "./controllers/contact";
 import { showDetails } from "./controllers/details";
 import { navToSection } from "./controllers/page";
@@ -18,9 +17,9 @@ document.getElementById("content").addEventListener("scroll", handleScroll, fals
 window.onpopstate = function(event) {
     if (event.state.hasOwnProperty("page")) {
         let p = event.state.page;
-        if (clickNavLink(p)) {
-            navToSection(p);
-            markChange(ChangeHandler.page);
+        if (navToSection(p)) {
+            setActiveSection(p);
+            markChange(ChangeHandler.navigate);
         }
     }
 };
@@ -42,16 +41,15 @@ function handleClick(event) {
             case ClickAction.home:
             case ClickAction.agency:
             case ClickAction.collection:
-                if (clickNavLink(action)) {
-                    navToSection(action);
+                if (navToSection(action)) {
                     setActiveSection(action);
-                    markChange(ChangeHandler.page);
+                    markChange(ChangeHandler.navigate);
                 }
                 break;
 
             case ClickAction.contact:
                 toggleContact();
-                markChange(ChangeHandler.popunder);
+                markChange(ChangeHandler.contact);
                 break;
 
             case ClickAction.product:

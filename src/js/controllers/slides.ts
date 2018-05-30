@@ -1,9 +1,26 @@
 import { SiteArea, ContentChange } from "../constants/masks";
 import { TransitionMS } from "../constants/options";
 
-
-var changes = 0,
-    activeSection = 0,
+const transformVis = "rotate(-90deg) translateY(-175px) scaleX(1)";
+const transformHidden = "rotate(-90deg) translateY(-175px) scaleX(0)";
+const contentEl = document.getElementById("content");
+const navLinks = [
+    document.getElementById("nav--left").querySelector("h2"),
+    document.getElementById("nav--right").querySelector("h2")
+];
+const subnavs = [
+    // SiteArea.agency
+    document.getElementById("subnav--agency"),
+    // SiteArea.collection
+    document.getElementById("subnav--collection")
+];
+const subnavLinks = [
+    document.getElementById("subnav--agency").querySelectorAll(".subnav__link"),
+    document.getElementById("subnav--collection").querySelectorAll(".subnav__link")
+];
+let changes = 0,
+    activeSection = SiteArea.home,
+    activeSubnav = SiteArea.home,
     nextSlide = 0,
     markedSlide = 0,
     scrollY = 0,
@@ -11,11 +28,8 @@ var changes = 0,
     targetScrollY = 0,
     scrollDist = 0,
     height = window.innerHeight;
-var startTime, delta = 0;
-var scrollUp = true;
-var contentEl = document.getElementById("content"),
-    agencySubNav = document.getElementById("subnav--agency").querySelectorAll(".subnav__link"),
-    collectionSubNav = document.getElementById("subnav--collection").querySelectorAll(".subnav__link");
+let startTime, delta = 0;
+let scrollUp = false;
 
 export function updateHeight() {
     height = window.innerHeight;
@@ -102,14 +116,23 @@ function onAfterScroll() {
 }
 
 function updateSubnav() {
-    if (markedSlide !== nextSlide) {
-        if (activeSection === SiteArea.agency) {
-            agencySubNav[markedSlide].className = "subnav__link";
-            agencySubNav[nextSlide].className = "subnav__link subnav__link--active";
-        } else if (activeSection === SiteArea.collection) {
-            collectionSubNav[markedSlide].className = "subnav__link";
-            collectionSubNav[nextSlide].className = "subnav__link subnav__link--active";
+    // show/hide subnavs on nav
+    if (activeSection !== activeSubnav) {
+        if (activeSubnav !== SiteArea.home) {
+            navLinks[activeSubnav].className = "nav__link--side";
+            subnavs[activeSubnav].style.transform = transformHidden;
         }
+        if (activeSection !== SiteArea.home) {
+            navLinks[activeSection].className = "nav__link--side nav__link--active";
+            subnavs[activeSection].style.transform = transformVis;
+        }
+        activeSubnav = activeSection;
+    }
+
+    // set active subnav item after scroll or link click
+    if (markedSlide !== nextSlide && activeSubnav !== SiteArea.home) {
+        subnavLinks[activeSubnav][markedSlide].className = "subnav__link";
+        subnavLinks[activeSubnav][nextSlide].className = "subnav__link subnav__link--active";
         markedSlide = nextSlide;
     }
 }

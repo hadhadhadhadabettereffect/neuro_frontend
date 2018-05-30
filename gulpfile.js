@@ -146,9 +146,9 @@ gulp.task("connect", function () {
  * watch for changes in ./src, bundle and livereload
  */
 gulp.task("watch", ["build"], function () {
-    gulp.watch(["./src/js/*.ts"], ["js"]);
+    gulp.watch(["./src/js/*.ts", "./src/js/**/*.ts"], ["js"]);
     gulp.watch(["./src/css/*.css"], ["css"]);
-    gulp.watch(["./src/html/*.pug"], ["html"]);
+    gulp.watch(["./src/html/*.pug", "./src/html/**/*.pug"], ["html"]);
 });
 
 /**

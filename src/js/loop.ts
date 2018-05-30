@@ -1,5 +1,4 @@
 import { ChangeHandler } from "./constants/masks";
-import { updateNav } from "./controllers/nav";
 import { updateContact } from "./controllers/contact";
 import { updateContent,
         updateWidth } from "./controllers/page";
@@ -21,17 +20,13 @@ function applyUpdates() {
     if (changes) {
         // only applying changes to one handler at a time
         // so if contact is active, nav and sections wont change
-        if (changes & ChangeHandler.popunder) {
+        if (changes & ChangeHandler.contact) {
             if (updateContact())
-                changes ^= ChangeHandler.popunder;
+                changes ^= ChangeHandler.contact;
         }
-        else if (changes & ChangeHandler.navigation) {
-            if (updateNav())
-                changes ^= ChangeHandler.navigation;
-        }
-        else if (changes & ChangeHandler.content) {
+        else if (changes & ChangeHandler.page) {
             if (updateContent())
-                changes ^= ChangeHandler.content;
+                changes ^= ChangeHandler.page;
         }
         else if (changes & ChangeHandler.slides) {
             if (updateSlides())

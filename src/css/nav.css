@@ -7,7 +7,7 @@
     background-position-y: center;
 }
 
-.nav--top {
+#nav--top {
     position: fixed;
     top: 0;
     left: 0;
@@ -15,7 +15,7 @@
     height: $height__nav;
 }
 
-.nav--left {
+#nav--left {
     position: fixed;
     top: 0;
     bottom: 0;
@@ -23,7 +23,7 @@
     width: $height__nav;
 }
 
-.nav--right {
+#nav--right {
     position: fixed;
     top: 0;
     right: 0;
@@ -31,7 +31,7 @@
     width: $height__nav;
 }
 
-.nav--bottom {
+#nav--bottom {
     position: fixed;
     left: 0;
     right: 0;
@@ -52,8 +52,14 @@
 }
 
 .nav__link--side {
-    cursor: pointer;
+    position: absolute;
+    top: 50%;
+    width: 90px;
     margin: 0;
+    transform: rotate(-90deg) translateX(-10px);
+    transform-origin: center;
+    text-align: center;
+    cursor: pointer;
 
     &:hover {
         color: $font-color__link--hover;
@@ -71,17 +77,19 @@
     position: absolute;
     display: flex;
     flex-direction: row-reverse;
+    width: 460px;
     top: 50%;
-    transform: rotate(-90deg) translateY(-175px);
+    transform: rotate(-90deg) translateY(-175px) scaleX(0);
     transform-origin: bottom;
     font-size: $font-size__subnav;
-    width: 460px;
+    transition: transform 350ms cubic-bezier(0.5, -0.25, 0.25, 1.5);
 }
 
 .subnav__item {
     width: 20%;
     text-align: center;
 }
+
 
 .subnav__link {
     font-size: 0.4rem;

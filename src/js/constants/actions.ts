@@ -1,7 +1,8 @@
+// agency, collection, home should match masks.SiteArea
 export const enum ClickAction {
-    home,
     agency,
     collection,
+    home,
     contact,
     product,
 

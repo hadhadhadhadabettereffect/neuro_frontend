@@ -2,6 +2,11 @@ import { SiteArea } from "../constants/masks";
 import { TransitionMS } from "../constants/options";
 
 
+const pageTitles = [
+    "Neuro Studio", "Neuro Studio | Agency", "Neuro Studio | Collection"
+];
+const pageUrls = process.env.NODE_ENV === "production" ?
+    ["/", "/agency", "/collection"] : ["/","/","/"];
 var width = window.innerWidth,
     startX = 0,
     moveX = 0;
@@ -41,15 +46,26 @@ fetchCollection.onreadystatechange = function () {
 fetchCollection.open("GET", "/collection.html", true);
 fetchCollection.send();
 
+// replace state on init for popstate data
+history.replaceState({
+    page: activeSection
+}, pageTitles[activeSection], pageUrls[activeSection]);
+
 export function updateWidth() {
     width = window.innerWidth;
 }
 
-export function navToSection(section: number) {
+export function navToSection(section: number): boolean {
+    if (section === activeSection) return false;
     prevSection = activeSection;
     activeSection = section;
     initMove = true;
     isAnimating = true;
+
+    history.pushState({
+        page: section
+    }, pageTitles[section], pageUrls[section]);
+    return true;
 }
 
 export function updateContent(): boolean {
