@@ -1,10 +1,10 @@
 import { ChangeHandler } from "./constants/masks";
-import { updateNav } from "./nav";
-import { updateContact } from "./contact";
+import { updateNav } from "./controllers/nav";
+import { updateContact } from "./controllers/contact";
 import { updateContent,
-        updateWidth } from "./content";
+        updateWidth } from "./controllers/page";
 import { updateSlides,
-        updateHeight } from "./slides";
+        updateHeight } from "./controllers/slides";
 
 var changes = 0;
 

@@ -1,14 +1,14 @@
 import { ClickAction } from "./constants/actions";
 import { ChangeHandler,
         ContentChange } from "./constants/masks";
-import { clickNavLink } from "./nav";
-import { toggleContact } from "./contact";
-import { markChange } from "./changeloop";
-import { showDetails } from "./details";
-import { navToSection } from "./content";
+import { clickNavLink } from "./controllers/nav";
+import { toggleContact } from "./controllers/contact";
+import { showDetails } from "./controllers/details";
+import { navToSection } from "./controllers/page";
 import { markSlidesChange,
         scrollToSlide,
-        setActiveSection } from "./slides";
+        setActiveSection } from "./controllers/slides";
+import { markChange } from "./loop";
 
 
 document.body.addEventListener("click", handleClick, false);

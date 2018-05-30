@@ -1,5 +1,5 @@
 import { NavMeasure,
-        TransitionMS } from "./constants/options";
+        TransitionMS } from "../constants/options";
 
 
 const enum TimeUnits {

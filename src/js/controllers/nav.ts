@@ -1,5 +1,5 @@
-import { NavMeasure } from "./constants/options";
-import { SiteArea } from "./constants/masks";
+import { NavMeasure } from "../constants/options";
+import { SiteArea } from "../constants/masks";
 
 
 const pageTitles = [

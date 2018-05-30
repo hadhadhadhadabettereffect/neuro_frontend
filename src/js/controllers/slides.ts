@@ -1,5 +1,5 @@
-import { SiteArea, ContentChange } from "./constants/masks";
-import { TransitionMS } from "./constants/options";
+import { SiteArea, ContentChange } from "../constants/masks";
+import { TransitionMS } from "../constants/options";
 
 
 var changes = 0,

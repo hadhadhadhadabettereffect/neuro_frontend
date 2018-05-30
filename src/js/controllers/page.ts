@@ -1,5 +1,5 @@
-import { SiteArea } from "./constants/masks";
-import { TransitionMS } from "./constants/options";
+import { SiteArea } from "../constants/masks";
+import { TransitionMS } from "../constants/options";
 
 
 var width = window.innerWidth,
