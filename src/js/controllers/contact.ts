@@ -77,14 +77,13 @@ export function updateContact(): boolean {
 
 function finalizeTransition () {
     transition = false;
-    if (visible)
-        contactEl.style.top = NavMeasure.nav_height + "px";
+    if (visible) contactEl.style.transform = "";
     else document.body.removeChild(contactEl);
 }
 
 function showHide () {
     delta = (performance.now() - startTime) / TransitionMS.popunder;
-    contactEl.style.top = (elTop + (yOffset * delta) >>> 0) + "px";
+    contactEl.style.transform = "translateY(" + (elTop + (yOffset * delta) >>> 0) + "px)";
     if (appendEl) {
         appendEl = false;
         document.body.appendChild(contactEl);

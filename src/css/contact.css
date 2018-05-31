@@ -1,8 +1,9 @@
 #contact {
     position: fixed;
+    top: $height__nav;
     left: 0;
     right: 0;
-    height: 100%;
+    bottom: 0;
     background: $background__contact;
     overflow-y: auto;
 }
