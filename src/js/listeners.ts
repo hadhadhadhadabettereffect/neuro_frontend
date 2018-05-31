@@ -2,7 +2,7 @@ import { ClickAction } from "./constants/actions";
 import { ChangeHandler,
         ContentChange } from "./constants/masks";
 import { toggleContact } from "./controllers/contact";
-import { showDetails } from "./controllers/details";
+import { showDetails } from "./controllers/products";
 import { navToSection } from "./controllers/page";
 import { markSlidesChange,
         scrollToSlide,

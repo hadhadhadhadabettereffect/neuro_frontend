@@ -5,6 +5,7 @@ $width__product-thumb: 140px;
     grid-gap: 10px;
     grid-auto-flow: column;
     grid-template-rows: $width__product-thumb $width__product-thumb $width__product-thumb;
+    overflow-x: auto;
 }
 
 .product-thumb {
@@ -12,4 +13,62 @@ $width__product-thumb: 140px;
     height: $width__product-thumb;
     border: 1px solid #333;
     cursor: pointer;
+}
+
+#details {
+    position: fixed;
+    top: $height__nav;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: black;
+}
+
+#details__inner {
+    width: $width__content;
+    max-width: 100%;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 50%;
+    grid-template-rows: 50px auto 200px;
+}
+
+#details__next {
+
+}
+
+#details__prev {
+
+}
+
+.infotoggle {
+
+}
+
+.infotoggle--active {
+    border-top: 1px solid;
+}
+
+#product__image {
+
+}
+
+#product__title {
+
+}
+
+#product__description {
+
+}
+
+#product__materials {
+
+}
+
+#product__gallery {
+
+}
+
+#product__order {
+
 }
