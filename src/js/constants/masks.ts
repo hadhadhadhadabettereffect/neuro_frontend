@@ -2,10 +2,6 @@ export const enum SiteArea {
     agency,
     collection,
     home,
-
-    agency_mask = 1 << agency,
-    collection_mask = 1 << collection,
-    home_mask = 1 << home,
 }
 
 export const enum ChangeHandler {
@@ -43,4 +39,14 @@ export const enum ContentChange {
 
     jump_and_subnav = jump | subnav,
     not_jump_subnav = ~jump_and_subnav,
+}
+
+export const enum DetailsUpdate {
+    _active,
+    _data,
+    _gallery,
+
+    active = 1 << _active,
+    data = 1 << _data,
+    gallery = 1 << _gallery,
 }
