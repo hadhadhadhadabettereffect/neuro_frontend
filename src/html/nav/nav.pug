@@ -1,10 +1,10 @@
 #nav--top
-    a(id="nav_home" class="nav__link" data-action= clickActions.home)
+    a(id="nav_home" class="nav__link" data-action= clickActions.nav data-id= groups.LandingPage.home)
 #nav--left
-    h2(class="nav__link--side" data-action= clickActions.agency) AGENCY
+    h2(class="nav__link--side" data-action= clickActions.nav data-id= groups.LandingPage.agency) AGENCY
     include agency_subnav
 #nav--right
-    h2(class="nav__link--side" data-action= clickActions.collection) COLLECTION
+    h2(class="nav__link--side" data-action= clickActions.nav data-id= groups.LandingPage.collection) COLLECTION
     include collection_subnav
 #nav--bottom
     h2(id="nav_contact" class="nav__link" data-action= clickActions.contact) CONTACT

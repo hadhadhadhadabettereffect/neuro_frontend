@@ -1,17 +1,13 @@
-export const enum SiteArea {
-    agency,
-    collection,
-    home,
-}
-
 export const enum ChangeHandler {
     _slides,
     _page,
+    _product,
     _contact,
     _resize,
 
     slides = 1 << _slides,
     page = 1 << _page,
+    product = 1 << _product,
     contact = 1 << _contact,
     resize = 1 << _resize,
 
@@ -45,8 +41,10 @@ export const enum DetailsUpdate {
     _active,
     _data,
     _gallery,
+    _info,
 
     active = 1 << _active,
     data = 1 << _data,
     gallery = 1 << _gallery,
+    info = 1 << _info,
 }

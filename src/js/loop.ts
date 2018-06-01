@@ -4,6 +4,8 @@ import { updateContent,
         updateWidth } from "./controllers/page";
 import { updateSlides,
         updateHeight } from "./controllers/slides";
+import { updateProductDetails } from "./controllers/products";
+
 
 var changes = 0;
 
@@ -27,6 +29,10 @@ function applyUpdates() {
         else if (changes & ChangeHandler.page) {
             if (updateContent())
                 changes ^= ChangeHandler.page;
+        }
+        else if (changes & ChangeHandler.product) {
+            if (updateProductDetails())
+                changes ^= ChangeHandler.product;
         }
         else if (changes & ChangeHandler.slides) {
             if (updateSlides())

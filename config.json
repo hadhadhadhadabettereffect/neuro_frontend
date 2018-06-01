@@ -3,7 +3,8 @@
         "src": ["src/html/index.pug",
             "src/html/collection/collection.pug",
             "src/html/agency/agency.pug",
-            "src/html/contact.pug"
+            "src/html/contact.pug",
+            "src/html/product.pug"
         ],
         "outDir": "../back_end/static",
         "minify": false

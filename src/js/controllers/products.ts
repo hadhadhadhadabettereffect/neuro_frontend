@@ -1,33 +1,50 @@
 import { DetailsUpdate } from "../constants/masks";
-
+import { ProductInfo } from "../constants/groups";
 
 var active = false;
 var updates = 0,
     activeGalleryImg = 0,
     clickedGalleryThumb = 0,
+    activeInfo = 0,
     currentProduct = -1;
 var productData,
     detailsWrap,
     productImage,
     productName,
-    productDescription,
-    productMaterials,
+    productInfo,
     galleryMain,
-    galleryThumbs;
+    galleryThumbs,
+    toggleDescription,
+    toggleMaterials;
 
 void function init() {
-    var req = new XMLHttpRequest();
-    req.onreadystatechange = function () {
-        if (req.readyState === XMLHttpRequest.DONE) {
-            productData = JSON.parse(req.responseText);
-        }
-    };
-    req.open("GET", "/data/products.json", true);
-    req.send();
-
     detailsWrap = document.createElement("div");
     detailsWrap.id = "details";
 
+    const reqData = new XMLHttpRequest();
+    reqData.onreadystatechange = function () {
+        if (reqData.readyState === XMLHttpRequest.DONE) {
+            productData = JSON.parse(reqData.responseText);
+        }
+    };
+    reqData.open("GET", "/data/products.json", true);
+    reqData.send();
+
+    const reqHtml = new XMLHttpRequest();
+    reqHtml.onreadystatechange = function () {
+        if (reqHtml.readyState === XMLHttpRequest.DONE) {
+            detailsWrap.innerHtml = reqHtml.responseText;
+            productName = detailsWrap.querySelector("#product__name");
+            productImage = detailsWrap.querySelector("#product__image");
+            productInfo = detailsWrap.querySelector("#product__info");
+            galleryMain = detailsWrap.querySelector("#gallery__main");
+            galleryThumbs = detailsWrap.querySelectorAll(".gallery__item");
+            let toggles = detailsWrap.querySelectorAll(".toggle");
+            toggleDescription = toggles[0];
+            toggleMaterials = toggles[1];
+            toggles = null;
+        }
+    };
 }();
 
 export function showDetails(productIndex: number) {
@@ -47,6 +64,13 @@ export function clickDetailThumb(index: number): boolean {
     return true;
 }
 
+export function toggleProductInfo(showInfo: number): boolean {
+    if (activeInfo === showInfo) return false;
+    activeInfo = showInfo;
+    updates |= DetailsUpdate.info;
+    return true;
+}
+
 export function updateProductDetails(): boolean {
     if (updates & DetailsUpdate.active) {
         updateVisible();
@@ -60,20 +84,34 @@ export function updateProductDetails(): boolean {
         updateGallery();
         updates ^= DetailsUpdate.gallery;
     }
+    if (updates & DetailsUpdate.info) {
+        updates ^= DetailsUpdate.info;
+    }
     return updates === 0;
 }
 
 function setProductDetails() {
-    var data = productData[currentProduct],
-        baseUrl = "/media/products/p" + data.id;
+    const data = productData[currentProduct];
     productName.innerText = data.name;
-    productDescription.innerText = data.description;
-    productMaterials.innerHtml = data.materials;
-    productImage.src = baseUrl + "_main.jpg";
+    productInfo.innerHtml = activeInfo === ProductInfo.description ?
+        data.description : data.materials;
+    productImage.src = "/media/products/p" + 0 /* debug data.id */ + "_main.jpg";
+}
+
+function setInfoText() {
+    if (activeInfo === ProductInfo.description) {
+        productInfo.innerHtml = productData[currentProduct].description;
+        toggleDescription.className = "toggle toggle--active";
+        toggleMaterials.className = "toggle";
+    } else {
+        productInfo.innerHtml = productData[currentProduct].materials;
+        toggleDescription.className = "toggle";
+        toggleMaterials.className = "toggle toggle--active";
+    }
 }
 
 function setGallery() {
-    const baseUrl = "/media/products/p" + productData[currentProduct].id;
+    const baseUrl = "/media/products/p" + 0; // debug productData[currentProduct].id;
 
     galleryMain.src = baseUrl + "_0.jpg";
     galleryThumbs[0].src = baseUrl + "_0.jpg";
@@ -96,5 +134,6 @@ function updateGallery() {
 }
 
 function updateVisible() {
-    detailsWrap.display = active ? "block" : "none";
+    if (detailsWrap.parentNode) detailsWrap.parentNode.removeChild(detailsWrap);
+    if (active) document.body.appendChild(detailsWrap);
 }

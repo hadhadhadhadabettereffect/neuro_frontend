@@ -1,4 +1,5 @@
-import { SiteArea, ContentChange } from "../constants/masks";
+import { ContentChange } from "../constants/masks";
+import { LandingPage } from "../constants/groups";
 import { TransitionMS } from "../constants/options";
 
 
@@ -10,9 +11,9 @@ const navLinks = [
     document.getElementById("nav--right").querySelector("h2")
 ];
 const subnavs = [
-    // SiteArea.agency
+    // LandingPage.agency
     document.getElementById("subnav--agency"),
-    // SiteArea.collection
+    // LandingPage.collection
     document.getElementById("subnav--collection")
 ];
 const subnavLinks = [
@@ -20,8 +21,8 @@ const subnavLinks = [
     document.getElementById("subnav--collection").querySelectorAll(".subnav__link")
 ];
 let changes = 0,
-    activeSection = SiteArea.home,
-    activeSubnav = SiteArea.home,
+    activeSection = LandingPage.home,
+    activeSubnav = LandingPage.home,
     nextSlide = 0,
     markedSlide = 0,
     scrollY = 0,
@@ -117,13 +118,13 @@ function onAfterScroll() {
 function updateSubnav() {
     // show/hide subnavs on nav
     if (activeSection !== activeSubnav) {
-        if (activeSubnav !== SiteArea.home) {
+        if (activeSubnav !== LandingPage.home) {
             navLinks[activeSubnav].className = "nav__link--side";
             subnavs[activeSubnav].style.transform = transformHidden;
             // clear marked subnav item
             subnavLinks[activeSubnav][markedSlide].className = "subnav__link";
         }
-        if (activeSection !== SiteArea.home) {
+        if (activeSection !== LandingPage.home) {
             navLinks[activeSection].className = "nav__link--side nav__link--active";
             subnavs[activeSection].style.transform = transformVis;
             // set first subnav item as active
@@ -133,7 +134,7 @@ function updateSubnav() {
     }
 
     // set active subnav item after scroll or link click
-    else if (markedSlide !== nextSlide && activeSubnav !== SiteArea.home) {
+    else if (markedSlide !== nextSlide && activeSubnav !== LandingPage.home) {
         subnavLinks[activeSubnav][markedSlide].className = "subnav__link";
         subnavLinks[activeSubnav][nextSlide].className = "subnav__link subnav__link--active";
         markedSlide = nextSlide;

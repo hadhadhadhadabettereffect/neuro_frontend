@@ -1,4 +1,4 @@
-import { SiteArea } from "../constants/masks";
+import { LandingPage } from "../constants/groups";
 import { TransitionMS } from "../constants/options";
 
 
@@ -10,9 +10,9 @@ const pageUrls = process.env.NODE_ENV === "production" ?
 var width = window.innerWidth,
     startX = 0,
     moveX = 0;
-var activeSection = SiteArea.home,
-    prevSection = SiteArea.home,
-    activeContent = SiteArea.home;
+var activeSection = LandingPage.home,
+    prevSection = LandingPage.home,
+    activeContent = LandingPage.home;
 var startTime, delta = 0;
 var isAnimating = false,
     initMove = true;
@@ -80,17 +80,17 @@ function initTransition() {
     contentEl.style.overflowY = "hidden";
 
     // if coming from either size, first move off to side
-    if (prevSection === SiteArea.agency) {
+    if (prevSection === LandingPage.agency) {
         startX = 0;
         moveX = -width;
-    } else if (prevSection === SiteArea.collection) {
+    } else if (prevSection === LandingPage.collection) {
         startX = 0;
         moveX = width;
     } else {
         homeVideo.pause();
         wrapEl.style.display = "block";
         // if coming from home, move from off screen to 0
-        if (activeSection === SiteArea.agency) {
+        if (activeSection === LandingPage.agency) {
             startX = -width;
             moveX = width;
         } else {
@@ -101,7 +101,7 @@ function initTransition() {
         if (activeSection !== activeContent) {
             if (contentEl.firstChild)
                 contentEl.removeChild(contentEl.firstChild);
-            contentEl.appendChild(activeSection === SiteArea.agency ?
+            contentEl.appendChild(activeSection === LandingPage.agency ?
                 agencyEl : collectionEl);
             activeContent = activeSection;
             contentEl.scrollTop = 0;
@@ -115,13 +115,13 @@ function handleTransition() {
     delta = (performance.now() - startTime) / TransitionMS.landing;
     if (delta > 1) {
         // done if moving to home
-        if (activeSection === SiteArea.home) {
+        if (activeSection === LandingPage.home) {
             isAnimating = false;
             wrapEl.style.display = "none";
             homeVideo.play();
         }
         // done if coming from home
-        else if (prevSection === SiteArea.home) {
+        else if (prevSection === LandingPage.home) {
             isAnimating = false;
             contentEl.style.overflowY = "auto";
             wrapEl.style.transform = "translateX(0)";
@@ -132,7 +132,7 @@ function handleTransition() {
         // if coming from one side and moving to the other
         // start moving towards other side after moving from prevSide
         else {
-            prevSection = SiteArea.home;
+            prevSection = LandingPage.home;
             initMove = true;
         }
     } else {

@@ -2,7 +2,9 @@ import { ClickAction } from "./constants/actions";
 import { ChangeHandler,
         ContentChange } from "./constants/masks";
 import { toggleContact } from "./controllers/contact";
-import { showDetails } from "./controllers/products";
+import { showDetails,
+        clickDetailThumb,
+        toggleProductInfo } from "./controllers/products";
 import { navToSection } from "./controllers/page";
 import { markSlidesChange,
         scrollToSlide,
@@ -34,17 +36,20 @@ function handleScroll() {
 }
 
 function handleClick(event) {
-    let action, flag = event.target.getAttribute("data-action");
+    let clickId, flag = event.target.getAttribute("data-action");
     if (flag !== null) {
-        action = flag | 0;
-        switch (action) {
-            case ClickAction.home:
-            case ClickAction.agency:
-            case ClickAction.collection:
-                if (navToSection(action)) {
-                    setActiveSection(action);
+        switch (flag | 0) {
+            case ClickAction.nav:
+                clickId = event.target.getAttribute("data-id") | 0;
+                if (navToSection(clickId)) {
+                    setActiveSection(clickId);
                     markChange(ChangeHandler.navigate);
                 }
+                break;
+
+            case ClickAction.subnav:
+                scrollToSlide(event.target.getAttribute("data-id") | 0);
+                markChange(ChangeHandler.slides);
                 break;
 
             case ClickAction.contact:
@@ -53,15 +58,26 @@ function handleClick(event) {
                 break;
 
             case ClickAction.product:
-                showDetails(event.target.getAttribute("data-product") | 0);
+                showDetails(event.target.getAttribute("data-id") | 0);
+                markChange(ChangeHandler.product);
                 break;
 
-            case ClickAction.subnav_0:
-            case ClickAction.subnav_1:
-            case ClickAction.subnav_2:
-            case ClickAction.subnav_3:
-                scrollToSlide(action - ClickAction.subnav_offset);
-                markChange(ChangeHandler.slides);
+            case ClickAction.gallery:
+                if(clickDetailThumb(event.target.getAttribute("data-id") | 0))
+                    markChange(ChangeHandler.product);
+                break;
+
+            case ClickAction.info:
+                if (toggleProductInfo(event.target.getAttribute("data-id") | 0))
+                    markChange(ChangeHandler.product);
+                break;
+
+            case ClickAction.share:
+                console.log("share product");
+                break;
+
+            case ClickAction.order:
+                console.log("order product");
                 break;
         }
     }
