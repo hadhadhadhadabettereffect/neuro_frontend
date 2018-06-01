@@ -37,13 +37,11 @@ export function updateHeight() {
 }
 
 export function setActiveSection(section: number) {
-    if (section === SiteArea.agency || section === SiteArea.collection) {
-        activeSection = section;
-        nextSlide = 0;
-        scrollY = 0;
-        prevScrollY = 0;
-        changes |= ContentChange.subnav;
-    }
+    activeSection = section;
+    nextSlide = 0;
+    scrollY = 0;
+    prevScrollY = 0;
+    changes |= ContentChange.subnav;
 }
 
 export function scrollToSlide(slide: number) {
