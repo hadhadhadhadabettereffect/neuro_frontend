@@ -56,7 +56,7 @@ function handleClick(event) {
                 showDetails(event.target.getAttribute("data-product") | 0);
                 break;
 
-            case ClickAction.subnav_1:
+            case ClickAction.subnav_0:
             case ClickAction.subnav_1:
             case ClickAction.subnav_2:
             case ClickAction.subnav_3:
