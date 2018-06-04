@@ -10,9 +10,13 @@
     a#product__share.action(data-action= clickActions.product_share) SHARE
     #product__gallery
         img#gallery__main
-        img.gallery__item.gallery__item--active(data-action= clickActions.product_gallery data-id="0")
-        img.gallery__item(data-action= clickActions.product_gallery data-id="1")
-        img.gallery__item(data-action= clickActions.product_gallery data-id="2")
-        img.gallery__item(data-action= clickActions.product_gallery data-id="3")
+        .gallery__item
+            img.gallery__thumb.gallery__thumb--active(data-action= clickActions.product_gallery data-id="0")
+        .gallery__item
+            img.gallery__thumb(data-action= clickActions.product_gallery data-id="1")
+        .gallery__item
+            img.gallery__thumb(data-action= clickActions.product_gallery data-id="2")
+        .gallery__item
+            img.gallery__thumb(data-action= clickActions.product_gallery data-id="3")
         #product__order.action(data-action= clickActions.product_order) PREORDER
     a#product--next(data-action= clickActions.product_next data-id= groups.NavDirection.next) >

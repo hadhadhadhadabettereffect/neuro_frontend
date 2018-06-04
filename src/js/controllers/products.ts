@@ -38,7 +38,7 @@ void function init() {
             productImage = detailsWrap.querySelector("#product__image");
             productInfo = detailsWrap.querySelector("#product__info");
             galleryMain = detailsWrap.querySelector("#gallery__main");
-            galleryThumbs = detailsWrap.querySelectorAll(".gallery__item");
+            galleryThumbs = detailsWrap.querySelectorAll(".gallery__thumb");
             let toggles = detailsWrap.querySelectorAll(".toggles > .action");
             toggleDescription = toggles[0];
             toggleMaterials = toggles[1];
@@ -77,6 +77,7 @@ export function nextProduct(direction: number) {
 export function clickDetailThumb(index: number): boolean {
     if (index === activeGalleryImg) return false;
     clickedGalleryThumb = index;
+    updates |= DetailsUpdate.gallery;
     return true;
 }
 
@@ -139,14 +140,14 @@ function setGallery() {
 
     if (activeGalleryImg !== 0) {
         galleryThumbs[activeGalleryImg].className = "gallery__thumb";
-        galleryThumbs[0].className = "gallery__thumb--active";
+        galleryThumbs[0].className = "gallery__thumb gallery__thumb--active";
         activeGalleryImg = 0;
     }
 }
 
 function updateGallery() {
     galleryThumbs[activeGalleryImg].className = "gallery__thumb";
-    galleryThumbs[clickedGalleryThumb].className = "gallery__thumb--active";
+    galleryThumbs[clickedGalleryThumb].className = "gallery__thumb gallery__thumb--active";
     galleryMain.src = galleryThumbs[clickedGalleryThumb].src;
     activeGalleryImg = clickedGalleryThumb;
 }
