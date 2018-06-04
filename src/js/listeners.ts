@@ -4,7 +4,8 @@ import { ChangeHandler,
 import { toggleContact } from "./controllers/contact";
 import { showDetails,
         clickDetailThumb,
-        toggleProductInfo } from "./controllers/products";
+        toggleProductInfo,
+        nextProduct } from "./controllers/products";
 import { navToSection } from "./controllers/page";
 import { markSlidesChange,
         scrollToSlide,
@@ -57,7 +58,7 @@ function handleClick(event) {
                 markChange(ChangeHandler.contact);
                 break;
 
-            case ClickAction.product_thumb:
+            case ClickAction.product_show:
                 showDetails(event.target.getAttribute("data-id") | 0);
                 markChange(ChangeHandler.product);
                 break;
@@ -65,6 +66,11 @@ function handleClick(event) {
             case ClickAction.product_gallery:
                 if(clickDetailThumb(event.target.getAttribute("data-id") | 0))
                     markChange(ChangeHandler.product);
+                break;
+
+            case ClickAction.product_next:
+                nextProduct(event.target.getAttribute("data-id") | 0);
+                markChange(ChangeHandler.product);
                 break;
 
             case ClickAction.product_info:

@@ -1,5 +1,6 @@
 import { DetailsUpdate } from "../constants/masks";
-import { ProductInfo } from "../constants/groups";
+import { ProductInfo,
+        NavDirection } from "../constants/groups";
 
 var active = false;
 var updates = 0,
@@ -49,14 +50,28 @@ void function init() {
 }();
 
 export function showDetails(productIndex: number) {
-    if (!active) {
-        active = true;
+    if (~productIndex) {
+        if (currentProduct !== productIndex) {
+            currentProduct = productIndex;
+            updates |= DetailsUpdate.data;
+        }
+        if (!active) {
+            active = true;
+            updates |= DetailsUpdate.active;
+        }
+    } else if (active) {
+        active = false;
         updates |= DetailsUpdate.active;
     }
-    if (currentProduct !== productIndex) {
-        currentProduct = productIndex;
-        updates |= DetailsUpdate.data;
+}
+
+export function nextProduct(direction: number) {
+    if (direction === NavDirection.prev) {
+        if (--currentProduct < 0) currentProduct = productData.length - 1;
+    } else if (++currentProduct >= productData.length) {
+        currentProduct = 0;
     }
+    updates |= DetailsUpdate.data;
 }
 
 export function clickDetailThumb(index: number): boolean {

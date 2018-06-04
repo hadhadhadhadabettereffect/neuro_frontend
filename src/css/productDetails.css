@@ -47,6 +47,32 @@ $width__details__text--end: calc($width__details__col--2 - $width__details__text
     grid-template-rows: [title] $height__details__title [toggles] $height__details__toggles [info] $height__details__info [share] $height__details__share [gallery] $height__details__gallery;
 }
 
+#product--prev {
+    grid-column-start: 1;
+    grid-column-end: col--1;
+    grid-row-start: title;
+    grid-row-end: -1;
+    cursor: pointer;
+    align-self: center;
+}
+
+#product--next {
+    grid-column-start: margin--2;
+    grid-column-end: -1;
+    grid-row-start: title;
+    grid-row-end: -1;
+    cursor: pointer;
+    align-self: center;
+}
+
+#product__close {
+    grid-column-start: margin--2;
+    grid-column-end: -1;
+    grid-row-start: 1;
+    grid-row-end: 2;
+    cursor: pointer;
+}
+
 #product__image {
     grid-column-start: col--1;
     grid-column-end: gutter;
