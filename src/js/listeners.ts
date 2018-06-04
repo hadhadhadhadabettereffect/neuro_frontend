@@ -57,26 +57,26 @@ function handleClick(event) {
                 markChange(ChangeHandler.contact);
                 break;
 
-            case ClickAction.product:
+            case ClickAction.product_thumb:
                 showDetails(event.target.getAttribute("data-id") | 0);
                 markChange(ChangeHandler.product);
                 break;
 
-            case ClickAction.gallery:
+            case ClickAction.product_gallery:
                 if(clickDetailThumb(event.target.getAttribute("data-id") | 0))
                     markChange(ChangeHandler.product);
                 break;
 
-            case ClickAction.info:
+            case ClickAction.product_info:
                 if (toggleProductInfo(event.target.getAttribute("data-id") | 0))
                     markChange(ChangeHandler.product);
                 break;
 
-            case ClickAction.share:
+            case ClickAction.product_share:
                 console.log("share product");
                 break;
 
-            case ClickAction.order:
+            case ClickAction.product_order:
                 console.log("order product");
                 break;
         }

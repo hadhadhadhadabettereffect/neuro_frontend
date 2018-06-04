@@ -2,7 +2,7 @@
     display: block;
     height: $height__nav;
     width: $width__nav-link;
-    background: url(/media/Neuro-logo.png) no-repeat;
+    background: url(/media/logo.png) no-repeat;
     background-size: contain;
     background-position-y: center;
 }

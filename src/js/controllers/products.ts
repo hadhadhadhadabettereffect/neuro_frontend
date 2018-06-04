@@ -18,9 +18,6 @@ var productData,
     toggleMaterials;
 
 void function init() {
-    detailsWrap = document.createElement("div");
-    detailsWrap.id = "details";
-
     const reqData = new XMLHttpRequest();
     reqData.onreadystatechange = function () {
         if (reqData.readyState === XMLHttpRequest.DONE) {
@@ -33,18 +30,22 @@ void function init() {
     const reqHtml = new XMLHttpRequest();
     reqHtml.onreadystatechange = function () {
         if (reqHtml.readyState === XMLHttpRequest.DONE) {
-            detailsWrap.innerHtml = reqHtml.responseText;
+            detailsWrap = document.createElement("div");
+            detailsWrap.id = "details";
+            detailsWrap.innerHTML = reqHtml.responseText;
             productName = detailsWrap.querySelector("#product__name");
             productImage = detailsWrap.querySelector("#product__image");
             productInfo = detailsWrap.querySelector("#product__info");
             galleryMain = detailsWrap.querySelector("#gallery__main");
             galleryThumbs = detailsWrap.querySelectorAll(".gallery__item");
-            let toggles = detailsWrap.querySelectorAll(".toggle");
+            let toggles = detailsWrap.querySelectorAll(".toggles > .action");
             toggleDescription = toggles[0];
             toggleMaterials = toggles[1];
             toggles = null;
         }
     };
+    reqHtml.open("GET", "/product.html", true);
+    reqHtml.send();
 }();
 
 export function showDetails(productIndex: number) {
@@ -77,7 +78,7 @@ export function updateProductDetails(): boolean {
         updates ^= DetailsUpdate.active;
     }
     if (updates & DetailsUpdate.data) {
-        updateProductDetails();
+        setProductDetails();
         updates ^= DetailsUpdate.data;
     }
     if (updates & DetailsUpdate.gallery) {
@@ -85,6 +86,7 @@ export function updateProductDetails(): boolean {
         updates ^= DetailsUpdate.gallery;
     }
     if (updates & DetailsUpdate.info) {
+        setInfoText();
         updates ^= DetailsUpdate.info;
     }
     return updates === 0;
@@ -93,20 +95,21 @@ export function updateProductDetails(): boolean {
 function setProductDetails() {
     const data = productData[currentProduct];
     productName.innerText = data.name;
-    productInfo.innerHtml = activeInfo === ProductInfo.description ?
+    productInfo.innerText = activeInfo === ProductInfo.description ?
         data.description : data.materials;
     productImage.src = "/media/products/p" + 0 /* debug data.id */ + "_main.jpg";
+    setGallery();
 }
 
 function setInfoText() {
     if (activeInfo === ProductInfo.description) {
-        productInfo.innerHtml = productData[currentProduct].description;
-        toggleDescription.className = "toggle toggle--active";
-        toggleMaterials.className = "toggle";
+        productInfo.innerText = productData[currentProduct].description;
+        toggleDescription.className = "action action--active";
+        toggleMaterials.className = "action";
     } else {
-        productInfo.innerHtml = productData[currentProduct].materials;
-        toggleDescription.className = "toggle";
-        toggleMaterials.className = "toggle toggle--active";
+        productInfo.innerText = productData[currentProduct].materials;
+        toggleDescription.className = "action";
+        toggleMaterials.className = "action action--active";
     }
 }
 

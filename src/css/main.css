@@ -5,6 +5,8 @@
 @import "agency";
 @import "collection";
 @import "video";
+@import "productDetails";
+
 
 html {
   box-sizing: border-box;

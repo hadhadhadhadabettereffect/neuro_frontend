@@ -1,18 +1,16 @@
-#details
-    #details__inner
-        #product__image
-        h3#product__name
-        .info
-            .info__toggles
-                a.toggle.toggle--active(data-action= clickActions.info data-id= groups.ProductInfo.description) DESCRIPTION
-                a.toggle(data-action= clickActions.info data-id= groups.ProductInfo.materials) MATERIALS
-            #product__info
-            a#product__share(data-action= clickActions.share) SHARE
-        #product__gallery
-            img#gallery__main
-            #gallery__side
-                img.gallery__item.gallery__item--active(data-action= clickActions.gallery data-id="0")
-                img.gallery__item(data-action= clickActions.gallery data-id="1")
-                img.gallery__item(data-action= clickActions.gallery data-id="2")
-                img.gallery__item(data-action= clickActions.gallery data-id="3")
-                #product__order(data-action= clickActions.order) PREORDER
+#details__inner
+    img#product__image
+    h3#product__name
+    .close(data-action= clickActions.product_close)
+    .toggles
+        a.action.action--active(style="margin-right: 20px" data-action= clickActions.product_info data-id= groups.ProductInfo.description) DESCRIPTION
+        a.action(data-action= clickActions.product_info data-id= groups.ProductInfo.materials) MATERIALS
+    #product__info
+    a#product__share.action(data-action= clickActions.product_share) SHARE
+    #product__gallery
+        img#gallery__main
+        img.gallery__item.gallery__item--active(data-action= clickActions.product_gallery data-id="0")
+        img.gallery__item(data-action= clickActions.product_gallery data-id="1")
+        img.gallery__item(data-action= clickActions.product_gallery data-id="2")
+        img.gallery__item(data-action= clickActions.product_gallery data-id="3")
+        #product__order.action(data-action= clickActions.product_order) PREORDER
