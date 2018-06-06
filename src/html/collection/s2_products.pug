@@ -1,6 +1,7 @@
 - var n = 0
 - var productCount = 10
 
-#products
+.grid
     while n < productCount
-        img.product-thumb(src="media/products/p0_thumb.jpg" data-action= clickActions.product_show data-id= n++)
+        a.grid__item
+            img(src="media/products/p0_thumb.jpg" data-action= clickActions.product_show data-id= n++)

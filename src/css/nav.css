@@ -1,7 +1,7 @@
-#nav_home {
+#logo {
     display: block;
-    height: $height__nav;
-    width: $width__nav-link;
+    height: $height--nav;
+    width: $width--logo;
     background: url(/media/logo.png) no-repeat;
     background-size: contain;
     background-position-y: center;
@@ -12,7 +12,7 @@
     top: 0;
     left: 0;
     right: 0;
-    height: $height__nav;
+    height: $height--nav;
 }
 
 #nav--left {
@@ -20,7 +20,7 @@
     top: 0;
     bottom: 0;
     left: 0;
-    width: $height__nav;
+    width: $height--nav;
 }
 
 #nav--right {
@@ -28,7 +28,7 @@
     top: 0;
     right: 0;
     bottom: 0;
-    width: $height__nav;
+    width: $height--nav;
 }
 
 #nav--bottom {
@@ -36,52 +36,48 @@
     left: 0;
     right: 0;
     bottom: 0;
-    height: $height__nav;
+    height: $height--nav;
 }
 
 .nav__link {
-    cursor: pointer;
-    line-height: $height__nav;
-    width: $width__nav-link;
+    @extend %type--nav__link;
+    width: $width--nav-link;
     margin: 0 auto;
-    text-align: center;
+    display: block;
 
     &:hover {
-        color: $font-color__link--hover;
+        color: $font-color--link--hover;
     }
 }
 
 .nav__link--side {
+    @extend %type--nav__link;
     position: absolute;
     top: 50%;
-    width: 90px;
-    margin: 0;
-    transform: rotate(-90deg) translateX(-10px);
-    transform-origin: center;
+    width: 100px;
+    transform: rotate(-90deg);
+    transform-origin: bottom;
     text-align: center;
-    cursor: pointer;
 
     &:hover {
-        color: $font-color__link--hover;
+        color: $font-color--link--hover;
     }
 
     &.nav__link--active {
+        @extend %type--nav__link--active;
         cursor: default;
-        color: $font-color__link--active;
-        font-weight: 700;
-        font-size: 0.7rem;
     }
 }
 
 .subnav {
+    @extend %type--nav__subnav;
     position: absolute;
     display: flex;
     flex-direction: row-reverse;
-    width: 460px;
+    width: $height--content;
     top: 50%;
-    transform: rotate(-90deg) translateY(-175px) scaleX(0);
+    transform: rotate(-90deg) translateY(-300px) scaleX(0);
     transform-origin: bottom;
-    font-size: $font-size__subnav;
     transition: transform 350ms cubic-bezier(0.5, -0.25, 0.25, 1.5);
 }
 
@@ -92,15 +88,12 @@
 
 
 .subnav__link {
-    font-size: 0.4rem;
-    font-weight: 200;
-    letter-spacing: 0.25em;
     padding: 2px 2px 2px 4px;
     cursor: pointer;
     display: block;
 
     &:hover {
-        color: $font-color__link--hover;
+        color: $font-color--link--hover;
     }
 
     &.subnav__link--active {

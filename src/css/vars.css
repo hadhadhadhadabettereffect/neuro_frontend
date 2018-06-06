@@ -1,48 +1,73 @@
 /*********
- * measurement
+ * color
  *********/
-
-$width__content: 1366px;
-$width__content--min: 300px;
-
-$padding__col: 50px;
-
-$height__nav: 75px;
-$width__nav-link: 150px;
-$padding__nav-link: 25px;
-
-$width__subnav: 500px;
-$width__subnav__item: 100px;
-
-$height__subnav: 460px;
-$width__subnav: 40px;
-
-$height__contact: 500px;
-$padding__contact: 35px 40px;
-
-$width__staff__photo: 140px;
+$blue: #0600ff;
+$blue--trans: rgba(6, 0, 255, 0.8);
+$background: black;
 
 
 /*********
  *type
  *********/
-
-/* font */
-$font-family: 'Hind', sans-serif;
 /* font color */
 $font-color: white;
-$font-color__link--hover: #6bbdff;
-$font-color__link--active: blue;
+$font-color--link--hover: #bcbcbc;
+$font-color--link--active: $blue;
 /* font size */
-$font-size__nav: 1rem;
-$font-size__subnav: 0.8rem;
-$font-size__time: 2.8rem;
+$font-size--nav: 1.25rem;
+$font-size--title: 1.75rem;
+$font-size--body: 1rem;
+$font-size--link: 0.75rem;
+$font-size--headline: 3.25rem;
+$font-size--team__name: 1.4rem;
+$font-size--clock: 3rem;
+
 
 /*********
- * color
+ * measurement
  *********/
-$background: black;
-$background__contact: blue;
+ /* layout */
+$width--content: 1400px;
+$width--content--min: 300px;
+
+$height--content: 700px;
+
+$height--grid__item: 193px;
+$width--grid__item: 193px;
+$width--grid__item--wide: 394px;
+$width--grid__item__gap: 10px;
+
+$padding__col: 50px;
+
+/* nav */
+$height--nav: 100px;
+$width--nav-link: 120px;
+$width--logo: 186px;
+
+/* agency/staff */
+$width--staff__photo: 140px;
+
+/* product details */
+$width--gallery__img: 400px;
+$width--gallery__thumb: 200px;
+$width--gallery__gap: 4px;
+$height--gallery__thumb: 80px;
+$height--gallery__order: 50px;
+$height--gallery__gap: 4px;
+
+$width--details__margin--1: 70px;
+$width--details__col--1: 500px;
+$width--details__col--gap: 100px;
+$width--details__col--2: 600px;
+$width--details__text: 480px;
+$width--details__margin--2: 70px;
+
+$height--details__margin: 50px;
+$height--details__title: 70px;
+$height--details__toggles: 50px;
+$height--details__info: 80px;
+$height--details__share: 40px;
+$height--details__gallery: 390px;
 
 
 /*********
@@ -50,3 +75,10 @@ $background__contact: blue;
  *********/
 $breakpoint-1: 600px;
 $breakpoint-2: 420px;
+
+
+/* calculated measurements */
+$width--details__gallery: calc($width--gallery__img + $width--gallery__thumb);
+$width--details: calc($width--details__margin--1 + $width--details__col--1 + $width--details__col--gap + $width--details__col--2 + $width--details__margin--2);
+$height--details: calc($height--details__title + $height--details__toggles + $height--details__info + $height--details__share + $height--details__gallery);
+$width--details__text--end: calc($width--details__col--2 - $width--details__text);

@@ -3,12 +3,12 @@ import { LandingPage } from "../constants/groups";
 import { TransitionMS } from "../constants/options";
 
 
-const transformVis = "rotate(-90deg) translateY(-175px) scaleX(1)";
-const transformHidden = "rotate(-90deg) translateY(-175px) scaleX(0)";
+const transformVis = "rotate(-90deg) translateY(-300px) scaleX(1)";
+const transformHidden = "rotate(-90deg) translateY(-300px) scaleX(0)";
 const contentEl = document.getElementById("content");
 const navLinks = [
-    document.getElementById("nav--left").querySelector("h2"),
-    document.getElementById("nav--right").querySelector("h2")
+    document.querySelector("#nav--left > .nav__link--side"),
+    document.querySelector("#nav--right > .nav__link--side")
 ];
 const subnavs = [
     // LandingPage.agency

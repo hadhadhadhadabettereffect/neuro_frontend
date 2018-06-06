@@ -1,47 +1,82 @@
-@import url('https://fonts.googleapis.com/css?family=Hind:300,400,500,600,700');
+@font-face {
+    font-family: "karbon";
+    src: url("/fonts/karbon-regular-webfont.ttf");
+    font-weight: 300;
+}
+
+@font-face {
+    font-family: "karbon";
+    src: url("/fonts/karbon-medium-webfont.ttf");
+    font-weight: 500;
+}
+
+@font-face {
+  font-family: "karbon";
+  src: url("/fonts/karbon-bold-webfont.ttf");
+  font-weight: 700;
+}
 
 body {
     margin: 0;
     background-color: $background;
-    font-family: $font-family;
+    font-family: "karbon", sans-serif;
+    font-size: $font-size--body;
+    line-height: 1.25em;
     color: $font-color;
-}
-
-h1 {
-    font-size: 1rem;
-    letter-spacing: 1.35em;
     font-weight: 300;
 }
 
+// slide/project/product titles
 h2 {
-    font-size: 0.75rem;
-    font-weight: 300;
-    letter-spacing: 0.2em;
-}
-
-h3 {
-    font-weight: 700;
-    font-size: 2.2rem;
-    letter-spacing: 0.08em;
-    margin: 0;
-}
-
-h4 {
-    font-size: 2rem;
+    font-size: $font-size--title;
+    font-weight: 500;
     letter-spacing: 0.04em;
+    margin: 0;
+}
+
+// contact headers, agency/services
+h3 {
+    font-size: $font-size--headline;
     font-weight: 700;
+    /* letter-spacing: 0.08em; */
     margin: 0;
 }
 
-h5 {
-    margin: 0;
-    font-size: 1.25rem;
-    font-weight: 200;
-    letter-spacing: 0.03em;
+a {
+    cursor: pointer;
 }
 
-p {
-    font-size: 0.9rem;
-    font-weight: 200;
-    line-height: 1.2rem;
+%type--nav__link {
+    font-size: $font-size--nav;
+    font-weight: 300;
+    letter-spacing: 0.14em;
+}
+
+%type--nav__link--active {
+    color: $font-color--link--active;
+    font-weight: 700;
+    font-size: 1.2rem;
+    letter-spacing: 0.1em;
+}
+
+%type--nav__subnav {
+    font-size: $font-size--link;
+    font-weight: 300;
+    letter-spacing: 0.14em;
+}
+
+%type--staff__name {
+    font-size: $font-size--team__name;
+    line-height: 1.5em;
+    font-weight: 700;
+}
+
+%type--staff__title {
+    font-size: $font-size--body;
+    font-weight: 300;
+}
+
+%type--details__button {
+    font-size: $font-size--link;
+    /* letter-spacing: 0.1em; */
 }

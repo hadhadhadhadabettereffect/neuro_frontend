@@ -10,17 +10,15 @@
 
 .staff__photo {
     background: #ccc;
-    height: $width__staff__photo;
-    width: $width__staff__photo;
+    height: $width--staff__photo;
+    width: $width--staff__photo;
 }
 
 .staff__name {
-    line-height: 1.5em;
-    font-weight: 300;
+    @extend %type--staff__name;
     margin-top: 16px;
 }
 
 .staff__title {
-    font-size: 0.7rem;
-    font-weight: 200;
+    @extend %type--staff__title;
 }

@@ -1,7 +1,7 @@
 #details__inner
     a#product--prev(data-action= clickActions.product_next data-id= groups.NavDirection.prev) <
     img#product__image
-    h3#product__name
+    h2#product__name
     a#product__close(data-action= clickActions.product_show data-id= "-1") x
     .toggles
         a.action.action--active(style="margin-right: 20px" data-action= clickActions.product_info data-id= groups.ProductInfo.description) DESCRIPTION
@@ -18,5 +18,5 @@
             img.gallery__thumb(data-action= clickActions.product_gallery data-id="2")
         .gallery__item
             img.gallery__thumb(data-action= clickActions.product_gallery data-id="3")
-        #product__order.action(data-action= clickActions.product_order) PREORDER
+        a#product__order.action(data-action= clickActions.product_order) PREORDER
     a#product--next(data-action= clickActions.product_next data-id= groups.NavDirection.next) >
