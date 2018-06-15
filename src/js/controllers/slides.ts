@@ -46,7 +46,12 @@ export function setActiveSection(section: number) {
 }
 
 export function scrollToSlide(slide: number) {
-    nextSlide = slide;
+    onEnterSlide(slide);
+    if (nextSlide !== slide) {
+        onLeaveSlide(nextSlide);
+        nextSlide = slide;
+
+    }
     targetScrollY = nextSlide * height;
     changes |= ContentChange.jump_and_subnav;
     scrollY = contentEl.scrollTop;
@@ -109,9 +114,11 @@ function onAfterScroll() {
     if (scrollUp) {
         dist = scrollY - (nextSlide * height);
         if (dist / height < 0.5) scrollToSlide(nextSlide);
+        else if (nextSlide < 3) scrollToSlide(nextSlide + 1);
     } else if (nextSlide < 3) {
         dist = ((nextSlide + 1) * height) - scrollY;
         if (dist / height < 0.5) scrollToSlide(nextSlide + 1);
+        else scrollToSlide(nextSlide);
     }
 }
 
@@ -140,3 +147,31 @@ function updateSubnav() {
         markedSlide = nextSlide;
     }
 }
+
+
+function onLeaveSlide(slide: number) {
+    console.log(`left slide ${slide}`);
+    switch (slide) {
+        case 0:
+            // pauseVideo
+            (document.querySelector("#content video") as HTMLVideoElement).pause();
+            break;
+        case 2:
+            // scroll x to 0
+            break;
+    }
+}
+
+
+function onEnterSlide(slide: number) {
+    console.log(`entered slide ${slide}`);
+    switch (slide) {
+        case 0:
+            // play vid;
+            (document.querySelector("#content video") as HTMLVideoElement).play();
+            break;
+
+    }
+}
+
+

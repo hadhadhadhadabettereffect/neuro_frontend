@@ -8,4 +8,5 @@ export const enum ClickAction {
     product_share,
     product_gallery,
     product_order,
+    filter,
 }

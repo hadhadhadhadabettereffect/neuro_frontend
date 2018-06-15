@@ -26,15 +26,15 @@ body {
     font-weight: 300;
 }
 
-// slide/project/product titles
+/* slide/project/product titles */
 h2 {
+    font-weight: 300;
     font-size: $font-size--title;
-    font-weight: 500;
     letter-spacing: 0.04em;
-    margin: 0;
+    margin: 0 0 2rem;
 }
 
-// contact headers, agency/services
+/* contact headers, agency/services */
 h3 {
     font-size: $font-size--headline;
     font-weight: 700;

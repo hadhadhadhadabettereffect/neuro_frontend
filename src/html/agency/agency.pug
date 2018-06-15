@@ -1,17 +1,16 @@
 - var n = 0
-.full
+.landing
     video(playsinline autoplay muted loop poster="media/vid-b.jpg" class="video")
         source(src="media/vid-b.mp4" type="video/mp4")
         source(src="media/vid-b.webm" type="video/webm")
-.landing
-    .content__inner
+    .content__inner--stack
         include s1_about
 .slide(style=`top:${++n}00%`)
-    .content__inner.alt
+    .content__inner--stack
         include s2_services
 .slide(style=`top:${++n}00%`)
-    .content__inner
+    .content__inner--scroll
         include s3_work
 .slide(style=`top:${++n}00%`)
-    .content__inner
+    .content__inner--stack
         include s4_team

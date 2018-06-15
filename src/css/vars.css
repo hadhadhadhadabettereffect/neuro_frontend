@@ -2,7 +2,7 @@
  * color
  *********/
 $blue: #0600ff;
-$blue--trans: rgba(6, 0, 255, 0.8);
+$blue--gradient: linear-gradient(to bottom, rgba(6,0,255,0.8) 0%,rgba(6,0,255,1) 100%);
 $background: black;
 
 
@@ -15,7 +15,7 @@ $font-color--link--hover: #bcbcbc;
 $font-color--link--active: $blue;
 /* font size */
 $font-size--nav: 1.25rem;
-$font-size--title: 1.75rem;
+$font-size--title: 2rem;
 $font-size--body: 1rem;
 $font-size--link: 0.75rem;
 $font-size--headline: 3.25rem;
@@ -36,6 +36,9 @@ $height--grid__item: 193px;
 $width--grid__item: 193px;
 $width--grid__item--wide: 394px;
 $width--grid__item__gap: 10px;
+
+$width--col: 360px;
+$width--col__gap: 50px;
 
 $padding__col: 50px;
 

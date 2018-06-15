@@ -4,12 +4,14 @@ export const enum ChangeHandler {
     _product,
     _contact,
     _resize,
+    _filters,
 
     slides = 1 << _slides,
     page = 1 << _page,
     product = 1 << _product,
     contact = 1 << _contact,
     resize = 1 << _resize,
+    filters = 1 << _filters,
 
     navigate = page | slides,
 }

@@ -1,5 +1,11 @@
 - var n = 0
 - var productCount = 10
+- var filters = ["DRESS", "ACCESSORIES", "JACKETS", "PANTS", "TOPS", "SHOES"]
+
+#filters
+    .filter--active(data-action= clickActions.filter data-id= 0) ALL
+    each filter, i in filters
+        .filter(data-action= clickActions.filter data-id= i+1)= filter
 
 .grid
     while n < productCount

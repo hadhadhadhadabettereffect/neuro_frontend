@@ -10,6 +10,7 @@ import { navToSection } from "./controllers/page";
 import { markSlidesChange,
         scrollToSlide,
         setActiveSection } from "./controllers/slides";
+import { clickFilter } from "./controllers/filters";
 import { markChange } from "./loop";
 
 
@@ -84,6 +85,11 @@ function handleClick(event) {
 
             case ClickAction.product_order:
                 console.log("order product");
+                break;
+
+            case ClickAction.filter:
+                if (clickFilter(event.target.getAttribute("data-id") | 0))
+                    markChange(ChangeHandler.filters);
                 break;
         }
     }

@@ -13,3 +13,13 @@ export const enum NavDirection {
     prev,
     next,
 }
+
+export const enum ProductType {
+    any,
+    dress,
+    accessory,
+    jacket,
+    pants,
+    top,
+    shoes,
+}

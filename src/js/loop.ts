@@ -5,6 +5,7 @@ import { updateContent,
 import { updateSlides,
         updateHeight } from "./controllers/slides";
 import { updateProductDetails } from "./controllers/products";
+import { updateFilters } from "./controllers/filters";
 
 
 var changes = 0;
@@ -42,6 +43,10 @@ function applyUpdates() {
             changes ^= ChangeHandler.resize;
             updateWidth();
             updateHeight();
+        }
+        else if (changes & ChangeHandler.filters) {
+            if (updateFilters())
+                changes ^= ChangeHandler.filters;
         }
     }
 }
