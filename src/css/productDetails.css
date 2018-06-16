@@ -138,3 +138,8 @@
 .action--active {
     border-top: 1px solid;
 }
+
+.msg {
+    cursor: default;
+    background: #777;
+}

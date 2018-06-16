@@ -4,6 +4,7 @@ import { ChangeHandler,
 import { toggleContact } from "./controllers/contact";
 import { showDetails,
         clickDetailThumb,
+        clickOrderProduct,
         toggleProductInfo,
         nextProduct } from "./controllers/products";
 import { navToSection } from "./controllers/page";
@@ -84,7 +85,7 @@ function handleClick(event) {
                 break;
 
             case ClickAction.product_order:
-                console.log("order product");
+                if (clickOrderProduct()) markChange(ChangeHandler.product);
                 break;
 
             case ClickAction.filter:

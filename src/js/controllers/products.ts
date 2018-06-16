@@ -2,7 +2,8 @@ import { DetailsUpdate } from "../constants/masks";
 import { ProductInfo,
         NavDirection } from "../constants/groups";
 
-var active = false;
+var active = false,
+    orderBtnClicked = false;
 var updates = 0,
     activeGalleryImg = 0,
     clickedGalleryThumb = 0,
@@ -13,6 +14,7 @@ var productData,
     productImage,
     productName,
     productInfo,
+    orderBtn,
     galleryMain,
     galleryThumbs,
     toggleDescription,
@@ -37,6 +39,7 @@ void function init() {
             productName = detailsWrap.querySelector("#product__name");
             productImage = detailsWrap.querySelector("#product__image");
             productInfo = detailsWrap.querySelector("#product__info");
+            orderBtn = detailsWrap.querySelector("#product__order");
             galleryMain = detailsWrap.querySelector("#gallery__main");
             galleryThumbs = detailsWrap.querySelectorAll(".gallery__thumb");
             let toggles = detailsWrap.querySelectorAll(".toggles > .action");
@@ -54,6 +57,10 @@ export function showDetails(productIndex: number) {
         if (currentProduct !== productIndex) {
             currentProduct = productIndex;
             updates |= DetailsUpdate.data;
+            if (orderBtnClicked) {
+                orderBtnClicked = false;
+                updates |= DetailsUpdate.order;
+            }
         }
         if (!active) {
             active = true;
@@ -71,6 +78,10 @@ export function nextProduct(direction: number) {
     } else if (++currentProduct >= productData.length) {
         currentProduct = 0;
     }
+    if (orderBtnClicked) {
+        orderBtnClicked = false;
+        updates |= DetailsUpdate.order;
+    }
     updates |= DetailsUpdate.data;
 }
 
@@ -85,6 +96,13 @@ export function toggleProductInfo(showInfo: number): boolean {
     if (activeInfo === showInfo) return false;
     activeInfo = showInfo;
     updates |= DetailsUpdate.info;
+    return true;
+}
+
+export function clickOrderProduct(): boolean {
+    if (orderBtnClicked) return false;
+    orderBtnClicked = true;
+    updates |= DetailsUpdate.order;
     return true;
 }
 
@@ -104,6 +122,10 @@ export function updateProductDetails(): boolean {
     if (updates & DetailsUpdate.info) {
         setInfoText();
         updates ^= DetailsUpdate.info;
+    }
+    if (updates & DetailsUpdate.order) {
+        updateOrderBtn();
+        updates ^= DetailsUpdate.order;
     }
     return updates === 0;
 }
@@ -126,6 +148,16 @@ function setInfoText() {
         productInfo.innerText = productData[currentProduct].materials;
         toggleDescription.className = "action";
         toggleMaterials.className = "action action--active";
+    }
+}
+
+function updateOrderBtn() {
+    if (orderBtnClicked) {
+        orderBtn.innerText = "capacity reached";
+        orderBtn.className = "msg";
+    } else {
+        orderBtn.innerText = "order";
+        orderBtn.className = "button";
     }
 }
 
