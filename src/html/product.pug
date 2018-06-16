@@ -1,13 +1,18 @@
 #details__inner
-    a#product--prev(data-action= clickActions.product_next data-id= groups.NavDirection.prev) <
+    a#product--prev.icon.icon-arrow-left(data-action= clickActions.product_next data-id= groups.NavDirection.prev)
     img#product__image
     h2#product__name
-    a#product__close(data-action= clickActions.product_show data-id= "-1") x
+    a#product__close.icon.icon-x(data-action= clickActions.product_show data-id= "-1")
     .toggles
         a.action.action--active(style="margin-right: 20px" data-action= clickActions.product_info data-id= groups.ProductInfo.description) DESCRIPTION
         a.action(data-action= clickActions.product_info data-id= groups.ProductInfo.materials) MATERIALS
     #product__info
-    a#product__share.action(data-action= clickActions.product_share) SHARE
+    #product__share
+        a.action(data-action= clickActions.product_share data-id= groups.SocialMedia.none) SHARE
+        #share-buttons
+            a.icon.icon-pinterest(data-action= clickActions.product_share data-id= groups.SocialMedia.pinterest)
+            a.icon.icon-facebook(data-action= clickActions.product_share data-id= groups.SocialMedia.facebook)
+            a.icon.icon-twitter(data-action= clickActions.product_share data-id= groups.SocialMedia.twitter)
     #product__gallery
         img#gallery__main
         .gallery__item
@@ -19,4 +24,4 @@
         .gallery__item
             img.gallery__thumb(data-action= clickActions.product_gallery data-id="3")
         a#product__order.action(data-action= clickActions.product_order) PREORDER
-    a#product--next(data-action= clickActions.product_next data-id= groups.NavDirection.next) >
+    a#product--next.icon.icon-arrow-right(data-action= clickActions.product_next data-id= groups.NavDirection.next)

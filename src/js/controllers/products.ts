@@ -1,8 +1,18 @@
 import { DetailsUpdate } from "../constants/masks";
 import { ProductInfo,
-        NavDirection } from "../constants/groups";
+        NavDirection,
+        SocialMedia } from "../constants/groups";
+
+// social media apis
+declare var PinUtils;
+declare var FB;
+
+const productsUrlBase = "//localhost:8000/products/";
+const pinterestBase = "https://www.pinterest.com/pin/create/button/?url=" + productsUrlBase;
+const pinterestMediaBase = "http://localhost:8000/media/products/p";
 
 var active = false,
+    shareBtnsVisible = false,
     orderBtnClicked = false;
 var updates = 0,
     activeGalleryImg = 0,
@@ -15,6 +25,7 @@ var productData,
     productName,
     productInfo,
     orderBtn,
+    shareBtns,
     galleryMain,
     galleryThumbs,
     toggleDescription,
@@ -40,12 +51,26 @@ void function init() {
             productImage = detailsWrap.querySelector("#product__image");
             productInfo = detailsWrap.querySelector("#product__info");
             orderBtn = detailsWrap.querySelector("#product__order");
+            shareBtns = detailsWrap.querySelector("#share-buttons");
             galleryMain = detailsWrap.querySelector("#gallery__main");
             galleryThumbs = detailsWrap.querySelectorAll(".gallery__thumb");
             let toggles = detailsWrap.querySelectorAll(".toggles > .action");
             toggleDescription = toggles[0];
             toggleMaterials = toggles[1];
             toggles = null;
+
+            // init social buttons
+            let scriptTag = document.createElement("script");
+            scriptTag.type = "text/javascript";
+            scriptTag.async = true;
+            scriptTag.src = "//assets.pinterest.com/js/pinit.js";
+            document.head.appendChild(scriptTag);
+            scriptTag = document.createElement("script");
+            scriptTag.type = "text/javascript";
+            scriptTag.async = true;
+            scriptTag.src = "https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.6&appId=432524660561276";
+            document.head.appendChild(scriptTag);
+            scriptTag = null;
         }
     };
     reqHtml.open("GET", "/product.html", true);
@@ -57,10 +82,6 @@ export function showDetails(productIndex: number) {
         if (currentProduct !== productIndex) {
             currentProduct = productIndex;
             updates |= DetailsUpdate.data;
-            if (orderBtnClicked) {
-                orderBtnClicked = false;
-                updates |= DetailsUpdate.order;
-            }
         }
         if (!active) {
             active = true;
@@ -72,17 +93,14 @@ export function showDetails(productIndex: number) {
     }
 }
 
+
 export function nextProduct(direction: number) {
     if (direction === NavDirection.prev) {
         if (--currentProduct < 0) currentProduct = productData.length - 1;
     } else if (++currentProduct >= productData.length) {
         currentProduct = 0;
     }
-    if (orderBtnClicked) {
-        orderBtnClicked = false;
-        updates |= DetailsUpdate.order;
-    }
-    updates |= DetailsUpdate.data;
+      updates |= DetailsUpdate.data;
 }
 
 export function clickDetailThumb(index: number): boolean {
@@ -106,6 +124,37 @@ export function clickOrderProduct(): boolean {
     return true;
 }
 
+export function clickShare(socialmedium: number): boolean {
+    switch (socialmedium) {
+        case SocialMedia.none:
+            shareBtnsVisible = !shareBtnsVisible;
+            updates |= DetailsUpdate.share;
+            return true;
+
+        case SocialMedia.pinterest:
+            PinUtils.pinOne({
+                url: pinterestBase + currentProduct,
+                media: pinterestMediaBase + currentProduct + "_main.jpg",
+                description: productData[currentProduct].description
+            });
+            break;
+
+        case SocialMedia.facebook:
+            FB.ui({
+                method: "share",
+                href: productsUrlBase + currentProduct,
+                quote: productData[currentProduct].description
+            }, function (response) {
+                console.log(response);
+            });
+            break;
+
+        case SocialMedia.twitter:
+            break;
+    }
+    return false;
+}
+
 export function updateProductDetails(): boolean {
     if (updates & DetailsUpdate.active) {
         updateVisible();
@@ -127,6 +176,10 @@ export function updateProductDetails(): boolean {
         updateOrderBtn();
         updates ^= DetailsUpdate.order;
     }
+    if (updates & DetailsUpdate.share) {
+        updateShareBtns();
+        updates ^= DetailsUpdate.share;
+    }
     return updates === 0;
 }
 
@@ -136,6 +189,14 @@ function setProductDetails() {
     productInfo.innerText = activeInfo === ProductInfo.description ?
         data.description : data.materials;
     productImage.src = "/media/products/p" + 0 /* debug data.id */ + "_main.jpg";
+    if (shareBtnsVisible) {
+        shareBtnsVisible = false;
+        updateShareBtns();
+    }
+    if (orderBtnClicked) {
+        orderBtnClicked = false;
+        updateOrderBtn();
+    }
     setGallery();
 }
 
@@ -187,4 +248,8 @@ function updateGallery() {
 function updateVisible() {
     if (detailsWrap.parentNode) detailsWrap.parentNode.removeChild(detailsWrap);
     if (active) document.body.appendChild(detailsWrap);
+}
+
+function updateShareBtns() {
+    shareBtns.style.visibility = shareBtnsVisible ? "visible" : "hidden";
 }

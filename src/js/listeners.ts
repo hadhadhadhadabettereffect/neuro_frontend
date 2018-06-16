@@ -5,6 +5,7 @@ import { toggleContact } from "./controllers/contact";
 import { showDetails,
         clickDetailThumb,
         clickOrderProduct,
+        clickShare,
         toggleProductInfo,
         nextProduct } from "./controllers/products";
 import { navToSection } from "./controllers/page";
@@ -81,7 +82,9 @@ function handleClick(event) {
                 break;
 
             case ClickAction.product_share:
-                console.log("share product");
+                if (clickShare(event.target.getAttribute("data-id") | 0)) {
+                    markChange(ChangeHandler.product);
+                }
                 break;
 
             case ClickAction.product_order:

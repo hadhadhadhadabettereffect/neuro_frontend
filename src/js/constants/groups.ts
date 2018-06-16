@@ -23,3 +23,11 @@ export const enum ProductType {
     top,
     shoes,
 }
+
+export const enum SocialMedia {
+    none,
+    pinterest,
+    facebook,
+    twitter,
+    instagram,
+}

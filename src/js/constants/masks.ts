@@ -45,10 +45,12 @@ export const enum DetailsUpdate {
     _gallery,
     _info,
     _order,
+    _share,
 
     active = 1 << _active,
     data = 1 << _data,
     gallery = 1 << _gallery,
     info = 1 << _info,
     order = 1 << _order,
+    share = 1 << _share,
 }

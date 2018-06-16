@@ -146,4 +146,5 @@
 
 #share-buttons {
     display: inline-block;
+    visibility: hidden;
 }
