@@ -1,0 +1,40 @@
+.icon {
+  display: inline-block;
+  background-repeat: no-repeat;
+  background-image: url(sprite.png);
+}
+.icon-arrow-left {
+  width: 48px;
+  height: 48px;
+  background-position: 0 0;
+}
+.icon-arrow-right {
+  width: 48px;
+  height: 48px;
+  background-position: -64px 0;
+}
+.icon-x {
+  width: 48px;
+  height: 48px;
+  background-position: -128px 0;
+}
+.icon-facebook {
+  width: 24px;
+  height: 24px;
+  background-position: 0 -64px;
+}
+.icon-instagram {
+  width: 24px;
+  height: 24px;
+  background-position: -40px -64px;
+}
+.icon-twitter {
+  width: 24px;
+  height: 24px;
+  background-position: -80px -64px;
+}
+.icon-pinterest {
+  width: 24px;
+  height: 24px;
+  background-position: -120px -64px;
+}

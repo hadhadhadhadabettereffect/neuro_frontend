@@ -143,3 +143,7 @@
     cursor: default;
     background: #777;
 }
+
+#share-buttons {
+    display: inline-block;
+}
