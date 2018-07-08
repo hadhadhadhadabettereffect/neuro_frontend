@@ -22,9 +22,9 @@ const productsUrlBase = "//localhost:8000/products/";
 const pinterestBase = "https://www.pinterest.com/pin/create/button/?url=" + productsUrlBase;
 const pinterestMediaBase = "http://localhost:8000/media/products/p";
 
-var active = false,
-    shareBtnsVisible = false,
-    orderBtnClicked = false;
+var shareBtnsVisible = false,
+    orderBtnClicked = false,
+    attached = false;
 var updates = 0,
     activeGalleryImg = 0,
     clickedGalleryThumb = 0,
@@ -38,11 +38,10 @@ var x0 = 0,
     targetFrame = GalleryConfig.startingFrame,
     trueFrame = GalleryConfig.startingFrame;
 
-
-
+const liftEl = document.getElementById("lift__content"),
+    detailsWrap = document.createElement("div");
 
 var productData,
-    detailsWrap,
     turnerImg,
     productName,
     productInfo,
@@ -66,7 +65,6 @@ void function init() {
     const reqHtml = new XMLHttpRequest();
     reqHtml.onreadystatechange = function () {
         if (reqHtml.readyState === XMLHttpRequest.DONE) {
-            detailsWrap = document.createElement("div");
             detailsWrap.id = "details";
             detailsWrap.innerHTML = reqHtml.responseText;
             productName = detailsWrap.querySelector("#product__name");
@@ -99,6 +97,14 @@ void function init() {
     reqHtml.send();
 }();
 
+
+export function attachDetails(attach: boolean) {
+    if (attached !== attach) {
+        attached = attach;
+        updates |= DetailsUpdate.mount;
+    }
+}
+
 export function startTurner(event: MouseEvent) {
     if ((updates & DetailsUpdate.turning) === 0) {
         window.addEventListener("mousemove", handleMouseMove, false);
@@ -109,18 +115,13 @@ export function startTurner(event: MouseEvent) {
 }
 
 export function showDetails(productIndex: number) {
-    if (~productIndex) {
-        if (currentProduct !== productIndex) {
-            currentProduct = productIndex;
-            updates |= DetailsUpdate.data;
-        }
-        if (!active) {
-            active = true;
-            updates |= DetailsUpdate.active;
-        }
-    } else if (active) {
-        active = false;
-        updates |= DetailsUpdate.active;
+    if (!attached) {
+        attached = true;
+        updates |= DetailsUpdate.mount;
+    }
+    if (currentProduct !== productIndex) {
+        currentProduct = productIndex;
+        updates |= DetailsUpdate.data;
     }
 }
 
@@ -191,13 +192,13 @@ export function updateProductDetails(): boolean {
         if (updates & DetailsUpdate.turning) {
             turnTurner();
         }
-        if (updates & DetailsUpdate.active) {
-            updateVisible();
-            updates ^= DetailsUpdate.active;
-        }
         if (updates & DetailsUpdate.data) {
             setProductDetails();
             updates ^= DetailsUpdate.data;
+        }
+        if (updates & DetailsUpdate.info) {
+            setInfoText();
+            updates ^= DetailsUpdate.info;
         }
         if (updates & DetailsUpdate.gallery) {
             updateGallery();
@@ -205,10 +206,6 @@ export function updateProductDetails(): boolean {
         }
     }
     if (updates & DetailsUpdate.group2) {
-        if (updates & DetailsUpdate.info) {
-            setInfoText();
-            updates ^= DetailsUpdate.info;
-        }
         if (updates & DetailsUpdate.order) {
             updateOrderBtn();
             updates ^= DetailsUpdate.order;
@@ -217,9 +214,15 @@ export function updateProductDetails(): boolean {
             updateShareBtns();
             updates ^= DetailsUpdate.share;
         }
+        if (updates & DetailsUpdate.mount) {
+            if (attached) liftEl.appendChild(detailsWrap);
+            else detailsWrap.remove();
+            updates ^= DetailsUpdate.mount;
+        }
     }
     return updates === 0;
 }
+
 
 function setProductDetails() {
     const data = productData[currentProduct];
@@ -281,11 +284,6 @@ function updateGallery() {
     galleryThumbs[clickedGalleryThumb].className = "gallery__thumb gallery__thumb--active";
     galleryMain.src = galleryThumbs[clickedGalleryThumb].src;
     activeGalleryImg = clickedGalleryThumb;
-}
-
-function updateVisible() {
-    if (detailsWrap.parentNode) detailsWrap.parentNode.removeChild(detailsWrap);
-    if (active) document.body.appendChild(detailsWrap);
 }
 
 function updateShareBtns() {

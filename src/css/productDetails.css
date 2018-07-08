@@ -35,6 +35,7 @@
     text-align: right;
 }
 
+/*
 #product__close {
     grid-column-start: margin--2;
     grid-column-end: -1;
@@ -43,7 +44,6 @@
     text-align: right;
 }
 
-/*
 #product__image {
     grid-column-start: col--1;
     grid-column-end: gutter;

@@ -79,6 +79,12 @@ $height--details__gallery: 390px;
 $breakpoint-1: 600px;
 $breakpoint-2: 420px;
 
+/*********
+ * z-index
+ *********/
+$z--nav: 1;
+$z--lift: 2;
+
 
 /* calculated measurements */
 $width--details__gallery: calc($width--gallery__img + $width--gallery__thumb);

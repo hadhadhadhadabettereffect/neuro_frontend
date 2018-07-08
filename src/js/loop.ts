@@ -6,9 +6,10 @@ import { updateSlides,
         updateHeight } from "./controllers/slides";
 import { updateProductDetails } from "./controllers/products";
 import { updateFilters } from "./controllers/filters";
-
+import { updateLift } from "./controllers/lift";
 
 var changes = 0;
+var start;
 
 export function markChange(changeMask: number) {
     changes |= changeMask;
@@ -21,32 +22,46 @@ function animate() {
 
 function applyUpdates() {
     if (changes) {
-        // only applying changes to one handler at a time
-        // so if contact is active, nav and sections wont change
-        if (changes & ChangeHandler.contact) {
-            if (updateContact())
-                changes ^= ChangeHandler.contact;
-        }
-        else if (changes & ChangeHandler.page) {
-            if (updateContent())
-                changes ^= ChangeHandler.page;
-        }
-        else if (changes & ChangeHandler.product) {
-            if (updateProductDetails())
-                changes ^= ChangeHandler.product;
-        }
-        else if (changes & ChangeHandler.slides) {
-            if (updateSlides())
-                changes ^= ChangeHandler.slides;
-        }
-        else if (changes & ChangeHandler.resize) {
+        start = performance.now();
+
+        // update width height first since it could affect other items
+        if (changes & ChangeHandler.resize) {
             changes ^= ChangeHandler.resize;
             updateWidth();
             updateHeight();
+            if (performance.now() - start > 3) return;
         }
-        else if (changes & ChangeHandler.filters) {
+
+        if (changes & ChangeHandler.slides) {
+            if (updateSlides())
+                changes ^= ChangeHandler.slides;
+            if (performance.now() - start > 3) return;
+        }
+
+        // wait for product info to load before showing details
+        if (changes & ChangeHandler.product) {
+            if (updateProductDetails())
+                changes ^= ChangeHandler.product;
+            if (performance.now() - start > 3) return;
+        } else if (changes & ChangeHandler.lift) {
+            if (updateLift())
+                changes ^= ChangeHandler.lift;
+            if (performance.now() - start > 3) return;
+        }
+
+        // these shouldn't need updates at the same time
+        if (changes & ChangeHandler.page) {
+            if (updateContent())
+                changes ^= ChangeHandler.page;
+            if (performance.now() - start > 3) return;
+        } else if (changes & ChangeHandler.contact) {
+            if (updateContact())
+                changes ^= ChangeHandler.contact;
+            if (performance.now() - start > 3) return;
+        } else if (changes & ChangeHandler.filters) {
             if (updateFilters())
                 changes ^= ChangeHandler.filters;
+            if (performance.now() - start > 3) return;
         }
     }
 }

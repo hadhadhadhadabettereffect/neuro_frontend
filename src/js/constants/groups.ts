@@ -31,3 +31,8 @@ export const enum SocialMedia {
     twitter,
     instagram,
 }
+
+export const enum LiftContent {
+    contact,
+    product,
+}

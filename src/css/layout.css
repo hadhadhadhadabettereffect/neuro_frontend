@@ -1,44 +1,35 @@
-#wrap {
+.full {
     position: fixed;
-    width: 100%;
     top: 0;
     bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+#wrap {
+    @extend .full;
     display: none;
     background: $background;
 }
 
 #content {
-    position: fixed;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
+    @extend .full;
     will-change: transform;
     -ms-overflow-style: none;
 }
 
-.landing {
-    position: absolute;
-    width: 100%;
+.video-wrap {
     height: 100%;
+    width: 100%;
     overflow: hidden;
+    transform: translate3d(0,0,0); /* helps keep contact link from getting hidden */
 }
 
-.full {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    overflow: hidden;
-    background-color: #000;
-}
 
 .slide {
     position: absolute;
     width: 100%;
     height: 100%;
-    background: $background;
     border-bottom: 1px solid #333;
 }
 
@@ -117,13 +108,6 @@
     background: gray;
 }
 
-
-
-.video-wrap {
-    height: 100%;
-    width: 100%;
-    transform: translate3d(0,0,0); /* helps keep contact link from getting hidden */
-}
 
 
 

@@ -1,8 +1,10 @@
 import { ClickAction } from "./constants/actions";
 import { ChangeHandler,
         ContentChange } from "./constants/masks";
-import { toggleContact } from "./controllers/contact";
+import { attachContact,
+        showContact } from "./controllers/contact";
 import { showDetails,
+        attachDetails,
         clickDetailThumb,
         clickOrderProduct,
         clickShare,
@@ -13,6 +15,7 @@ import { navToSection } from "./controllers/page";
 import { markSlidesChange,
         scrollToSlide,
         setActiveSection } from "./controllers/slides";
+import { activateLift } from "./controllers/lift";
 import { clickFilter } from "./controllers/filters";
 import { markChange } from "./loop";
 
@@ -58,13 +61,17 @@ function handleClick(event) {
                 break;
 
             case ClickAction.contact:
-                toggleContact();
-                markChange(ChangeHandler.contact);
+                attachDetails(false);
+                showContact(true);
+                activateLift(true);
+                markChange(ChangeHandler.liftedContent);
                 break;
 
             case ClickAction.product_show:
                 showDetails(event.target.getAttribute("data-id") | 0);
-                markChange(ChangeHandler.product);
+                attachContact(false);
+                activateLift(true);
+                markChange(ChangeHandler.liftedContent);
                 break;
 
             case ClickAction.product_turn:
@@ -95,6 +102,12 @@ function handleClick(event) {
 
             case ClickAction.product_order:
                 if (clickOrderProduct()) markChange(ChangeHandler.product);
+                break;
+
+            case ClickAction.lower_lift:
+                activateLift(false);
+                showContact(false);
+                markChange(ChangeHandler.lift);
                 break;
 
             case ClickAction.filter:

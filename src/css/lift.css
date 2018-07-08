@@ -1,0 +1,22 @@
+#lift {
+    @extend .full;
+    display: none;
+    z-index: $z--lift;
+    will-change: transform;
+}
+
+#lift__up {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: $height--nav;
+}
+
+#lift__content {
+    position: absolute;
+    top: $height--nav;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}

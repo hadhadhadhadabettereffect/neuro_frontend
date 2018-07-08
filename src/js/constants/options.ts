@@ -1,7 +1,9 @@
 export const enum TransitionMS {
     slide = 250,
     landing = 300,
-    popunder = 180,
+    lift = 200,
+
+    lift_divide = lift / 100,
 }
 
 export const enum NavMeasure {

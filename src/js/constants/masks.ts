@@ -1,19 +1,22 @@
 export const enum ChangeHandler {
     _slides,
+    _lift,
     _page,
-    _product,
     _contact,
+    _product,
     _resize,
     _filters,
 
     slides = 1 << _slides,
+    lift = 1 << _lift,
     page = 1 << _page,
-    product = 1 << _product,
     contact = 1 << _contact,
+    product = 1 << _product,
     resize = 1 << _resize,
     filters = 1 << _filters,
 
     navigate = page | slides,
+    liftedContent = lift | contact | product,
 }
 
 export const enum ListenerEvent {
@@ -41,21 +44,21 @@ export const enum ContentChange {
 
 export const enum DetailsUpdate {
     _turning,
-    _active,
     _data,
-    _gallery,
     _info,
+    _gallery,
     _order,
     _share,
-
-    turning = 1 << _turning,
-    active = 1 << _active,
-    data = 1 << _data,
-    gallery = 1 << _gallery,
-    info = 1 << _info,
-    order = 1 << _order,
-    share = 1 << _share,
+    _mount,
 
     group1 = (1 << 4) - 1,
+    turning = 1 << _turning,
+    data = 1 << _data,
+    info = 1 << _info,
+    gallery = 1 << _gallery,
+
     group2 = group1 << 4,
+    order = 1 << _order,
+    share = 1 << _share,
+    mount = 1 << _mount,
 }

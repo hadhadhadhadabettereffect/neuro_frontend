@@ -1,7 +1,6 @@
 import { NavMeasure,
         TransitionMS } from "../constants/options";
 
-
 const enum TimeUnits {
     hoursPerDay = 24,
     minsPerHour = 60,
@@ -12,21 +11,17 @@ const enum TimeUnits {
     msPerHour = msPerMin * minsPerHour,
 }
 
-const contactEl = document.createElement("div");
-var clockEl = null;
 
-var visible = false;
-var transition = false;
-var appendEl = false;
-var awaitingHTML = true;
+const contactEl = document.createElement("div");
+const liftEl = document.getElementById("lift__content");
+var clockEl = document.createElement("div");
+
+var active = false;
+var attached = false;
+var remount = false;
 
 var timeoffset = -4 * TimeUnits.msPerHour; // UTC -4:00
 var t = 0; // current time in ms
-var delta = 0; // transition time
-var startTime = 0;
-var windowHeight = 0;
-var yOffset = 0;
-var elTop = 0;
 
 var fetchContact = new XMLHttpRequest();
 fetchContact.onreadystatechange = function () {
@@ -34,36 +29,40 @@ fetchContact.onreadystatechange = function () {
         contactEl.id = "contact";
         contactEl.innerHTML = fetchContact.responseText;
         clockEl = contactEl.querySelector("#clock");
-        awaitingHTML = false;
     }
 };
 fetchContact.open("GET", "/contact.html", true);
 fetchContact.send();
 
-export function toggleContact() {
-    if (!transition) {
-        transition = true;
-        delta = 0;
-        visible = !visible;
-        windowHeight = window.innerHeight;
-        if (visible) {
-            elTop = windowHeight;
-            yOffset = NavMeasure.nav_height - windowHeight;
-            appendEl = true;
-        } else {
-            elTop = NavMeasure.nav_height;
-            yOffset = windowHeight - NavMeasure.nav_height;
-        }
-        startTime = performance.now();
+
+export function attachContact(show: boolean) {
+    if (attached !== show) {
+        attached = show
+        remount = true;
+    }
+}
+
+export function showContact(show: boolean) {
+    active = show;
+    if (active && !attached) {
+        attached = true;
+        remount = true;
     }
 }
 
 export function updateContact(): boolean {
-    if (awaitingHTML) return false;
+    if (remount) {
+        remount = false;
+        if (attached) {
+            if (contactEl.parentElement !== liftEl) {
+                contactEl.remove();
+                liftEl.appendChild(contactEl);
+            }
+        } else contactEl.remove();
+    }
 
-    if (transition) showHide();
     // if contact form is active, animate clock
-    if (visible && clockEl !== null) {
+    else if (active) {
         // if at least 1 second has passed
         if ((Date.now() + timeoffset) - t > 999) {
             t = Date.now() + timeoffset;
@@ -72,22 +71,7 @@ export function updateContact(): boolean {
                 getSecs(t);
         }
     }
-    return !transition && !visible; // keep animating time if visible
-}
-
-function finalizeTransition () {
-    transition = false;
-    if (visible) contactEl.style.transform = "";
-    else document.body.removeChild(contactEl);
-}
-
-function showHide () {
-    delta = (performance.now() - startTime) / TransitionMS.popunder;
-    contactEl.style.transform = "translateY(" + (elTop + (yOffset * delta) >>> 0) + "px)";
-    if (appendEl) {
-        appendEl = false;
-        document.body.appendChild(contactEl);
-    } else if (delta > 1) finalizeTransition();
+    return active; // keep animating time if visible
 }
 
 
