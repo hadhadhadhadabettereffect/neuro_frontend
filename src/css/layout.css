@@ -44,6 +44,8 @@
     max-width: 100%;
     margin: 0 auto;
     padding: $height--nav;
+    position: absolute;
+    top: 0;
 }
 
 .content__inner--half {
@@ -58,6 +60,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+
 }
 
 .content__inner--scroll {

@@ -37,6 +37,7 @@ fetchContact.send();
 
 export function attachContact(show: boolean) {
     if (attached !== show) {
+        active = show;
         attached = show
         remount = true;
     }
@@ -62,7 +63,7 @@ export function updateContact(): boolean {
     }
 
     // if contact form is active, animate clock
-    else if (active) {
+    if (active) {
         // if at least 1 second has passed
         if ((Date.now() + timeoffset) - t > 999) {
             t = Date.now() + timeoffset;
@@ -71,7 +72,7 @@ export function updateContact(): boolean {
                 getSecs(t);
         }
     }
-    return active; // keep animating time if visible
+    return !active; // keep animating time if visible
 }
 
 

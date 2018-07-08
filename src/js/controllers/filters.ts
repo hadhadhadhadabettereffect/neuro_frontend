@@ -10,6 +10,7 @@ var updateIndex = 0;
 var filters, products;
 
 export function clickFilter(filter: number): boolean {
+    console.log(filter);
     if (nextActive === filter) return false;
     if (!filters) {
         filters = document.querySelectorAll(".filter, .filter--active");
