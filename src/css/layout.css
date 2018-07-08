@@ -81,17 +81,14 @@
 
 .col {
     width: $width--col;
-    /* height: 100%; */
     margin-right: $width--col__gap;
     flex-shrink: 0;
     padding-top: 100px;
 }
 
 .slide__img {
-    /* width: 400px; */
     height: 100%;
     background: gray;
-    /* padding-top: 100px; */
     margin-right: 50px;
 }
 
@@ -119,6 +116,16 @@
     height: $height--grid__item;
     background: gray;
 }
+
+
+
+.video-wrap {
+    height: 100%;
+    width: 100%;
+    transform: translate3d(0,0,0); /* helps keep contact link from getting hidden */
+}
+
+
 
 @media only screen and (max-width: $breakpoint-1) {
     .col {

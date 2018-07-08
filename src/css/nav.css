@@ -39,6 +39,27 @@
     height: $height--nav;
 }
 
+%contactLink {
+    bottom: 2.4em;
+    left: 50%;
+    width: 8em;
+    margin-left: -4em;
+    font-size: 1.2rem;
+    text-align: center;
+    letter-spacing: 0.15em;
+}
+
+#nav--contact {
+    @extend %contactLink;
+    position: fixed;
+}
+
+#contact--agency, #contact--collection {
+    @extend %contactLink;
+    visibility: hidden;
+    position: absolute;
+}
+
 .nav__link {
     @extend %type--nav__link;
     width: $width--nav-link;

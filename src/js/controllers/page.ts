@@ -20,13 +20,16 @@ var wrapEl = document.getElementById("wrap"),
     contentEl = document.getElementById("content"),
     agencyEl = document.createElement("div"),
     collectionEl = document.createElement("div"),
+    contactNavLink  = document.getElementById("nav--contact"),
     homeVideo = document.getElementById("home").querySelector("video") as HTMLVideoElement;
+var agencyContactLink, collectionContactLink;
 
 // fetch agency and collection html
 var fetchAgency = new XMLHttpRequest();
 fetchAgency.onreadystatechange = function () {
     if (fetchAgency.readyState === XMLHttpRequest.DONE) {
         agencyEl.innerHTML = fetchAgency.responseText;
+        agencyContactLink = agencyEl.querySelector("#contact--agency");
         let photos = agencyEl.querySelectorAll(".staff__photo");
         for (let i = 0; i < 4; ++i) {
             (photos[i] as HTMLImageElement).src = "https://placeimg.com/140/140/animals?t=" +
@@ -41,6 +44,7 @@ var fetchCollection = new XMLHttpRequest();
 fetchCollection.onreadystatechange = function () {
     if (fetchCollection.readyState === XMLHttpRequest.DONE) {
         collectionEl.innerHTML = fetchCollection.responseText;
+        collectionContactLink = collectionEl.querySelector("#contact--collection");
     }
 };
 fetchCollection.open("GET", "/collection.html", true);
@@ -78,14 +82,20 @@ function initTransition() {
     initMove = false;
     // hide scroll bars when moving
     contentEl.style.overflowY = "hidden";
+    // swap local contact btn for global
+    contactNavLink.style.display = "block";
+
 
     // if coming from either size, first move off to side
     if (prevSection === LandingPage.agency) {
         startX = 0;
         moveX = -width;
+        console.log(agencyContactLink);
+
     } else if (prevSection === LandingPage.collection) {
         startX = 0;
         moveX = width;
+        console.log(collectionContactLink);
     } else {
         homeVideo.pause();
         wrapEl.style.display = "block";
@@ -128,6 +138,10 @@ function handleTransition() {
             prevSection = activeSection;
             homeVideo.pause();
             contentEl.querySelector("video").play();
+            contactNavLink.style.display = "none";
+            agencyContactLink.style.visibility = "visible";
+            collectionContactLink.style.visibility = "visible";
+            // (contentEl.querySelector(".button--contact") as HTMLElement).style.visibility = "visible";
         }
         // if coming from one side and moving to the other
         // start moving towards other side after moving from prevSide

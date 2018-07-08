@@ -1,8 +1,10 @@
 - var m = 0
 .landing
-    video(playsinline autoplay muted loop poster="media/vid-c.jpg" class="video")
-        source(src="media/vid-c.mp4" type="video/mp4")
-        source(src="media/vid-c.webm" type="video/webm")
+    .video-wrap
+        video(playsinline autoplay muted loop poster="media/vid-c.jpg" class="video")
+            source(src="media/vid-c.mp4" type="video/mp4")
+            source(src="media/vid-c.webm" type="video/webm")
+    a#contact--collection(data-action= clickActions.contact) CONTACT
 .slide(style=`top:${++m}00%`)
     .content__inner
         include s2_products
