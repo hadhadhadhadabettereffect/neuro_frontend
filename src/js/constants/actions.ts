@@ -3,6 +3,7 @@ export const enum ClickAction {
     subnav,
     contact,
     product_show,
+    product_turn,
     product_next,
     product_info,
     product_share,

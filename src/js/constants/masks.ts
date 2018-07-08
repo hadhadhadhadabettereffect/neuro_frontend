@@ -40,6 +40,7 @@ export const enum ContentChange {
 }
 
 export const enum DetailsUpdate {
+    _turning,
     _active,
     _data,
     _gallery,
@@ -47,10 +48,14 @@ export const enum DetailsUpdate {
     _order,
     _share,
 
+    turning = 1 << _turning,
     active = 1 << _active,
     data = 1 << _data,
     gallery = 1 << _gallery,
     info = 1 << _info,
     order = 1 << _order,
     share = 1 << _share,
+
+    group1 = (1 << 4) - 1,
+    group2 = group1 << 4,
 }

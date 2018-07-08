@@ -7,6 +7,17 @@ import { ProductInfo,
 declare var PinUtils;
 declare var FB;
 
+declare const enum GalleryConfig {
+    pxPerFrame = 2,
+    totalFrames = 32,
+    maxFrame = totalFrames - 1,
+    startingFrame = 0,
+    width = 625,
+    height = 1600,
+    doubleWidth = 1250,
+}
+
+
 const productsUrlBase = "//localhost:8000/products/";
 const pinterestBase = "https://www.pinterest.com/pin/create/button/?url=" + productsUrlBase;
 const pinterestMediaBase = "http://localhost:8000/media/products/p";
@@ -19,9 +30,20 @@ var updates = 0,
     clickedGalleryThumb = 0,
     activeInfo = 0,
     currentProduct = -1;
+
+var x0 = 0,
+    x1 = 0,
+    startingFrame = GalleryConfig.startingFrame,
+    currentFrame = GalleryConfig.startingFrame,
+    targetFrame = GalleryConfig.startingFrame,
+    trueFrame = GalleryConfig.startingFrame;
+
+
+
+
 var productData,
     detailsWrap,
-    productImage,
+    turnerImg,
     productName,
     productInfo,
     orderBtn,
@@ -48,7 +70,7 @@ void function init() {
             detailsWrap.id = "details";
             detailsWrap.innerHTML = reqHtml.responseText;
             productName = detailsWrap.querySelector("#product__name");
-            productImage = detailsWrap.querySelector("#product__image");
+            turnerImg = detailsWrap.querySelector("#turner__img");
             productInfo = detailsWrap.querySelector("#product__info");
             orderBtn = detailsWrap.querySelector("#product__order");
             shareBtns = detailsWrap.querySelector("#share-buttons");
@@ -77,6 +99,15 @@ void function init() {
     reqHtml.send();
 }();
 
+export function startTurner(event: MouseEvent) {
+    if ((updates & DetailsUpdate.turning) === 0) {
+        window.addEventListener("mousemove", handleMouseMove, false);
+        window.addEventListener("mouseup", handleMouseUp, false);
+        updates |= DetailsUpdate.turning;
+        x0 = event.clientX;
+    }
+}
+
 export function showDetails(productIndex: number) {
     if (~productIndex) {
         if (currentProduct !== productIndex) {
@@ -92,7 +123,6 @@ export function showDetails(productIndex: number) {
         updates |= DetailsUpdate.active;
     }
 }
-
 
 export function nextProduct(direction: number) {
     if (direction === NavDirection.prev) {
@@ -156,29 +186,37 @@ export function clickShare(socialmedium: number): boolean {
 }
 
 export function updateProductDetails(): boolean {
-    if (updates & DetailsUpdate.active) {
-        updateVisible();
-        updates ^= DetailsUpdate.active;
+
+    if (updates & DetailsUpdate.group1) {
+        if (updates & DetailsUpdate.turning) {
+            turnTurner();
+        }
+        if (updates & DetailsUpdate.active) {
+            updateVisible();
+            updates ^= DetailsUpdate.active;
+        }
+        if (updates & DetailsUpdate.data) {
+            setProductDetails();
+            updates ^= DetailsUpdate.data;
+        }
+        if (updates & DetailsUpdate.gallery) {
+            updateGallery();
+            updates ^= DetailsUpdate.gallery;
+        }
     }
-    if (updates & DetailsUpdate.data) {
-        setProductDetails();
-        updates ^= DetailsUpdate.data;
-    }
-    if (updates & DetailsUpdate.gallery) {
-        updateGallery();
-        updates ^= DetailsUpdate.gallery;
-    }
-    if (updates & DetailsUpdate.info) {
-        setInfoText();
-        updates ^= DetailsUpdate.info;
-    }
-    if (updates & DetailsUpdate.order) {
-        updateOrderBtn();
-        updates ^= DetailsUpdate.order;
-    }
-    if (updates & DetailsUpdate.share) {
-        updateShareBtns();
-        updates ^= DetailsUpdate.share;
+    if (updates & DetailsUpdate.group2) {
+        if (updates & DetailsUpdate.info) {
+            setInfoText();
+            updates ^= DetailsUpdate.info;
+        }
+        if (updates & DetailsUpdate.order) {
+            updateOrderBtn();
+            updates ^= DetailsUpdate.order;
+        }
+        if (updates & DetailsUpdate.share) {
+            updateShareBtns();
+            updates ^= DetailsUpdate.share;
+        }
     }
     return updates === 0;
 }
@@ -188,7 +226,7 @@ function setProductDetails() {
     productName.innerText = data.name;
     productInfo.innerText = activeInfo === ProductInfo.description ?
         data.description : data.materials;
-    productImage.src = "/media/products/p" + 0 /* debug data.id */ + "_main.jpg";
+    turnerImg.src = "/media/products/360/" + currentProduct + ".jpg";
     if (shareBtnsVisible) {
         shareBtnsVisible = false;
         updateShareBtns();
@@ -252,4 +290,36 @@ function updateVisible() {
 
 function updateShareBtns() {
     shareBtns.style.visibility = shareBtnsVisible ? "visible" : "hidden";
+}
+
+
+function turnTurner() {
+    targetFrame = startingFrame + Math.round((x0 - x1) / GalleryConfig.doubleWidth * GalleryConfig.totalFrames);
+
+    if (targetFrame > currentFrame) {
+        ++currentFrame;
+        if (++trueFrame > GalleryConfig.maxFrame)
+            trueFrame = 0;
+    } else if (targetFrame < currentFrame) {
+        --currentFrame;
+        if (--trueFrame < 0) trueFrame = GalleryConfig.maxFrame;
+    }
+    turnerImg.style.left = "-" + trueFrame + "00%";
+}
+
+
+// mouse listeners
+
+function handleMouseMove(event) {
+    x1 = event.clientX;
+}
+
+function handleMouseUp(event) {
+    if (updates & DetailsUpdate.turning) {
+        window.removeEventListener("mousemove", handleMouseMove, false);
+        window.removeEventListener("mouseup", handleMouseUp, false);
+        updates ^= DetailsUpdate.turning;
+        startingFrame = trueFrame;
+        currentFrame = trueFrame;
+    }
 }

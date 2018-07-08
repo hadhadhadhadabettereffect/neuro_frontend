@@ -175,3 +175,9 @@ function onEnterSlide(slide: number) {
 }
 
 
+const topContact = document.createElement("div");
+
+function fixContact() {
+    topContact.className = nextSlide === 0 ? "hidden" : "fixed";
+
+}

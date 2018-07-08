@@ -6,6 +6,7 @@ import { showDetails,
         clickDetailThumb,
         clickOrderProduct,
         clickShare,
+        startTurner,
         toggleProductInfo,
         nextProduct } from "./controllers/products";
 import { navToSection } from "./controllers/page";
@@ -16,7 +17,7 @@ import { clickFilter } from "./controllers/filters";
 import { markChange } from "./loop";
 
 
-document.body.addEventListener("click", handleClick, false);
+document.body.addEventListener("mousedown", handleClick, false);
 window.addEventListener("resize", handleResize, false);
 document.getElementById("content").addEventListener("scroll", handleScroll, false);
 
@@ -63,6 +64,11 @@ function handleClick(event) {
 
             case ClickAction.product_show:
                 showDetails(event.target.getAttribute("data-id") | 0);
+                markChange(ChangeHandler.product);
+                break;
+
+            case ClickAction.product_turn:
+                startTurner(event);
                 markChange(ChangeHandler.product);
                 break;
 

@@ -10,18 +10,20 @@
 
 .close {
     position: absolute;
-    top: 60px;
-    right: 60px;
+    top: 45px;
+    right: 45px;
     cursor: pointer;
-    // height: 20px;
-    // width: 20px;
 }
 
 .time {
     display: inline-block;
+    font-size: 4rem;
 }
 
 #clock {
     /* setting fixed width so "EDT/EST" doesnt move as time updates */
-    width: 150px;
+    width: 16.5rem;
+    font-size: 4rem;
+    letter-spacing: 0.1em;
+    margin-top: 10px;
 }

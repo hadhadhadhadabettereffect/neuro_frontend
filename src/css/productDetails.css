@@ -43,11 +43,32 @@
     text-align: right;
 }
 
+/*
 #product__image {
     grid-column-start: col--1;
     grid-column-end: gutter;
     grid-row-start: title;
     grid-row-end: -1;
+}
+*/
+
+#turner {
+    grid-column-start: col--1;
+    grid-column-end: gutter;
+    grid-row-start: title;
+    grid-row-end: -1;
+    position: relative;
+    overflow: hidden;
+}
+
+#turner__img {
+    height: 100%;
+    width: 3600%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    will-change: left;
+    pointer-events: none;
 }
 
 #product__name {
