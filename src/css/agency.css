@@ -1,3 +1,15 @@
+.about {
+    position: absolute;
+    max-width: 50rem;
+    left: 50%;
+    top: 50%;
+    transform: translate3d(-50%,-50%,0);
+    font-size: 2rem;
+    line-height: 2.5rem;
+    z-index: 1;
+    text-align: center;
+}
+
 .service {
     font-weight: 500;
     font-size: 3rem;
