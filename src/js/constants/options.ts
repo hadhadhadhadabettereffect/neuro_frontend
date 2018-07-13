@@ -25,3 +25,15 @@ export const enum NavMeasure {
 
     min_width = 500 // if < min_width, use mobile nav
 }
+
+export const enum SectionCount {
+    a0 = 1,
+    a1 = 1,
+    a2 = 3,
+    a3 = 1,
+
+    c0 = 2,
+    c1 = 1,
+    c2 = 1,
+    c3 = 1,
+}

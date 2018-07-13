@@ -42,7 +42,7 @@ assetRoot = path.join(__dirname, config.js.outDir, "..");
 if (serverRoots.indexOf(assetRoot) == -1) serverRoots.push(assetRoot);
 
 var serverOptions = mergeOptions({
-    port: 8000,
+    port: 3000,
     livereload: true,
     root: serverRoots
 }, "serverOptions", "html");

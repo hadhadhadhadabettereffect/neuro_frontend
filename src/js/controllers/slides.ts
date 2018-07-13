@@ -1,6 +1,6 @@
 import { ContentChange } from "../constants/masks";
 import { LandingPage } from "../constants/groups";
-import { TransitionMS } from "../constants/options";
+import { TransitionMS, SectionCount } from "../constants/options";
 
 
 const transformVis = "rotate(-90deg) translateY(-300px) scaleX(1)";
@@ -23,6 +23,8 @@ const subnavLinks = [
 let changes = 0,
     activeSection = LandingPage.home,
     activeSubnav = LandingPage.home,
+    subnavGroup = 0,
+    nextGroup = 0,
     nextSlide = 0,
     markedSlide = 0,
     scrollY = 0,
@@ -32,6 +34,11 @@ let changes = 0,
     height = window.innerHeight;
 let startTime, delta = 0;
 let scrollUp = false;
+
+const slideOffsets = [
+    [0, SectionCount.a0, SectionCount.a0 + SectionCount.a1, SectionCount.a0 + SectionCount.a1 + SectionCount.a2],
+    [0, SectionCount.c0, SectionCount.c0 + SectionCount.c1, SectionCount.c0 + SectionCount.c1 + SectionCount.c2]
+];
 
 export function updateHeight() {
     height = window.innerHeight;
@@ -45,7 +52,13 @@ export function setActiveSection(section: number) {
     changes |= ContentChange.subnav;
 }
 
-export function scrollToSlide(slide: number) {
+export function clickSubnav(link: number) {
+    nextGroup = link;
+    scrollToSlide(slideOffsets[activeSection][nextGroup]);
+}
+
+
+function scrollToSlide(slide: number) {
     onEnterSlide(slide);
     if (nextSlide !== slide) {
         onLeaveSlide(nextSlide);
@@ -105,7 +118,8 @@ function handleScroll() {
     scrollY = contentEl.scrollTop;
     scrollUp = scrollY < prevScrollY;
     nextSlide = (scrollY / height) >>> 0;
-    if (nextSlide !== markedSlide) updateSubnav();
+    nextGroup = checkSubnavGroup();
+    if (nextGroup !== markedSlide) updateSubnav();
 }
 
 // gravitate toward nearest slide after scroll
@@ -120,6 +134,14 @@ function onAfterScroll() {
         if (dist / height < 0.5) scrollToSlide(nextSlide + 1);
         else scrollToSlide(nextSlide);
     }
+}
+
+function checkSubnavGroup(): number {
+    let s = Math.round(scrollY / height);
+    if (s > slideOffsets[activeSection][3]) return 3;
+    else if (s > slideOffsets[activeSection][2]) return 2;
+    else if (s > slideOffsets[activeSection][1]) return 1;
+    return 0;
 }
 
 function updateSubnav() {
@@ -141,16 +163,15 @@ function updateSubnav() {
     }
 
     // set active subnav item after scroll or link click
-    else if (markedSlide !== nextSlide && activeSubnav !== LandingPage.home) {
+    else if (markedSlide !== nextGroup && activeSubnav !== LandingPage.home) {
         subnavLinks[activeSubnav][markedSlide].className = "subnav__link";
-        subnavLinks[activeSubnav][nextSlide].className = "subnav__link subnav__link--active";
-        markedSlide = nextSlide;
+        subnavLinks[activeSubnav][nextGroup].className = "subnav__link subnav__link--active";
+        markedSlide = nextGroup;
     }
 }
 
 
 function onLeaveSlide(slide: number) {
-    console.log(`left slide ${slide}`);
     switch (slide) {
         case 0:
             // pauseVideo
@@ -164,7 +185,6 @@ function onLeaveSlide(slide: number) {
 
 
 function onEnterSlide(slide: number) {
-    console.log(`entered slide ${slide}`);
     switch (slide) {
         case 0:
             // play vid;

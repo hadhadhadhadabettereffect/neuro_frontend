@@ -13,7 +13,7 @@ import { showDetails,
         nextProduct } from "./controllers/products";
 import { navToSection } from "./controllers/page";
 import { markSlidesChange,
-        scrollToSlide,
+        clickSubnav,
         setActiveSection } from "./controllers/slides";
 import { activateLift } from "./controllers/lift";
 import { clickFilter } from "./controllers/filters";
@@ -56,7 +56,7 @@ function handleClick(event) {
                 break;
 
             case ClickAction.subnav:
-                scrollToSlide(event.target.getAttribute("data-id") | 0);
+                clickSubnav(event.target.getAttribute("data-id") | 0);
                 markChange(ChangeHandler.slides);
                 break;
 
