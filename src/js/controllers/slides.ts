@@ -20,6 +20,11 @@ const subnavLinks = [
     document.getElementById("subnav--agency").querySelectorAll(".subnav__link"),
     document.getElementById("subnav--collection").querySelectorAll(".subnav__link")
 ];
+const slideOffsets = [
+    [0, SectionCount.a0, SectionCount.a0 + SectionCount.a1, SectionCount.a0 + SectionCount.a1 + SectionCount.a2],
+    [0, SectionCount.c0, SectionCount.c0 + SectionCount.c1, SectionCount.c0 + SectionCount.c1 + SectionCount.c2]
+];
+
 let changes = 0,
     activeSection = LandingPage.home,
     activeSubnav = LandingPage.home,
@@ -34,11 +39,6 @@ let changes = 0,
     height = window.innerHeight;
 let startTime, delta = 0;
 let scrollUp = false;
-
-const slideOffsets = [
-    [0, SectionCount.a0, SectionCount.a0 + SectionCount.a1, SectionCount.a0 + SectionCount.a1 + SectionCount.a2],
-    [0, SectionCount.c0, SectionCount.c0 + SectionCount.c1, SectionCount.c0 + SectionCount.c1 + SectionCount.c2]
-];
 
 export function updateHeight() {
     height = window.innerHeight;
@@ -55,22 +55,6 @@ export function setActiveSection(section: number) {
 export function clickSubnav(link: number) {
     nextGroup = link;
     scrollToSlide(slideOffsets[activeSection][nextGroup]);
-}
-
-
-function scrollToSlide(slide: number) {
-    onEnterSlide(slide);
-    if (nextSlide !== slide) {
-        onLeaveSlide(nextSlide);
-        nextSlide = slide;
-
-    }
-    targetScrollY = nextSlide * height;
-    changes |= ContentChange.jump_and_subnav;
-    scrollY = contentEl.scrollTop;
-    prevScrollY = scrollY;
-    scrollDist = targetScrollY - scrollY;
-    startTime = performance.now();
 }
 
 export function markSlidesChange(changeMask) {
@@ -113,13 +97,31 @@ function moveToNextSlide() {
     return false;
 }
 
+function scrollToSlide(slide: number) {
+    onEnterSlide(slide);
+    if (nextSlide !== slide) {
+        onLeaveSlide(nextSlide);
+        nextSlide = slide;
+
+    }
+    targetScrollY = nextSlide * height;
+    changes |= ContentChange.jump_and_subnav;
+    scrollY = contentEl.scrollTop;
+    prevScrollY = scrollY;
+    scrollDist = targetScrollY - scrollY;
+    startTime = performance.now();
+}
+
 function handleScroll() {
     prevScrollY = scrollY;
     scrollY = contentEl.scrollTop;
     scrollUp = scrollY < prevScrollY;
     nextSlide = (scrollY / height) >>> 0;
     nextGroup = checkSubnavGroup();
-    if (nextGroup !== markedSlide) updateSubnav();
+    if (nextGroup !== markedSlide) {
+        console.log(`current: ${markedSlide} -> ${nextGroup}`);
+        updateSubnav();
+    }
 }
 
 // gravitate toward nearest slide after scroll
@@ -129,7 +131,7 @@ function onAfterScroll() {
         dist = scrollY - (nextSlide * height);
         if (dist / height < 0.5) scrollToSlide(nextSlide);
         else if (nextSlide < 3) scrollToSlide(nextSlide + 1);
-    } else if (nextSlide < 3) {
+    } else if (nextGroup < 3) {
         dist = ((nextSlide + 1) * height) - scrollY;
         if (dist / height < 0.5) scrollToSlide(nextSlide + 1);
         else scrollToSlide(nextSlide);
@@ -138,9 +140,9 @@ function onAfterScroll() {
 
 function checkSubnavGroup(): number {
     let s = Math.round(scrollY / height);
-    if (s > slideOffsets[activeSection][3]) return 3;
-    else if (s > slideOffsets[activeSection][2]) return 2;
-    else if (s > slideOffsets[activeSection][1]) return 1;
+    if (s >= slideOffsets[activeSection][3]) return 3;
+    else if (s >= slideOffsets[activeSection][2]) return 2;
+    else if (s >= slideOffsets[activeSection][1]) return 1;
     return 0;
 }
 

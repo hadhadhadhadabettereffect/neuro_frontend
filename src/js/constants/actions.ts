@@ -11,4 +11,6 @@ export const enum ClickAction {
     product_order,
     lower_lift,
     filter,
+    story_nav,
+    slider,
 }

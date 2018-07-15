@@ -6,18 +6,18 @@
             "src/html/contact.pug",
             "src/html/product.pug"
         ],
-        "outDir": "../neuro_backend/static",
+        "outDir": "../back_end/static",
         "minify": false
     },
     "css": {
         "src": ["src/css/main.css"],
-        "outDir": "../neuro_backend/static/css",
+        "outDir": "../back_end/static/css",
         "minify": true,
         "plugins": ["postcss-import", "precss", "autoprefixer"]
     },
     "js": {
         "src": ["src/js/main.ts"],
-        "outDir": "../neuro_backend/static/js",
+        "outDir": "../back_end/static/js",
         "minify": false
     },
     "pugOptions": {
