@@ -25,12 +25,12 @@
     transform: translate3d(0,0,0); /* helps keep contact link from getting hidden */
 }
 
-
 .slide {
     position: absolute;
     width: 100%;
     height: 100%;
     border-bottom: 1px solid #333;
+    overflow: hidden;
 }
 
 .content--col {

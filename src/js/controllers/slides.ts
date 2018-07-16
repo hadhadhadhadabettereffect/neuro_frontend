@@ -39,6 +39,7 @@ let changes = 0,
     height = window.innerHeight;
 let startTime, delta = 0;
 let scrollUp = false;
+let timeoutFn;
 
 export function updateHeight() {
     height = window.innerHeight;
@@ -73,10 +74,9 @@ export function updateSlides(): boolean {
         handleScroll();
     }
     // if finished scrolling
-    else if (changes & ContentChange.postscroll) {
-        changes ^= ContentChange.postscroll;
-        onAfterScroll();
-    }
+    // else if (changes & ContentChange.postscroll) {
+    //     changes ^= ContentChange.postscroll;
+    // }
     // update highlighted subnav item
     if (changes & ContentChange.subnav) {
         changes ^= ContentChange.subnav;
@@ -118,8 +118,9 @@ function handleScroll() {
     scrollUp = scrollY < prevScrollY;
     nextSlide = (scrollY / height) >>> 0;
     nextGroup = checkSubnavGroup();
+    clearTimeout(timeoutFn);
+    setTimeout(onAfterScroll, 200);
     if (nextGroup !== markedSlide) {
-        console.log(`current: ${markedSlide} -> ${nextGroup}`);
         updateSubnav();
     }
 }
@@ -127,6 +128,7 @@ function handleScroll() {
 // gravitate toward nearest slide after scroll
 function onAfterScroll() {
     var dist;
+    changes &= ~ContentChange.postscroll;
     if (scrollUp) {
         dist = scrollY - (nextSlide * height);
         if (dist / height < 0.5) scrollToSlide(nextSlide);
