@@ -5,7 +5,6 @@ export const enum ChangeHandler {
     _contact,
     _product,
     _resize,
-    _filters,
 
     slides = 1 << _slides,
     lift = 1 << _lift,
@@ -13,7 +12,6 @@ export const enum ChangeHandler {
     contact = 1 << _contact,
     product = 1 << _product,
     resize = 1 << _resize,
-    filters = 1 << _filters,
 
     navigate = page | slides,
     liftedContent = lift | contact | product,
@@ -47,6 +45,7 @@ export const enum DetailsUpdate {
     _data,
     _info,
     _gallery,
+    _filter,
     _order,
     _share,
     _mount,
@@ -58,6 +57,7 @@ export const enum DetailsUpdate {
     gallery = 1 << _gallery,
 
     group2 = group1 << 4,
+    filter = 1 << _filter,
     order = 1 << _order,
     share = 1 << _share,
     mount = 1 << _mount,

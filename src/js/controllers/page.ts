@@ -18,42 +18,20 @@ var isAnimating = false,
     initMove = true;
 var wrapEl = document.getElementById("wrap"),
     contentEl = document.getElementById("content"),
-    agencyEl = document.createElement("div"),
-    collectionEl = document.createElement("div"),
+    agencyEl = document.getElementById("agency"),
+    collectionEl = document.getElementById("collection"),
     contactNavLink  = document.getElementById("nav--contact"),
     homeVideo = document.getElementById("home").querySelector("video") as HTMLVideoElement;
-var agencyContactLink, collectionContactLink;
-
-// fetch agency and collection html
-var fetchAgency = new XMLHttpRequest();
-fetchAgency.onreadystatechange = function () {
-    if (fetchAgency.readyState === XMLHttpRequest.DONE) {
-        agencyEl.innerHTML = fetchAgency.responseText;
-        agencyContactLink = agencyEl.querySelector("#contact--agency");
-        let photos = agencyEl.querySelectorAll(".staff__photo");
-        for (let i = 0; i < 4; ++i) {
-            (photos[i] as HTMLImageElement).src = "https://placeimg.com/140/140/animals?t=" +
-                Date.now() + i;
-        }
-    }
-};
-fetchAgency.open("GET", "/agency.html", true);
-fetchAgency.send();
-
-var fetchCollection = new XMLHttpRequest();
-fetchCollection.onreadystatechange = function () {
-    if (fetchCollection.readyState === XMLHttpRequest.DONE) {
-        collectionEl.innerHTML = fetchCollection.responseText;
-        collectionContactLink = collectionEl.querySelector("#contact--collection");
-    }
-};
-fetchCollection.open("GET", "/collection.html", true);
-fetchCollection.send();
+var agencyContactLink = document.getElementById("contact--agency"),
+    collectionContactLink = document.getElementById("contact--collection");
 
 // replace state on init for popstate data
 history.replaceState({
     page: activeSection
 }, pageTitles[activeSection], pageUrls[activeSection]);
+
+agencyEl.remove();
+collectionEl.remove();
 
 export function updateWidth() {
     width = window.innerWidth;
@@ -90,12 +68,9 @@ function initTransition() {
     if (prevSection === LandingPage.agency) {
         startX = 0;
         moveX = -width;
-        console.log(agencyContactLink);
-
     } else if (prevSection === LandingPage.collection) {
         startX = 0;
         moveX = width;
-        console.log(collectionContactLink);
     } else {
         homeVideo.pause();
         wrapEl.style.display = "block";
@@ -109,10 +84,13 @@ function initTransition() {
         }
         // switch content if needed
         if (activeSection !== activeContent) {
-            if (contentEl.firstChild)
-                contentEl.removeChild(contentEl.firstChild);
-            contentEl.appendChild(activeSection === LandingPage.agency ?
-                agencyEl : collectionEl);
+            if (activeSection === LandingPage.agency) {
+                collectionEl.remove();
+                contentEl.appendChild(agencyEl);
+            } else {
+                agencyEl.remove();
+                contentEl.appendChild(collectionEl);
+            }
             activeContent = activeSection;
             contentEl.scrollTop = 0;
         }
@@ -141,7 +119,6 @@ function handleTransition() {
             contactNavLink.style.display = "none";
             agencyContactLink.style.visibility = "visible";
             collectionContactLink.style.visibility = "visible";
-            // (contentEl.querySelector(".button--contact") as HTMLElement).style.visibility = "visible";
         }
         // if coming from one side and moving to the other
         // start moving towards other side after moving from prevSide

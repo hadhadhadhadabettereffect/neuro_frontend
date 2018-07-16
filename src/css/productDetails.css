@@ -1,13 +1,13 @@
-#details {
-    position: fixed;
-    top: $height--nav;
+#product__details {
+    background: black;
+    position: absolute;
+    top: 0;
     left: 0;
     right: 0;
     bottom: 0;
-    background: black;
 }
 
-#details__inner {
+#product__details__inner {
     width: $width--details;
     height: $height--details;
     max-width: 100%;
@@ -17,6 +17,7 @@
     $width--details__text--end [margin--2] $width--details__margin--2;
     grid-template-rows: [title] $height--details__title [toggles] $height--details__toggles [info] $height--details__info [share] $height--details__share [gallery] $height--details__gallery;
 }
+
 
 #product--prev {
     grid-column-start: 1;

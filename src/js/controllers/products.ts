@@ -1,5 +1,6 @@
 import { DetailsUpdate } from "../constants/masks";
 import { ProductInfo,
+        ProductType,
         NavDirection,
         SocialMedia } from "../constants/groups";
 
@@ -39,62 +40,49 @@ var x0 = 0,
     trueFrame = GalleryConfig.startingFrame;
 
 const liftEl = document.getElementById("lift__content"),
-    detailsWrap = document.createElement("div");
+    detailsWrap = document.getElementById("product__details") as HTMLElement,
+    productName = detailsWrap.querySelector("#product__name") as HTMLElement,
+    turnerImg = detailsWrap.querySelector("#turner__img") as HTMLImageElement,
+    productInfo = detailsWrap.querySelector("#product__info") as HTMLElement,
+    orderBtn = detailsWrap.querySelector("#product__order") as HTMLElement,
+    shareBtns = detailsWrap.querySelector("#share-buttons") as HTMLElement,
+    galleryMain = detailsWrap.querySelector("#gallery__main") as HTMLImageElement,
+    galleryThumbs = detailsWrap.querySelectorAll(".gallery__thumb") as NodeListOf<HTMLImageElement>,
+    toggleDescription = detailsWrap.querySelector("#product__description") as HTMLElement,
+    toggleMaterials = detailsWrap.querySelector("#product__materials") as HTMLElement;
+const filters = document.querySelectorAll(".filter, .filter--active") as NodeListOf<HTMLElement>,
+    products = document.querySelectorAll(".grid__item--thumb") as NodeListOf<HTMLImageElement>;
 
-var productData,
-    turnerImg,
-    productName,
-    productInfo,
-    orderBtn,
-    shareBtns,
-    galleryMain,
-    galleryThumbs,
-    toggleDescription,
-    toggleMaterials;
+var nextActive = ProductType.any;
+var activeFilter = ProductType.any;
+var updateIndex = 0;
+var productCount = 0;
+var productData;
+
+detailsWrap.remove();
 
 void function init() {
     const reqData = new XMLHttpRequest();
     reqData.onreadystatechange = function () {
         if (reqData.readyState === XMLHttpRequest.DONE) {
             productData = JSON.parse(reqData.responseText);
+            productCount = productData.length;
         }
     };
-    reqData.open("GET", "/data/products.json", true);
+    reqData.open("GET", "/products/data.json", true);
     reqData.send();
-
-    const reqHtml = new XMLHttpRequest();
-    reqHtml.onreadystatechange = function () {
-        if (reqHtml.readyState === XMLHttpRequest.DONE) {
-            detailsWrap.id = "details";
-            detailsWrap.innerHTML = reqHtml.responseText;
-            productName = detailsWrap.querySelector("#product__name");
-            turnerImg = detailsWrap.querySelector("#turner__img");
-            productInfo = detailsWrap.querySelector("#product__info");
-            orderBtn = detailsWrap.querySelector("#product__order");
-            shareBtns = detailsWrap.querySelector("#share-buttons");
-            galleryMain = detailsWrap.querySelector("#gallery__main");
-            galleryThumbs = detailsWrap.querySelectorAll(".gallery__thumb");
-            let toggles = detailsWrap.querySelectorAll(".toggles > .action");
-            toggleDescription = toggles[0];
-            toggleMaterials = toggles[1];
-            toggles = null;
-
-            // init social buttons
-            let scriptTag = document.createElement("script");
-            scriptTag.type = "text/javascript";
-            scriptTag.async = true;
-            scriptTag.src = "//assets.pinterest.com/js/pinit.js";
-            document.head.appendChild(scriptTag);
-            scriptTag = document.createElement("script");
-            scriptTag.type = "text/javascript";
-            scriptTag.async = true;
-            scriptTag.src = "https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.6&appId=432524660561276";
-            document.head.appendChild(scriptTag);
-            scriptTag = null;
-        }
-    };
-    reqHtml.open("GET", "/product.html", true);
-    reqHtml.send();
+    // init social buttons
+    let scriptTag = document.createElement("script");
+    scriptTag.type = "text/javascript";
+    scriptTag.async = true;
+    scriptTag.src = "//assets.pinterest.com/js/pinit.js";
+    document.head.appendChild(scriptTag);
+    scriptTag = document.createElement("script");
+    scriptTag.type = "text/javascript";
+    scriptTag.async = true;
+    scriptTag.src = "https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.6&appId=432524660561276";
+    document.head.appendChild(scriptTag);
+    scriptTag = null;
 }();
 
 
@@ -186,8 +174,18 @@ export function clickShare(socialmedium: number): boolean {
     return false;
 }
 
-export function updateProductDetails(): boolean {
 
+export function clickFilter(filter: number): boolean {
+    console.log(filter);
+    if (nextActive === filter) return false;
+    updateIndex = 0;
+    nextActive = filter;
+    return true;
+}
+
+
+export function updateProductDetails(): boolean {
+    const start = performance.now();
     if (updates & DetailsUpdate.group1) {
         if (updates & DetailsUpdate.turning) {
             turnTurner();
@@ -206,6 +204,13 @@ export function updateProductDetails(): boolean {
         }
     }
     if (updates & DetailsUpdate.group2) {
+        if (updates & DetailsUpdate.filter) {
+            if (updateFilters(start)) {
+                updates ^= DetailsUpdate.filter;
+            } else {
+                return false;
+            }
+        }
         if (updates & DetailsUpdate.order) {
             updateOrderBtn();
             updates ^= DetailsUpdate.order;
@@ -223,13 +228,26 @@ export function updateProductDetails(): boolean {
     return updates === 0;
 }
 
+function updateFilters(startTime): boolean {
+    filters[activeFilter].className = "filter";
+    filters[nextActive].className = "filter--active";
+    activeFilter = nextActive;
+    while (updateIndex < productData.length) {
+        products[updateIndex].style.display =
+            (activeFilter === 0 || productData[updateIndex].type === activeFilter) ?
+                "block" : "none";
+        ++updateIndex;
+        if (performance.now() - startTime > 3) break;
+    }
+    return updateIndex === productData.length;
+}
 
 function setProductDetails() {
     const data = productData[currentProduct];
     productName.innerText = data.name;
     productInfo.innerText = activeInfo === ProductInfo.description ?
         data.description : data.materials;
-    turnerImg.src = "/media/products/360/" + currentProduct + ".jpg";
+    turnerImg.src = "/static/products/360/" + productData[currentProduct].id + ".jpg";
     if (shareBtnsVisible) {
         shareBtnsVisible = false;
         updateShareBtns();
@@ -264,13 +282,13 @@ function updateOrderBtn() {
 }
 
 function setGallery() {
-    const baseUrl = "/media/products/p" + 0; // debug productData[currentProduct].id;
+    const baseUrl = "/media/photos/" + productData[currentProduct].id;
 
-    galleryMain.src = baseUrl + "_0.jpg";
-    galleryThumbs[0].src = baseUrl + "_0.jpg";
-    galleryThumbs[1].src = baseUrl + "_1.jpg";
-    galleryThumbs[2].src = baseUrl + "_2.jpg";
-    galleryThumbs[3].src = baseUrl + "_3.jpg";
+    galleryMain.src = baseUrl + "_1.jpg";
+    galleryThumbs[0].src = baseUrl + "_1.jpg";
+    galleryThumbs[1].src = baseUrl + "_2.jpg";
+    galleryThumbs[2].src = baseUrl + "_3.jpg";
+    galleryThumbs[3].src = baseUrl + "_4.jpg";
 
     if (activeGalleryImg !== 0) {
         galleryThumbs[activeGalleryImg].className = "gallery__thumb";

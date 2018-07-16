@@ -110,6 +110,11 @@
     background: gray;
 }
 
+.grid__item--thumb {
+    @extend .grid__item;
+    cursor: pointer;
+}
+
 
 
 

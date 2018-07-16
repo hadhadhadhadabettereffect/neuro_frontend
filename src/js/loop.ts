@@ -5,7 +5,6 @@ import { updateContent,
 import { updateSlides,
         updateHeight } from "./controllers/slides";
 import { updateProductDetails } from "./controllers/products";
-import { updateFilters } from "./controllers/filters";
 import { updateLift } from "./controllers/lift";
 
 var changes = 0;
@@ -57,10 +56,6 @@ function applyUpdates() {
         } else if (changes & ChangeHandler.contact) {
             if (updateContact())
                 changes ^= ChangeHandler.contact;
-            if (performance.now() - start > 3) return;
-        } else if (changes & ChangeHandler.filters) {
-            if (updateFilters())
-                changes ^= ChangeHandler.filters;
             if (performance.now() - start > 3) return;
         }
     }

@@ -12,9 +12,9 @@ const enum TimeUnits {
 }
 
 
-const contactEl = document.createElement("div");
 const liftEl = document.getElementById("lift__content");
-var clockEl = document.createElement("div");
+const contactEl = document.getElementById("contact");
+const clockEl = document.getElementById("clock");
 
 var active = false;
 var attached = false;
@@ -23,17 +23,7 @@ var remount = false;
 var timeoffset = -4 * TimeUnits.msPerHour; // UTC -4:00
 var t = 0; // current time in ms
 
-var fetchContact = new XMLHttpRequest();
-fetchContact.onreadystatechange = function () {
-    if (fetchContact.readyState === XMLHttpRequest.DONE) {
-        contactEl.id = "contact";
-        contactEl.innerHTML = fetchContact.responseText;
-        clockEl = contactEl.querySelector("#clock");
-    }
-};
-fetchContact.open("GET", "/contact.html", true);
-fetchContact.send();
-
+contactEl.remove();
 
 export function attachContact(show: boolean) {
     if (attached !== show) {

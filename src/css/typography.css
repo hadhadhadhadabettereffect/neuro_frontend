@@ -1,18 +1,18 @@
 @font-face {
     font-family: "karbon";
-    src: url("/fonts/karbon-regular-webfont.ttf");
+    src: url("../fonts/karbon-regular-webfont.ttf");
     font-weight: 300;
 }
 
 @font-face {
     font-family: "karbon";
-    src: url("/fonts/karbon-medium-webfont.ttf");
+    src: url("../fonts/karbon-medium-webfont.ttf");
     font-weight: 500;
 }
 
 @font-face {
   font-family: "karbon";
-  src: url("/fonts/karbon-bold-webfont.ttf");
+  src: url("../fonts/karbon-bold-webfont.ttf");
   font-weight: 700;
 }
 

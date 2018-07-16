@@ -10,13 +10,13 @@ import { showDetails,
         clickShare,
         startTurner,
         toggleProductInfo,
+        clickFilter,
         nextProduct } from "./controllers/products";
 import { navToSection } from "./controllers/page";
 import { markSlidesChange,
         clickSubnav,
         setActiveSection } from "./controllers/slides";
 import { activateLift } from "./controllers/lift";
-import { clickFilter } from "./controllers/filters";
 import { markChange } from "./loop";
 
 
@@ -112,7 +112,7 @@ function handleClick(event) {
 
             case ClickAction.filter:
                 if (clickFilter(event.target.getAttribute("data-id") | 0))
-                    markChange(ChangeHandler.filters);
+                    markChange(ChangeHandler.product);
                 break;
         }
     }
