@@ -2,6 +2,7 @@ import { ContentChange } from "../constants/masks";
 import { LandingPage } from "../constants/groups";
 import { TransitionMS, SectionCount } from "../constants/options";
 
+declare var NEURO;
 
 const transformVis = "rotate(-90deg) translateY(-300px) scaleX(1)";
 const transformHidden = "rotate(-90deg) translateY(-300px) scaleX(0)";
@@ -19,10 +20,6 @@ const subnavs = [
 const subnavLinks = [
     document.getElementById("subnav--agency").querySelectorAll(".subnav__link"),
     document.getElementById("subnav--collection").querySelectorAll(".subnav__link")
-];
-const slideOffsets = [
-    [0, SectionCount.a0, SectionCount.a0 + SectionCount.a1, SectionCount.a0 + SectionCount.a1 + SectionCount.a2],
-    [0, SectionCount.c0, SectionCount.c0 + SectionCount.c1, SectionCount.c0 + SectionCount.c1 + SectionCount.c2]
 ];
 
 let changes = 0,
@@ -55,10 +52,11 @@ export function setActiveSection(section: number) {
 
 export function clickSubnav(link: number) {
     nextGroup = link;
-    scrollToSlide(slideOffsets[activeSection][nextGroup]);
+    scrollToSlide(NEURO.offsets[activeSection][nextGroup]);
 }
 
 export function markSlidesChange(changeMask) {
+    // clearTimeout(timeoutFn);
     changes |= changeMask;
 }
 
@@ -74,9 +72,9 @@ export function updateSlides(): boolean {
         handleScroll();
     }
     // if finished scrolling
-    // else if (changes & ContentChange.postscroll) {
-    //     changes ^= ContentChange.postscroll;
-    // }
+    else if (changes & ContentChange.postscroll) {
+        onAfterScroll();
+    }
     // update highlighted subnav item
     if (changes & ContentChange.subnav) {
         changes ^= ContentChange.subnav;
@@ -118,8 +116,7 @@ function handleScroll() {
     scrollUp = scrollY < prevScrollY;
     nextSlide = (scrollY / height) >>> 0;
     nextGroup = checkSubnavGroup();
-    clearTimeout(timeoutFn);
-    setTimeout(onAfterScroll, 200);
+    // setTimeout(onAfterScroll, 200);
     if (nextGroup !== markedSlide) {
         updateSubnav();
     }
@@ -142,9 +139,9 @@ function onAfterScroll() {
 
 function checkSubnavGroup(): number {
     let s = Math.round(scrollY / height);
-    if (s >= slideOffsets[activeSection][3]) return 3;
-    else if (s >= slideOffsets[activeSection][2]) return 2;
-    else if (s >= slideOffsets[activeSection][1]) return 1;
+    if (s >= NEURO.offsets[activeSection][3]) return 3;
+    else if (s >= NEURO.offsets[activeSection][2]) return 2;
+    else if (s >= NEURO.offsets[activeSection][1]) return 1;
     return 0;
 }
 
@@ -179,7 +176,8 @@ function onLeaveSlide(slide: number) {
     switch (slide) {
         case 0:
             // pauseVideo
-            (document.querySelector("#content video") as HTMLVideoElement).pause();
+            if (NEURO.videos[activeSection])
+                (document.querySelector("#content video") as HTMLVideoElement).pause();
             break;
         case 2:
             // scroll x to 0
@@ -192,7 +190,8 @@ function onEnterSlide(slide: number) {
     switch (slide) {
         case 0:
             // play vid;
-            (document.querySelector("#content video") as HTMLVideoElement).play();
+            if (NEURO.videos[activeSection])
+                (document.querySelector("#content video") as HTMLVideoElement).play();
             break;
 
     }

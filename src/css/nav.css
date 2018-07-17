@@ -2,7 +2,7 @@
     display: block;
     height: $height--nav;
     width: $width--logo;
-    background: url(/media/logo.png) no-repeat;
+    background: url(/static/logo.png) no-repeat;
     background-size: contain;
     background-position-y: center;
 }

@@ -17,8 +17,11 @@ import { markSlidesChange,
         clickSubnav,
         setActiveSection } from "./controllers/slides";
 import { activateLift } from "./controllers/lift";
+import { setStoryPage,
+        startSlider } from "./controllers/story";
 import { markChange } from "./loop";
 
+declare var NEURO;
 
 document.body.addEventListener("mousedown", handleClick, false);
 window.addEventListener("resize", handleResize, false);
@@ -26,13 +29,18 @@ document.getElementById("content").addEventListener("scroll", handleScroll, fals
 
 window.onpopstate = function(event) {
     if (event.state.hasOwnProperty("page")) {
-        let p = event.state.page;
-        if (navToSection(p)) {
-            setActiveSection(p);
-            markChange(ChangeHandler.navigate);
-        }
+        navTo(event.state.page);
     }
 };
+
+navTo(NEURO.active);
+
+function navTo(page: number) {
+    if (navToSection(page)) {
+        setActiveSection(page);
+        markChange(ChangeHandler.navigate);
+    }
+}
 
 function handleResize() {
     markChange(ChangeHandler.resize);
@@ -48,11 +56,7 @@ function handleClick(event) {
     if (flag !== null) {
         switch (flag | 0) {
             case ClickAction.nav:
-                clickId = event.target.getAttribute("data-id") | 0;
-                if (navToSection(clickId)) {
-                    setActiveSection(clickId);
-                    markChange(ChangeHandler.navigate);
-                }
+                navTo(event.target.getAttribute("data-id") | 0);
                 break;
 
             case ClickAction.subnav:
@@ -113,6 +117,16 @@ function handleClick(event) {
             case ClickAction.filter:
                 if (clickFilter(event.target.getAttribute("data-id") | 0))
                     markChange(ChangeHandler.product);
+                break;
+
+            case ClickAction.story_nav:
+                setStoryPage(event.target.getAttribute("data-id") | 0);
+                markChange(ChangeHandler.story);
+                break;
+
+            case ClickAction.slider:
+                startSlider(event);
+                markChange(ChangeHandler.story);
                 break;
         }
     }

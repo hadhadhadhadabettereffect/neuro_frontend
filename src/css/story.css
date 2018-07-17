@@ -1,0 +1,33 @@
+#story__nav {
+    position: absolute;
+    bottom: 0;
+    list-style: none;
+    text-align: center;
+    width: 100%;
+    margin: 0;
+    height: 45px;
+    padding: 0;
+    line-height: 0;
+    font-size: 1.2rem;
+    color: $white--ish;
+}
+
+.story__link {
+    display: inline-block;
+    width: 1em;
+    padding-bottom: 8px;
+    cursor: pointer;
+    border-bottom: 1px solid;
+    margin: 2px;
+    border-color: transparent;
+
+    &:hover {
+        border-color: white;
+    }
+}
+
+.story__link--active {
+    @extend .story__link;
+    border-color: white;
+    color: white;
+}

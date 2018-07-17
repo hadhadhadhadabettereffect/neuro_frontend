@@ -47,16 +47,15 @@ const liftEl = document.getElementById("lift__content"),
     orderBtn = detailsWrap.querySelector("#product__order") as HTMLElement,
     shareBtns = detailsWrap.querySelector("#share-buttons") as HTMLElement,
     galleryMain = detailsWrap.querySelector("#gallery__main") as HTMLImageElement,
-    galleryThumbs = detailsWrap.querySelectorAll(".gallery__thumb") as NodeListOf<HTMLImageElement>,
+    galleryThumbs = Array.prototype.slice.call(detailsWrap.getElementsByClassName("gallery__thumb")) as Array<HTMLImageElement>,
     toggleDescription = detailsWrap.querySelector("#product__description") as HTMLElement,
     toggleMaterials = detailsWrap.querySelector("#product__materials") as HTMLElement;
-const filters = document.querySelectorAll(".filter, .filter--active") as NodeListOf<HTMLElement>,
-    products = document.querySelectorAll(".grid__item--thumb") as NodeListOf<HTMLImageElement>;
+const filters = Array.prototype.slice.call(document.querySelectorAll(".filter, .filter--active")) as Array<HTMLElement>,
+    products = Array.prototype.slice.call(document.getElementsByClassName("grid__item--thumb")) as Array<HTMLImageElement>;
 
 var nextActive = ProductType.any;
 var activeFilter = ProductType.any;
 var updateIndex = 0;
-var productCount = 0;
 var productData;
 
 detailsWrap.remove();
@@ -66,7 +65,6 @@ void function init() {
     reqData.onreadystatechange = function () {
         if (reqData.readyState === XMLHttpRequest.DONE) {
             productData = JSON.parse(reqData.responseText);
-            productCount = productData.length;
         }
     };
     reqData.open("GET", "/products/data.json", true);

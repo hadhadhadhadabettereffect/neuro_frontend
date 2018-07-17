@@ -4,6 +4,7 @@ export const enum ChangeHandler {
     _page,
     _contact,
     _product,
+    _story,
     _resize,
 
     slides = 1 << _slides,
@@ -11,6 +12,7 @@ export const enum ChangeHandler {
     page = 1 << _page,
     contact = 1 << _contact,
     product = 1 << _product,
+    story = 1 << _story,
     resize = 1 << _resize,
 
     navigate = page | slides,
@@ -62,3 +64,12 @@ export const enum DetailsUpdate {
     share = 1 << _share,
     mount = 1 << _mount,
 }
+
+export const enum StoryUpdate {
+    _slider,
+    _page,
+
+    slider = 1 << _slider,
+    page = 1 << _page,
+}
+

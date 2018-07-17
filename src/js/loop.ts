@@ -6,6 +6,7 @@ import { updateSlides,
         updateHeight } from "./controllers/slides";
 import { updateProductDetails } from "./controllers/products";
 import { updateLift } from "./controllers/lift";
+import { updateStory } from "./controllers/story";
 
 var changes = 0;
 var start;
@@ -28,35 +29,39 @@ function applyUpdates() {
             changes ^= ChangeHandler.resize;
             updateWidth();
             updateHeight();
-            if (performance.now() - start > 3) return;
+            if (changes === 0 || performance.now() - start > 3) return;
         }
 
         if (changes & ChangeHandler.slides) {
             if (updateSlides())
                 changes ^= ChangeHandler.slides;
-            if (performance.now() - start > 3) return;
+            if (changes === 0 || performance.now() - start > 3) return;
+        } else if (changes & ChangeHandler.story) {
+            if (updateStory())
+                changes ^= ChangeHandler.story;
+            if (changes === 0 || performance.now() - start > 3) return;
         }
 
         // wait for product info to load before showing details
         if (changes & ChangeHandler.product) {
             if (updateProductDetails())
                 changes ^= ChangeHandler.product;
-            if (performance.now() - start > 3) return;
+            if (changes === 0 || performance.now() - start > 3) return;
         } else if (changes & ChangeHandler.lift) {
             if (updateLift())
                 changes ^= ChangeHandler.lift;
-            if (performance.now() - start > 3) return;
+            if (changes === 0 || performance.now() - start > 3) return;
         }
 
         // these shouldn't need updates at the same time
         if (changes & ChangeHandler.page) {
             if (updateContent())
                 changes ^= ChangeHandler.page;
-            if (performance.now() - start > 3) return;
+            if (changes === 0 || performance.now() - start > 3) return;
         } else if (changes & ChangeHandler.contact) {
             if (updateContact())
                 changes ^= ChangeHandler.contact;
-            if (performance.now() - start > 3) return;
+            if (changes === 0 || performance.now() - start > 3) return;
         }
     }
 }
