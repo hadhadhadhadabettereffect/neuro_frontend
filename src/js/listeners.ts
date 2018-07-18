@@ -120,6 +120,7 @@ function handleClick(event) {
                 break;
 
             case ClickAction.story_nav:
+                console.log(event.target);
                 setStoryPage(event.target.getAttribute("data-id") | 0);
                 markChange(ChangeHandler.story);
                 break;

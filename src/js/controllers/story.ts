@@ -11,6 +11,7 @@ declare const enum PageType {
 var currentPage = 0;
 var nextPage = 0;
 var updates = 0;
+var pageType = PageType.text;
 var x0 = 0, x1 = 0;
 
 var baseWidth = 400;
@@ -19,10 +20,14 @@ var width = 400;
 
 const contentWrap = document.getElementById("story__content");
 const pageNumbers = Array.prototype.slice.call(document.getElementsByClassName("story__link"));
-var sliderImg;
-
+const textContent = document.getElementById("story-page--text");
+const textTitle = textContent.querySelector("h2");
+const textText = textContent.querySelector("p");
+const textImg = textContent.querySelector("img");
+const sliderContent = document.getElementById("story-page--slider");
+const sliderTop = sliderContent.querySelector(".slider__top") as HTMLImageElement;
+const sliderBottom = sliderContent.querySelector(".slider__btm") as HTMLImageElement;
 var pageData;
-
 const reqData = new XMLHttpRequest();
 reqData.onreadystatechange = function () {
     if (reqData.readyState === XMLHttpRequest.DONE) {
@@ -63,7 +68,7 @@ function updateSlider() {
     width = baseWidth + diff;
     if (width < 0) width = 0;
     else if (width > maxWidth) width = maxWidth;
-    sliderImg.style.width = width + "px";
+    sliderTop.style.width = width + "px";
 }
 
 function handleMouseMove(event: MouseEvent) {
@@ -78,15 +83,31 @@ function handleMouseUp() {
 }
 
 function setPageContent() {
+    const d = pageData[nextPage];
+    console.log(d);
     pageNumbers[currentPage].className = "story__link";
     pageNumbers[nextPage].className = "story__link--active";
-    if (NEURO.story_page_types[currentPage] === PageType.slider) {
-        sliderImg = null;
+
+    if (pageType !== d.type) {
+        pageType = d.type;
+        if (pageType === PageType.text) {
+            sliderContent.remove();
+            contentWrap.appendChild(textContent);
+        } else {
+            textContent.remove();
+            contentWrap.appendChild(sliderContent);
+        }
     }
     currentPage = nextPage;
-    contentWrap.innerHTML = pageData[currentPage];
-
-    if (NEURO.story_page_types[currentPage] === PageType.slider) {
-        sliderImg = contentWrap.querySelector(".slider__top");
+    if (pageType === PageType.text) {
+        textTitle.innerText = d.title;
+        textText.innerText = d.text;
+        textImg.src = d.image_a;
+    } else {
+        x0 = x1 = 0;
+        baseWidth = maxWidth >>> 1;
+        sliderTop.src = d.image_a;
+        sliderBottom.src = d.image_b;
+        updateSlider();
     }
 }

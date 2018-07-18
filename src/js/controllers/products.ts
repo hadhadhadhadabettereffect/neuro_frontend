@@ -174,10 +174,10 @@ export function clickShare(socialmedium: number): boolean {
 
 
 export function clickFilter(filter: number): boolean {
-    console.log(filter);
     if (nextActive === filter) return false;
     updateIndex = 0;
     nextActive = filter;
+    updates |= DetailsUpdate.filter;
     return true;
 }
 
@@ -226,10 +226,11 @@ export function updateProductDetails(): boolean {
     return updates === 0;
 }
 
-function updateFilters(startTime): boolean {
+function updateFilters(startTime) {
     filters[activeFilter].className = "filter";
     filters[nextActive].className = "filter--active";
     activeFilter = nextActive;
+
     while (updateIndex < productData.length) {
         products[updateIndex].style.display =
             (activeFilter === 0 || productData[updateIndex].type === activeFilter) ?

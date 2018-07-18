@@ -36,7 +36,8 @@ function applyUpdates() {
             if (updateSlides())
                 changes ^= ChangeHandler.slides;
             if (changes === 0 || performance.now() - start > 3) return;
-        } else if (changes & ChangeHandler.story) {
+        }
+        if (changes & ChangeHandler.story) {
             if (updateStory())
                 changes ^= ChangeHandler.story;
             if (changes === 0 || performance.now() - start > 3) return;
