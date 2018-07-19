@@ -3,6 +3,7 @@ import { StoryUpdate } from "../constants/masks";
 declare var NEURO;
 
 declare const enum PageType {
+    none,
     text,
     slider,
 }
@@ -11,7 +12,7 @@ declare const enum PageType {
 var currentPage = 0;
 var nextPage = 0;
 var updates = 0;
-var pageType = PageType.text;
+var pageType = PageType.none;
 var x0 = 0, x1 = 0;
 
 var baseWidth = 400;
@@ -25,8 +26,10 @@ const textTitle = textContent.querySelector("h2");
 const textText = textContent.querySelector("p");
 const textImg = textContent.querySelector("img");
 const sliderContent = document.getElementById("story-page--slider");
-const sliderTop = sliderContent.querySelector(".slider__top") as HTMLImageElement;
-const sliderBottom = sliderContent.querySelector(".slider__btm") as HTMLImageElement;
+const sliderTop = sliderContent.querySelector(".slider__top") as HTMLElement;
+const sliderImgA = sliderContent.querySelector(".slider__top") as HTMLImageElement;
+const sliderImgB = sliderContent.querySelector(".slider__btm") as HTMLImageElement;
+
 var pageData;
 const reqData = new XMLHttpRequest();
 reqData.onreadystatechange = function () {
@@ -38,16 +41,18 @@ reqData.onreadystatechange = function () {
 reqData.open("GET", "/story/content.json", true);
 reqData.send();
 
-
+console.log()
 
 export function setStoryPage(page: number) {
-    currentPage = page;
+    nextPage = page;
     updates |= StoryUpdate.page;
 }
 
 export function startSlider(event) {
     x0 = event.clientX;
     updates |= StoryUpdate.slider;
+    baseWidth = sliderImgA.getBoundingClientRect().width;
+    maxWidth = sliderContent.getBoundingClientRect().width;
     window.addEventListener("mousemove", handleMouseMove, false);
     window.addEventListener("mouseup", handleMouseUp, false);
 }
@@ -68,7 +73,7 @@ function updateSlider() {
     width = baseWidth + diff;
     if (width < 0) width = 0;
     else if (width > maxWidth) width = maxWidth;
-    sliderTop.style.width = width + "px";
+    sliderTop.style.width = (100* width/maxWidth).toFixed(2) + "%";
 }
 
 function handleMouseMove(event: MouseEvent) {
@@ -88,8 +93,8 @@ function setPageContent() {
     pageNumbers[currentPage].className = "story__link";
     pageNumbers[nextPage].className = "story__link--active";
 
-    if (pageType !== d.type) {
-        pageType = d.type;
+    if (pageType !== d.page_type) {
+        pageType = d.page_type;
         if (pageType === PageType.text) {
             sliderContent.remove();
             contentWrap.appendChild(textContent);
@@ -102,12 +107,12 @@ function setPageContent() {
     if (pageType === PageType.text) {
         textTitle.innerText = d.title;
         textText.innerText = d.text;
-        textImg.src = d.image_a;
+        textImg.src = "/media/" + d.image_a;
     } else {
         x0 = x1 = 0;
         baseWidth = maxWidth >>> 1;
-        sliderTop.src = d.image_a;
-        sliderBottom.src = d.image_b;
+        sliderImgA.style.backgroundImage = "url(/media/" + d.image_a + ")";
+        sliderImgB.src ="/media/" + d.image_b;
         updateSlider();
     }
 }
