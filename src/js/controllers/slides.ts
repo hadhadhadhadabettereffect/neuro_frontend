@@ -173,11 +173,17 @@ function updateSubnav() {
 
 
 function onLeaveSlide(slide: number) {
+    let vid;
     switch (slide) {
         case 0:
             // pauseVideo
-            if (NEURO.videos[activeSection])
-                (document.querySelector("#content video") as HTMLVideoElement).pause();
+            if (NEURO.videos[activeSection]) {
+                if (activeSection === LandingPage.agency)
+                    vid = (document.querySelector("#agency video") as HTMLVideoElement);
+                else if (activeSection === LandingPage.collection)
+                    vid = (document.querySelector("#collection video") as HTMLVideoElement);
+                if (vid && vid.readyState === 4) vid.pause();
+            }
             break;
         case 2:
             // scroll x to 0
@@ -187,11 +193,17 @@ function onLeaveSlide(slide: number) {
 
 
 function onEnterSlide(slide: number) {
+    let vid;
     switch (slide) {
         case 0:
             // play vid;
-            if (NEURO.videos[activeSection])
-                (document.querySelector("#content video") as HTMLVideoElement).play();
+            if (NEURO.videos[activeSection]) {
+                if (activeSection === LandingPage.agency)
+                    vid = (document.querySelector("#agency video") as HTMLVideoElement);
+                else if (activeSection === LandingPage.collection)
+                    vid = (document.querySelector("#collection video") as HTMLVideoElement);
+                if (vid && vid.readyState === 4 && vid.paused) vid.play();
+            }
             break;
 
     }

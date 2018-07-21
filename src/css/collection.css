@@ -13,3 +13,14 @@
     @extend .filter;
     border-top: 1px solid;
 }
+
+.press__author {
+    text-transform: uppercase;
+    display: inline-block;
+}
+
+.press__publication {
+    font-weight: 700;
+    text-transform: uppercase;
+    display: inline-block;
+}

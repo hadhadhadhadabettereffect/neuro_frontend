@@ -101,6 +101,7 @@ export function startTurner(event: MouseEvent) {
 }
 
 export function showDetails(productIndex: number) {
+    console.log(productData[productIndex].id);
     if (!attached) {
         attached = true;
         updates |= DetailsUpdate.mount;

@@ -55,6 +55,7 @@ export function startSlider(event) {
     maxWidth = sliderContent.getBoundingClientRect().width;
     window.addEventListener("mousemove", handleMouseMove, false);
     window.addEventListener("mouseup", handleMouseUp, false);
+    event.preventDefault();
 }
 
 export function updateStory(): boolean {
@@ -107,7 +108,12 @@ function setPageContent() {
     if (pageType === PageType.text) {
         textTitle.innerText = d.title;
         textText.innerText = d.text;
-        textImg.src = "/media/" + d.image_a;
+        if (d.image_a) {
+            textImg.src = "/media/" + d.image_a;
+            textImg.style.visibility = "visible";
+        } else {
+            textImg.style.visibility = "hidden";
+        }
     } else {
         x0 = x1 = 0;
         baseWidth = maxWidth >>> 1;

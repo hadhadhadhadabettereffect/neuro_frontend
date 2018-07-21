@@ -30,10 +30,11 @@ document.getElementById("content").addEventListener("scroll", handleScroll, fals
 window.onpopstate = function(event) {
     if (event.state.hasOwnProperty("page")) {
         navTo(event.state.page);
+    } else {
+        navTo(NEURO.active);
     }
 };
 
-navTo(NEURO.active);
 
 function navTo(page: number) {
     if (navToSection(page)) {

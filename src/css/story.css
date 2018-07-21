@@ -67,7 +67,7 @@
     background-origin: border-box;
     background-position: left;
     background-size: cover;
-    border-right: 2px solid $blue;
+    border-right: 2px solid white;
     left: 0;
     top: 0;
     bottom: 0;
@@ -77,19 +77,26 @@
 .slider__bar {
     position: absolute;
     top: 0;
-    right: -5px;
+    right: 0;
     bottom: 0;
     width: 9px;
     cursor: ew-resize;
+
+    &:before, &:after {
+        display: block;
+        content: " ";
+        position: absolute;
+        top: 50%;
+        border: 8px solid transparent;
+        margin-top: -5px;
+    }
+
+    &:before {
+        right: 0px;
+        border-right-color: white;
+    }
     &:after {
-            display: block;
-            content: ' ';
-            width: 10px;
-            height: 10px;
-            border-radius: 100%;
-            background: yellow;
-            position: absolute;
-            top: 50%;
-            margin-top: -5px;
+        right: -18px;
+        border-left-color: white;
     }
 }

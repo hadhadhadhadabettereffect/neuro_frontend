@@ -101,21 +101,28 @@
 .grid__item {
     width: $width--grid__item;
     height: $height--grid__item;
-    background: gray;
+    border: 1px solid #333;
 }
 
 .grid__item--wide {
     width: $width--grid__item--wide;
     height: $height--grid__item;
-    background: gray;
+    grid-column-end: span 2;
+    background:black;
+    color: white;
+    text-align: center;
+    border: 1px solid #333;
+    padding: 35px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 0.9rem;
+    letter-spacing: 0.01em;
 }
 
 .grid__item--thumb {
     @extend .grid__item;
     cursor: pointer;
 }
-
-
 
 
 @media only screen and (max-width: $breakpoint-1) {
